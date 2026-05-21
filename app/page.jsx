@@ -6,7 +6,7 @@ import { CategorySelector } from "../components/CategorySelector";
 import { ProgressBar } from "../components/ProgressBar";
 import { QuizCard } from "../components/QuizCard";
 import { quizzes } from "../data/quizData";
-import { calculateXp, checkAnswer, getProgressPercent } from "../lib/quizLogic";
+import { calculateDifficultyXp, checkAnswer, getDifficultyLabel, getProgressPercent, getQuestionDifficulty, getQuestionXp } from "../lib/quizLogic";
 
 const LEGACY_PYTHON_PROGRESS_KEY = "codelingo-ai-python-basics-progress";
 const SELECTED_CATEGORY_STORAGE_KEY = "codelingo-ai-selected-category";
@@ -43,6 +43,20 @@ function getUniqueQuestionIds(questionIds) {
   return [...new Set(questionIds.filter((questionId) => typeof questionId === "string"))];
 }
 
+function parseSavedWrongAnswerIds(savedWrongAnswers) {
+  const parsedWrongAnswers = JSON.parse(savedWrongAnswers);
+
+  if (Array.isArray(parsedWrongAnswers)) {
+    return getUniqueQuestionIds(parsedWrongAnswers);
+  }
+
+  if (Array.isArray(parsedWrongAnswers.questionIds)) {
+    return getUniqueQuestionIds(parsedWrongAnswers.questionIds);
+  }
+
+  return [];
+}
+
 export default function HomePage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [quizMode, setQuizMode] = useState(QUIZ_MODE);
@@ -71,9 +85,13 @@ export default function HomePage() {
   const totalQuestions = activeQuestions.length;
   const currentQuestion = activeQuestions[currentQuestionIndex];
   const correctCount = submittedAnswers.filter((answer) => answer.isCorrect).length;
-  const xp = calculateXp(correctCount, selectedQuiz?.xpPerCorrectAnswer ?? 0);
-  const progressPercent = getProgressPercent(submittedAnswers.length, totalQuestions);
   const isReviewMode = quizMode === REVIEW_MODE;
+  const currentDifficulty = getQuestionDifficulty(currentQuestion);
+  const currentDifficultyLabel = getDifficultyLabel(currentDifficulty);
+  const currentQuestionXp = getQuestionXp(currentQuestion, selectedQuiz?.xpByDifficulty);
+  const xp = isReviewMode ? 0 : calculateDifficultyXp(submittedAnswers, selectedQuiz?.questions ?? [], selectedQuiz?.xpByDifficulty);
+  const progressPercent = getProgressPercent(submittedAnswers.length, totalQuestions);
+  const remainingWrongAnswerCount = selectedCategoryId ? wrongAnswerIdsByCategory[selectedCategoryId]?.length ?? 0 : 0;
   const isComplete = Boolean(selectedQuiz) && currentQuestionIndex >= totalQuestions;
 
   const currentResult = useMemo(() => {
@@ -87,7 +105,7 @@ export default function HomePage() {
       for (const quiz of quizzes) {
         const savedWrongAnswers = window.localStorage.getItem(getWrongAnswersStorageKey(quiz.categoryId));
         nextWrongAnswerIdsByCategory[quiz.categoryId] = savedWrongAnswers
-          ? getUniqueQuestionIds(JSON.parse(savedWrongAnswers))
+          ? parseSavedWrongAnswerIds(savedWrongAnswers)
           : [];
       }
 
@@ -182,12 +200,15 @@ export default function HomePage() {
       window.localStorage.setItem(
         getProgressStorageKey(selectedQuiz.categoryId),
         JSON.stringify({
+          schemaVersion: 2,
           categoryId: selectedQuiz.categoryId,
           completedQuestions: submittedAnswers,
           currentQuestionIndex,
           isSubmitted,
+          mode: QUIZ_MODE,
           selectedOptionIndex,
-          xp
+          xp,
+          xpByDifficulty: selectedQuiz.xpByDifficulty
         })
       );
     } catch {
@@ -211,7 +232,15 @@ export default function HomePage() {
       };
 
       try {
-        window.localStorage.setItem(getWrongAnswersStorageKey(categoryId), JSON.stringify(nextQuestionIds));
+        window.localStorage.setItem(
+          getWrongAnswersStorageKey(categoryId),
+          JSON.stringify({
+            schemaVersion: 1,
+            categoryId,
+            questionIds: nextQuestionIds,
+            updatedAt: new Date().toISOString()
+          })
+        );
       } catch {
         // Ignore storage failures so answer flow keeps working.
       }
@@ -259,9 +288,12 @@ export default function HomePage() {
     }
 
     const nextAnswer = {
+      schemaVersion: 1,
       questionId: currentQuestion.id,
+      questionDifficulty: getQuestionDifficulty(currentQuestion),
       selectedOptionIndex,
-      isCorrect: checkAnswer(currentQuestion, selectedOptionIndex)
+      isCorrect: checkAnswer(currentQuestion, selectedOptionIndex),
+      xpAwarded: checkAnswer(currentQuestion, selectedOptionIndex) && !isReviewMode ? getQuestionXp(currentQuestion, selectedQuiz.xpByDifficulty) : 0
     };
 
     updateWrongAnswerIds(selectedQuiz.categoryId, currentQuestion.id, nextAnswer.isCorrect);
@@ -329,14 +361,26 @@ export default function HomePage() {
       <main className="app-shell">
         <section className="results">
           <p className="eyebrow">{isReviewMode ? "Review complete" : "Mission complete"}</p>
-          <h1>{xp} XP earned</h1>
+          <h1>{isReviewMode ? "Review summary" : xp + " XP earned"}</h1>
           <p className="subtitle">
-            You answered {correctCount} of {totalQuestions} {selectedQuiz.categoryLabel} {isReviewMode ? "review" : "quiz"} questions correctly.
+            {isReviewMode
+              ? "You reviewed " + totalQuestions + " saved " + selectedQuiz.categoryLabel + " questions."
+              : "You answered " + correctCount + " of " + totalQuestions + " " + selectedQuiz.categoryLabel + " quiz questions correctly."}
           </p>
           <div className="summary-grid">
-            <ScoreStat value={getProgressPercent(correctCount, totalQuestions) + "%"} label="Accuracy" />
-            <ScoreStat value={totalQuestions} label="Questions" />
-            <ScoreStat value={correctCount} label="Correct" />
+            {isReviewMode ? (
+              <>
+                <ScoreStat value={totalQuestions} label="Reviewed" />
+                <ScoreStat value={correctCount} label="Corrected" />
+                <ScoreStat value={remainingWrongAnswerCount} label="Remaining" />
+              </>
+            ) : (
+              <>
+                <ScoreStat value={getProgressPercent(correctCount, totalQuestions) + "%"} label="Accuracy" />
+                <ScoreStat value={totalQuestions} label="Questions" />
+                <ScoreStat value={correctCount} label="Correct" />
+              </>
+            )}
           </div>
           <div className="review-list" aria-label="Answer review">
             {activeQuestions.map((question, index) => {
@@ -400,6 +444,7 @@ export default function HomePage() {
         <ProgressBar
           answeredCount={submittedAnswers.length}
           categoryName={isReviewMode ? selectedQuiz.categoryLabel + " Review" : selectedQuiz.categoryLabel}
+          currentDifficulty={currentDifficultyLabel}
           currentQuestionIndex={currentQuestionIndex}
           progressPercent={progressPercent}
           totalQuestions={totalQuestions}
@@ -407,12 +452,14 @@ export default function HomePage() {
         />
         <QuizCard
           currentResult={currentResult}
+          difficultyLabel={currentDifficultyLabel}
           isSubmitted={isSubmitted}
           onRestart={restartQuiz}
           onSelectOption={setSelectedOptionIndex}
           onSubmitOrContinue={isSubmitted ? goToNextQuestion : submitAnswer}
           question={currentQuestion}
           selectedOptionIndex={selectedOptionIndex}
+          xpReward={isReviewMode ? 0 : currentQuestionXp}
         />
       </section>
     </main>

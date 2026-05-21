@@ -7,7 +7,7 @@
   "xpPerCorrectAnswer": 10,
   "questions": [
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "bio-001",
       "prompt": "Which molecule stores genetic information in most living organisms?",
       "options": [
@@ -20,7 +20,7 @@
       "explanation": "DNA stores genetic instructions using nucleotide sequences built from A, T, C, and G bases."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "bio-002",
       "prompt": "What does FASTA format commonly store?",
       "options": [
@@ -33,7 +33,7 @@
       "explanation": "FASTA is a text format for biological sequences, with a header line followed by sequence letters."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "bio-003",
       "prompt": "In DNA, which base pairs with adenine?",
       "options": [
@@ -43,10 +43,11 @@
         "Uracil"
       ],
       "correctOptionIndex": 2,
-      "explanation": "In DNA, adenine pairs with thymine, while cytosine pairs with guanine."
+      "explanation": "In DNA, adenine pairs with thymine, while cytosine pairs with guanine.",
+      "commonMistake": "It is easy to mix DNA and RNA pairing rules. In DNA, adenine pairs with thymine, not uracil."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "bio-004",
       "prompt": "What is sequence alignment used for?",
       "options": [
@@ -59,7 +60,7 @@
       "explanation": "Sequence alignment places sequences together to reveal similarities, differences, and possible evolutionary relationships."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "hard",
       "id": "bio-005",
       "prompt": "What does gene expression data often describe?",
       "options": [
@@ -71,5 +72,15 @@
       "correctOptionIndex": 0,
       "explanation": "Gene expression data measures how strongly genes are transcribed or represented in a biological sample."
     }
-  ]
+  ],
+  "difficultyLevels": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "xpByDifficulty": {
+    "easy": 10,
+    "medium": 15,
+    "hard": 25
+  }
 }

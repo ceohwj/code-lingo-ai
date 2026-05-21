@@ -7,7 +7,7 @@
   "xpPerCorrectAnswer": 10,
   "questions": [
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "ai-001",
       "prompt": "In supervised learning, what does the training data usually include?",
       "options": [
@@ -20,7 +20,7 @@
       "explanation": "Supervised learning trains on examples where each input is paired with the target answer the model should learn to predict."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "ai-002",
       "prompt": "What is overfitting?",
       "options": [
@@ -30,10 +30,11 @@
         "A model runs faster"
       ],
       "correctOptionIndex": 0,
-      "explanation": "Overfitting happens when a model performs well on training data but fails to generalize to new examples."
+      "explanation": "Overfitting happens when a model performs well on training data but fails to generalize to new examples.",
+      "commonMistake": "Overfitting is often confused with high accuracy, but the problem is poor performance on new unseen data."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "ai-003",
       "prompt": "Which metric is commonly used for classification accuracy?",
       "options": [
@@ -46,7 +47,7 @@
       "explanation": "Accuracy measures the share of predictions that match the true labels across all evaluated examples."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "ai-004",
       "prompt": "What is a feature in machine learning?",
       "options": [
@@ -59,7 +60,7 @@
       "explanation": "Features are input variables, such as age, word count, or gene expression values, that help a model make predictions."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "hard",
       "id": "ai-005",
       "prompt": "Why do we keep test data separate from training data?",
       "options": [
@@ -71,5 +72,15 @@
       "correctOptionIndex": 0,
       "explanation": "A separate test set helps estimate how well the model may perform on data it did not learn from directly."
     }
-  ]
+  ],
+  "difficultyLevels": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "xpByDifficulty": {
+    "easy": 10,
+    "medium": 15,
+    "hard": 25
+  }
 }

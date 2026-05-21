@@ -7,7 +7,7 @@
   "xpPerCorrectAnswer": 10,
   "questions": [
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "sql-001",
       "prompt": "Which SQL keyword selects columns from a table?",
       "options": [
@@ -20,7 +20,7 @@
       "explanation": "SELECT chooses the columns or expressions that should appear in the query result."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "sql-002",
       "prompt": "Which clause filters rows before they appear in the result?",
       "options": [
@@ -30,10 +30,11 @@
         "LIMIT"
       ],
       "correctOptionIndex": 0,
-      "explanation": "WHERE keeps only rows that match a condition, such as price > 100 or status = 'active'."
+      "explanation": "WHERE keeps only rows that match a condition, such as price > 100 or status = 'active'.",
+      "commonMistake": "Learners often reach for ORDER BY, but sorting happens after rows are filtered with WHERE."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "sql-003",
       "prompt": "What does ORDER BY usually control?",
       "options": [
@@ -46,7 +47,7 @@
       "explanation": "ORDER BY sorts result rows by one or more columns, often with ASC or DESC direction."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "sql-004",
       "prompt": "Which aggregate function counts rows?",
       "options": [
@@ -59,7 +60,7 @@
       "explanation": "COUNT() returns how many rows or non-null values match the query, depending on its argument."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "hard",
       "id": "sql-005",
       "prompt": "Which join keeps all rows from the left table and matching rows from the right table?",
       "options": [
@@ -71,5 +72,15 @@
       "correctOptionIndex": 1,
       "explanation": "LEFT JOIN preserves every row from the left table, filling unmatched right-table values with NULL."
     }
-  ]
+  ],
+  "difficultyLevels": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "xpByDifficulty": {
+    "easy": 10,
+    "medium": 15,
+    "hard": 25
+  }
 }

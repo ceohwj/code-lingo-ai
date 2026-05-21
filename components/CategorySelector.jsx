@@ -10,6 +10,9 @@ export function CategorySelector({ categories, onReviewCategory, onSelectCategor
         <div className="category-grid" aria-label="Quiz categories">
           {categories.map((category) => {
             const wrongAnswerCount = wrongAnswerCountsByCategory[category.categoryId] ?? 0;
+            const wrongAnswerText = wrongAnswerCount === 0
+              ? "No wrong answers yet"
+              : wrongAnswerCount + " wrong " + (wrongAnswerCount === 1 ? "answer" : "answers") + " to review";
 
             return (
               <article className="category-card" key={category.categoryId}>
@@ -18,14 +21,15 @@ export function CategorySelector({ categories, onReviewCategory, onSelectCategor
                   <strong>{category.title}</strong>
                   <small>{category.questions.length} questions</small>
                 </button>
+                <p className="wrong-answer-count">{wrongAnswerText}</p>
                 <button
                   className="review-mode-button"
                   type="button"
                   disabled={wrongAnswerCount === 0}
                   onClick={() => onReviewCategory(category.categoryId)}
                 >
-                  Review Wrong Answers
-                  <small>{wrongAnswerCount} saved</small>
+                  {wrongAnswerCount === 0 ? "No review needed" : "Review Wrong Answers"}
+                  <small>{wrongAnswerCount === 0 ? "Clear" : wrongAnswerCount + " saved"}</small>
                 </button>
               </article>
             );

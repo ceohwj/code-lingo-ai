@@ -1,6 +1,6 @@
 "use client";
 
-export function ProgressBar({ answeredCount, categoryName, currentQuestionIndex, progressPercent, totalQuestions, xp }) {
+export function ProgressBar({ answeredCount, categoryName, currentDifficulty, currentQuestionIndex, progressPercent, totalQuestions, xp }) {
   return (
     <section className="progress-panel" aria-label="Quiz progress summary">
       <div className="progress-panel-header">
@@ -15,6 +15,7 @@ export function ProgressBar({ answeredCount, categoryName, currentQuestionIndex,
         <ProgressSummaryItem label="Current" value={currentQuestionIndex + 1} />
         <ProgressSummaryItem label="Total" value={totalQuestions} />
         <ProgressSummaryItem label="Progress" value={progressPercent + "%"} />
+        <ProgressSummaryItem label="Difficulty" value={currentDifficulty} />
         <ProgressSummaryItem label="XP" value={xp} />
       </div>
 

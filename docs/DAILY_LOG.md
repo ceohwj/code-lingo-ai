@@ -170,3 +170,132 @@
 - Kept normal category progress storage, XP calculation, and answer checking compatible.
 - Reused existing QuizCard and ProgressBar components for review mode.
 - Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
+
+### 18:09 - Wrong Answer Review UX Verification
+
+#### Today’s Goal
+- Verify the existing wrong-answer review mode flow.
+- Add clear wrong-answer counts to each category card.
+- Improve disabled review button state when no wrong answers exist.
+- Add an end-of-review summary screen.
+- Ensure review mode does not affect normal quiz progress or award normal quiz XP.
+
+#### Completed Work
+- Verified review mode uses category-specific wrong-answer localStorage keys.
+- Added category-card copy such as No wrong answers yet and N wrong answers to review.
+- Updated disabled review button text to No review needed with a clearer disabled style.
+- Added review summary stats for reviewed questions, corrected questions, and remaining wrong answers.
+- Set review mode XP to 0 so review sessions do not award normal quiz XP.
+- Confirmed review mode remains excluded from normal quiz progress persistence.
+- Kept the implementation frontend-only with no backend logic or external UI libraries.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 7/7 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+
+#### Next Tasks
+- Verify the clearer review card states locally with npm run dev.
+- Manually test review completion with mixed corrected and still-wrong answers.
+- Consider a future visual badge for categories with pending review items.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Improved wrong-answer review count visibility and disabled review states.
+- Added end-of-review summary for reviewed, corrected, and remaining items.
+- Preserved category-specific localStorage keys and normal quiz progress compatibility.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
+
+### 18:28 - Difficulty-Based XP Support
+
+#### Today’s Goal
+- Add scalable easy, medium, and hard difficulty support to the quiz schema.
+- Add difficulty-based XP rewards while keeping quiz logic separated from UI.
+- Display quiz difficulty clearly in the UI.
+- Keep normal progress and wrong-answer review systems compatible.
+
+#### Completed Work
+- Added difficultyLevels and xpByDifficulty metadata to each category JSON file.
+- Standardized question difficulty values to easy, medium, and hard.
+- Added DEFAULT_XP_BY_DIFFICULTY, difficulty helpers, and calculateDifficultyXp in lib/quizLogic.js.
+- Updated normal quiz XP to sum correct answers by question difficulty.
+- Kept review mode XP at 0 while preserving original source question difficulty data.
+- Displayed current question difficulty and XP reward in QuizCard.
+- Added current difficulty to ProgressBar summary.
+- Added schemaVersion and XP metadata to localStorage payloads while keeping old saved data readable.
+- Extended tests for supported difficulty values and difficulty-based XP calculation.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 10/10 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+
+#### Next Tasks
+- Verify difficulty display and difficulty XP locally with npm run dev.
+- Review content labels to ensure easy, medium, and hard match actual learning difficulty.
+- Add more questions per category so difficulty progression feels meaningful.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed the requested agent review before implementation.
+- Implemented MVP-friendly difficulty support in data and quiz logic.
+- Reused existing ProgressBar and QuizCard for difficulty display.
+- Preserved category-specific localStorage compatibility and review mode behavior.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
+
+### 22:22 - Explanation Card UX
+
+#### Today’s Goal
+- Improve the explanation experience after answering questions.
+- Add a dedicated reusable explanation card UI.
+- Display correct answer, explanation, earned XP, and difficulty.
+- Add optional common mistake helper text support in quiz schema.
+- Keep normal quiz and wrong-answer review flows compatible.
+
+#### Completed Work
+- Added reusable ExplanationCard component.
+- Replaced inline explanation rendering in QuizCard with ExplanationCard.
+- Explanation card now shows correct answer, explanation, difficulty, and earned XP.
+- Added optional commonMistake schema support and sample helper text in quiz JSON.
+- Kept explanation rendering compatible with normal quiz mode and wrong-answer review mode.
+- Added mobile-friendly explanation card styling.
+- Preserved quiz progression, answer logic, XP logic, review logic, and localStorage compatibility.
+- Extended tests to validate optional commonMistake content.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 11/11 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+
+#### Next Tasks
+- Verify explanation card layout locally with npm run dev on mobile and desktop widths.
+- Add higher-quality commonMistake text for more questions as content expands.
+- Consider adding explanation quality review guidelines for future quiz content.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed the requested agent review before implementation.
+- Implemented a reusable explanation card with correct answer, explanation, earned XP, difficulty, and optional common mistake text.
+- Reused QuizCard and preserved current quiz progression and review compatibility.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.

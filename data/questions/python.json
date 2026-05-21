@@ -7,7 +7,7 @@
   "xpPerCorrectAnswer": 10,
   "questions": [
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "py-001",
       "prompt": "Which symbol starts a comment in Python?",
       "options": [
@@ -17,10 +17,11 @@
         "--"
       ],
       "correctOptionIndex": 1,
-      "explanation": "Python ignores everything after a # on the same line, so it is used for comments."
+      "explanation": "Python ignores everything after a # on the same line, so it is used for comments.",
+      "commonMistake": "Many beginners use // because they have seen it in JavaScript or Java, but Python comments start with #."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "py-002",
       "prompt": "What does print('Hello') do?",
       "options": [
@@ -33,7 +34,7 @@
       "explanation": "The print function sends text or values to the screen."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "py-003",
       "prompt": "Which value is a string?",
       "options": [
@@ -46,7 +47,7 @@
       "explanation": "Text wrapped in quotes is a string. Both single and double quotes work in Python."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "easy",
       "id": "py-004",
       "prompt": "What is the result of 2 + 3 * 4?",
       "options": [
@@ -56,10 +57,11 @@
         "9"
       ],
       "correctOptionIndex": 1,
-      "explanation": "Multiplication happens before addition, so 3 * 4 is 12, then 2 + 12 is 14."
+      "explanation": "Multiplication happens before addition, so 3 * 4 is 12, then 2 + 12 is 14.",
+      "commonMistake": "A common mistake is adding 2 + 3 first. Python follows operator precedence, so multiplication runs before addition."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "py-005",
       "prompt": "Which line creates a variable named score?",
       "options": [
@@ -72,7 +74,7 @@
       "explanation": "Python creates variables with the assignment operator: name = value."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "py-006",
       "prompt": "Which type is used for True or False values?",
       "options": [
@@ -85,7 +87,7 @@
       "explanation": "Boolean values use the bool type. The two boolean literals are True and False."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "py-007",
       "prompt": "What does len(['a', 'b', 'c']) return?",
       "options": [
@@ -98,7 +100,7 @@
       "explanation": "len returns the number of items in a collection. This list has three items."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "medium",
       "id": "py-008",
       "prompt": "Which keyword starts a conditional branch?",
       "options": [
@@ -111,7 +113,7 @@
       "explanation": "Python uses if to run code only when a condition is true."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "hard",
       "id": "py-009",
       "prompt": "Which loop is best for visiting every item in a list?",
       "options": [
@@ -124,7 +126,7 @@
       "explanation": "A for loop can visit each item in a list using syntax like for item in items:."
     },
     {
-      "difficulty": "beginner",
+      "difficulty": "hard",
       "id": "py-010",
       "prompt": "What does input() usually return?",
       "options": [
@@ -136,5 +138,15 @@
       "correctOptionIndex": 1,
       "explanation": "input reads what the user types and returns it as a string."
     }
-  ]
+  ],
+  "difficultyLevels": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "xpByDifficulty": {
+    "easy": 10,
+    "medium": 15,
+    "hard": 25
+  }
 }

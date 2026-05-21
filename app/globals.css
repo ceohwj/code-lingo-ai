@@ -181,6 +181,14 @@ h2 {
   font-weight: 700;
 }
 
+.wrong-answer-count {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .review-mode-button {
   display: flex;
   align-items: center;
@@ -195,8 +203,15 @@ h2 {
 }
 
 .review-mode-button:disabled {
+  border-color: var(--line);
+  background: #f3f6f9;
+  color: var(--muted);
   cursor: not-allowed;
-  opacity: 0.48;
+  opacity: 1;
+}
+
+.review-mode-button:disabled small {
+  color: var(--muted);
 }
 
 .category-toolbar {
@@ -257,7 +272,7 @@ h2 {
 
 .progress-summary-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
   gap: 0.7rem;
 }
 
@@ -308,6 +323,24 @@ h2 {
 
 .question-panel {
   padding: clamp(1.25rem, 2rem, 2rem);
+}
+
+.question-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.question-meta span {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(31, 122, 95, 0.18);
+  border-radius: 999px;
+  background: #effaf6;
+  color: var(--brand-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .checkpoint-strip {
@@ -423,24 +456,71 @@ h2 {
   font-weight: 800;
 }
 
-.explanation {
+.explanation-card {
+  display: grid;
+  gap: 0.9rem;
   margin-top: 1rem;
   padding: 1rem;
+  border: 1px solid rgba(31, 122, 95, 0.18);
   border-radius: 8px;
+  background: #f7faf9;
   line-height: 1.55;
 }
 
-.explanation p {
-  margin: 0.35rem 0 0;
+.explanation-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.explanation-card-header div:first-child {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.explanation-card-label,
+.explanation-card-meta span {
+  color: var(--brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.explanation-card-header strong {
+  color: var(--brand-strong);
+  font-size: 1.05rem;
+}
+
+.explanation-card p {
+  margin: 0;
   color: var(--muted);
 }
 
-.explanation.success {
-  background: var(--success-bg);
+.explanation-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
 }
 
-.explanation.warning {
+.explanation-card-meta span {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(31, 122, 95, 0.16);
+  border-radius: 999px;
+  background: #ffffff;
+  white-space: nowrap;
+}
+
+.common-mistake {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.85rem;
+  border-radius: 8px;
   background: var(--warning-bg);
+}
+
+.common-mistake strong {
+  color: var(--brand-strong);
 }
 
 .actions {
@@ -577,14 +657,17 @@ h2 {
   }
 
   .progress-panel-header,
+  .explanation-card-header,
   .actions,
   .checkpoint-strip {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .checkpoint-strip {
+  .checkpoint-strip,
+  .explanation-card-meta {
     align-items: flex-start;
+    justify-content: flex-start;
   }
 
   .checkpoint-dots {

@@ -1,18 +1,27 @@
 "use client";
 
-import { getFeedback } from "../lib/quizLogic";
+import { ExplanationCard } from "./ExplanationCard";
 
 export function QuizCard({
   currentResult,
+  difficultyLabel,
   isSubmitted,
   onRestart,
   onSelectOption,
   onSubmitOrContinue,
   question,
-  selectedOptionIndex
+  selectedOptionIndex,
+  xpReward
 }) {
+  const correctAnswer = question.options[question.correctOptionIndex];
+  const earnedXp = currentResult?.isCorrect ? currentResult.xpAwarded ?? xpReward : 0;
+
   return (
     <article className="question-panel">
+      <div className="question-meta" aria-label="Question details">
+        <span>{difficultyLabel}</span>
+        <span>{xpReward} XP</span>
+      </div>
       <h2>{question.prompt}</h2>
       <div className="options" role="radiogroup" aria-label="Answer options">
         {question.options.map((option, index) => {
@@ -23,7 +32,7 @@ export function QuizCard({
 
           return (
             <button
-              className={`option-button${isSelected ? " is-selected" : ""}${resultClass}${incorrectClass}`}
+              className={"option-button" + (isSelected ? " is-selected" : "") + resultClass + incorrectClass}
               type="button"
               role="radio"
               aria-checked={isSelected}
@@ -39,10 +48,13 @@ export function QuizCard({
       </div>
 
       {isSubmitted ? (
-        <div className={`explanation ${currentResult?.isCorrect ? "success" : "warning"}`} role="status">
-          <strong>{getFeedback(Boolean(currentResult?.isCorrect))}</strong>
-          <p>{question.explanation}</p>
-        </div>
+        <ExplanationCard
+          commonMistake={question.commonMistake}
+          correctAnswer={correctAnswer}
+          difficultyLabel={difficultyLabel}
+          earnedXp={earnedXp}
+          explanation={question.explanation}
+        />
       ) : null}
 
       <div className="actions">
