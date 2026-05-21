@@ -121,6 +121,39 @@ h2 {
   align-self: center;
 }
 
+.streak-panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid rgba(31, 122, 95, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.streak-panel div {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 4.5rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+
+.streak-panel span {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.streak-panel strong {
+  color: var(--brand-strong);
+  font-size: 1.2rem;
+}
+
 .category-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -677,6 +710,7 @@ h2 {
 
   .summary-grid,
   .category-grid,
+  .streak-panel,
   .progress-summary-grid {
     grid-template-columns: 1fr;
   }

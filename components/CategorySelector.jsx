@@ -1,12 +1,26 @@
 "use client";
 
-export function CategorySelector({ categories, onReviewCategory, onSelectCategory, wrongAnswerCountsByCategory = {} }) {
+export function CategorySelector({ categories, onReviewCategory, onSelectCategory, streak = {}, wrongAnswerCountsByCategory = {} }) {
   return (
     <main className="app-shell">
       <section className="category-selector">
         <p className="eyebrow">CodeLingo AI</p>
         <h1>Choose a category</h1>
         <p className="subtitle">Pick a quiz path or review saved wrong answers before starting again.</p>
+        <section className="streak-panel" aria-label="Daily learning streak">
+          <div>
+            <span>Current streak</span>
+            <strong>{streak.currentStreak ?? 0} {(streak.currentStreak ?? 0) === 1 ? "day" : "days"}</strong>
+          </div>
+          <div>
+            <span>Today</span>
+            <strong>{streak.todayCompleted ? "Completed" : "Not completed yet"}</strong>
+          </div>
+          <div>
+            <span>Best streak</span>
+            <strong>{streak.longestStreak ?? 0} {(streak.longestStreak ?? 0) === 1 ? "day" : "days"}</strong>
+          </div>
+        </section>
         <div className="category-grid" aria-label="Quiz categories">
           {categories.map((category) => {
             const wrongAnswerCount = wrongAnswerCountsByCategory[category.categoryId] ?? 0;

@@ -7,6 +7,7 @@ import { ProgressBar } from "../components/ProgressBar";
 import { QuizCard } from "../components/QuizCard";
 import { quizzes } from "../data/quizData";
 import { calculateDifficultyXp, checkAnswer, getDifficultyLabel, getProgressPercent, getQuestionDifficulty, getQuestionXp } from "../lib/quizLogic";
+import { STREAK_STORAGE_KEY, completeLearningDay, getInitialStreakState, getLocalDateKey, normalizeStreakState } from "../lib/streakLogic";
 
 const LEGACY_PYTHON_PROGRESS_KEY = "codelingo-ai-python-basics-progress";
 const SELECTED_CATEGORY_STORAGE_KEY = "codelingo-ai-selected-category";
@@ -68,6 +69,8 @@ export default function HomePage() {
   const [isProgressLoaded, setIsProgressLoaded] = useState(false);
   const [wrongAnswerIdsByCategory, setWrongAnswerIdsByCategory] = useState({});
   const [reviewSessionQuestionIds, setReviewSessionQuestionIds] = useState([]);
+  const [streakState, setStreakState] = useState(() => getInitialStreakState());
+  const [isStreakLoaded, setIsStreakLoaded] = useState(false);
 
   const selectedQuiz = selectedCategoryId ? quizByCategoryId[selectedCategoryId] : null;
   const activeQuestions = useMemo(() => {
@@ -127,6 +130,19 @@ export default function HomePage() {
       setWrongAnswerIdsByCategory(nextWrongAnswerIdsByCategory);
     } finally {
       setIsCategoryLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const savedStreakState = window.localStorage.getItem(STREAK_STORAGE_KEY);
+      setStreakState(savedStreakState
+        ? normalizeStreakState(JSON.parse(savedStreakState), getLocalDateKey())
+        : getInitialStreakState());
+    } catch {
+      setStreakState(getInitialStreakState());
+    } finally {
+      setIsStreakLoaded(true);
     }
   }, []);
 
@@ -305,8 +321,28 @@ export default function HomePage() {
     setIsSubmitted(true);
   }
 
+  function completeTodayStreak() {
+    setStreakState((currentStreakState) => {
+      const nextStreakState = completeLearningDay(currentStreakState, getLocalDateKey());
+
+      try {
+        window.localStorage.setItem(STREAK_STORAGE_KEY, JSON.stringify(nextStreakState));
+      } catch {
+        // Ignore storage failures so quiz completion keeps working.
+      }
+
+      return nextStreakState;
+    });
+  }
+
   function goToNextQuestion() {
-    setCurrentQuestionIndex((index) => index + 1);
+    const nextQuestionIndex = currentQuestionIndex + 1;
+
+    if (!isReviewMode && selectedQuiz && nextQuestionIndex >= totalQuestions) {
+      completeTodayStreak();
+    }
+
+    setCurrentQuestionIndex(nextQuestionIndex);
     setSelectedOptionIndex(null);
     setIsSubmitted(false);
   }
@@ -318,7 +354,7 @@ export default function HomePage() {
     setIsSubmitted(false);
   }
 
-  if (!isCategoryLoaded) {
+  if (!isCategoryLoaded || !isStreakLoaded) {
     return null;
   }
 
@@ -328,6 +364,7 @@ export default function HomePage() {
         categories={quizzes}
         onReviewCategory={startWrongAnswerReview}
         onSelectCategory={startCategoryQuiz}
+        streak={streakState}
         wrongAnswerCountsByCategory={Object.fromEntries(
           Object.entries(wrongAnswerIdsByCategory).map(([categoryId, questionIds]) => [categoryId, questionIds.length])
         )}

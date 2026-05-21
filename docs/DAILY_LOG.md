@@ -299,3 +299,44 @@
 - Implemented a reusable explanation card with correct answer, explanation, earned XP, difficulty, and optional common mistake text.
 - Reused QuizCard and preserved current quiz progression and review compatibility.
 - Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+### 22:55 - Daily Streak Tracking
+
+#### Today’s Goal
+- Implement a simple localStorage-only daily streak system.
+- Show current streak and today completed state on the home/category screen.
+- Ensure streak updates once per local calendar day and only after normal quiz completion.
+
+#### Completed Work
+- Added pure streak logic in lib/streakLogic.js.
+- Added a dedicated localStorage key for daily streak state.
+- Added local calendar date keys, first completion, same-day duplicate prevention, next-day continuation, missed-day reset, and invalid saved-state normalization.
+- Connected streak completion to normal quiz completion when the learner reaches the completion screen.
+- Kept wrong-answer review mode from triggering streak completion.
+- Added a responsive streak summary to the category selection screen with current streak, today status, and best streak.
+- Added focused streak tests covering the required date and normalization cases.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 18/18 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+
+#### Next Tasks
+- Verify the streak summary locally with npm run dev.
+- Manually complete one normal quiz and confirm today completed persists after refresh.
+- Confirm review mode completion does not update streak in the browser.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented MVP-friendly daily streak tracking with localStorage only.
+- Kept streak logic separate from quiz UI components.
+- Preserved existing category progress, review mode, XP, and wrong-answer storage behavior.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---

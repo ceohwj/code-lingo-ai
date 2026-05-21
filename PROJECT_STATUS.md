@@ -1,7 +1,7 @@
 # PROJECT_STATUS.md
 
 ## Current Status
-Quiz MVP supports category selection, reusable quiz UI components, dedicated explanation cards, difficulty-based XP, improved progress summary UI, clearer wrong-answer review mode, JSON question files, and category-specific browser progress restore.
+Quiz MVP supports category selection, reusable quiz UI components, dedicated explanation cards, difficulty-based XP, daily streak tracking, improved progress summary UI, clearer wrong-answer review mode, JSON question files, and category-specific browser progress restore.
 
 ## Done
 - Basic quiz screen
@@ -42,6 +42,11 @@ Quiz MVP supports category selection, reusable quiz UI components, dedicated exp
 - Explanation card shows correct answer, explanation, earned XP, and difficulty
 - Optional common mistake helper text supported in quiz schema
 - Explanation rendering is reusable through ExplanationCard
+- Daily streak logic added with local calendar day tracking
+- Home category screen shows current streak, today completed state, and best streak
+- Normal quiz completion marks daily streak once per day
+- Wrong-answer review mode does not trigger daily streak completion
+- Streak tests cover initial state, first completion, duplicate same-day completion, next-day continuation, missed-day reset, and invalid saved-state normalization
 
 ## In Progress
 - Project structure stabilization
@@ -66,14 +71,13 @@ Quiz MVP supports category selection, reusable quiz UI components, dedicated exp
 ~~~txt
 [Codex Result]
 - Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
-- Completed agent review before implementation and chose the MVP-friendly approach.
-- Added reusable ExplanationCard rendered after submitted answers.
-- Explanation card displays correct answer, explanation, earned XP, and difficulty.
-- Added optional commonMistake helper text support in quiz JSON and tests.
-- Kept explanation flow compatible with normal quiz mode and wrong-answer review mode.
-- Preserved current quiz progression, localStorage, XP, and answer logic.
+- Completed the requested agent review before implementation and chose the MVP-friendly streak approach.
+- Added localStorage-only daily streak state under a dedicated streak key.
+- Added pure streak logic for local calendar dates, same-day duplicate prevention, consecutive-day incrementing, missed-day reset, and saved-state normalization.
+- Added a home/category screen streak summary showing current streak, today completed state, and best streak.
+- Connected streak completion only to normal quiz completion; wrong-answer review mode does not trigger streak updates.
 - npm test could not run in Codex because npm is unavailable.
-- node --test passed in Codex as the direct equivalent, 11/11 tests.
+- node --test passed in Codex, 18/18 tests.
 - npm run build could not run in Codex because npm is unavailable.
 - Direct Next build failed in Codex because the environment cannot load the Next SWC binary.
 ~~~
