@@ -1,7 +1,7 @@
 # PROJECT_STATUS.md
 
 ## Current Status
-Quiz MVP supports category selection, reusable quiz UI components, dedicated explanation cards, difficulty-based XP, daily streak tracking, improved progress summary UI, clearer wrong-answer review mode, JSON question files, and category-specific browser progress restore.
+Quiz MVP supports category selection, reusable quiz UI components, dedicated explanation cards, difficulty-based XP, daily streak tracking, daily goal tracking, improved progress summary UI, clearer wrong-answer review mode, JSON question files, and category-specific browser progress restore.
 
 ## Done
 - Basic quiz screen
@@ -47,6 +47,11 @@ Quiz MVP supports category selection, reusable quiz UI components, dedicated exp
 - Normal quiz completion marks daily streak once per day
 - Wrong-answer review mode does not trigger daily streak completion
 - Streak tests cover initial state, first completion, duplicate same-day completion, next-day continuation, missed-day reset, and invalid saved-state normalization
+- Daily goal logic tracks completed normal quiz questions by local calendar day
+- Daily goal target defaults to 5 completed questions
+- Home category screen shows daily goal count, target, progress percentage, and completion state
+- Wrong-answer review mode does not count toward daily goal progress
+- Daily goal tests cover initial state, increments, completion, capped percentage, new-day reset, and invalid saved-state normalization
 
 ## In Progress
 - Project structure stabilization
@@ -71,13 +76,14 @@ Quiz MVP supports category selection, reusable quiz UI components, dedicated exp
 ~~~txt
 [Codex Result]
 - Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
-- Completed the requested agent review before implementation and chose the MVP-friendly streak approach.
-- Added localStorage-only daily streak state under a dedicated streak key.
-- Added pure streak logic for local calendar dates, same-day duplicate prevention, consecutive-day incrementing, missed-day reset, and saved-state normalization.
-- Added a home/category screen streak summary showing current streak, today completed state, and best streak.
-- Connected streak completion only to normal quiz completion; wrong-answer review mode does not trigger streak updates.
+- Completed the requested agent review before implementation and chose the MVP-friendly daily goal approach.
+- Added localStorage-only daily goal state under a dedicated versioned key.
+- Added pure daily goal logic for default target 5, local calendar day reset, progress percentage, completion state, and saved-state normalization.
+- Added focused daily goal tests for initial state, increments, target completion, capped progress, new-day reset, and invalid saved state.
+- Added a home/category screen daily goal summary showing completed questions today, target, percent, and completed/not completed state.
+- Connected daily goal progress only to normal quiz answer submission; wrong-answer review mode does not count.
 - npm test could not run in Codex because npm is unavailable.
-- node --test passed in Codex, 18/18 tests.
+- node --test passed in Codex, 25/25 tests.
 - npm run build could not run in Codex because npm is unavailable.
 - Direct Next build failed in Codex because the environment cannot load the Next SWC binary.
 ~~~

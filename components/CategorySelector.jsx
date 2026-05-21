@@ -1,6 +1,6 @@
 "use client";
 
-export function CategorySelector({ categories, onReviewCategory, onSelectCategory, streak = {}, wrongAnswerCountsByCategory = {} }) {
+export function CategorySelector({ categories, dailyGoal = {}, onReviewCategory, onSelectCategory, streak = {}, wrongAnswerCountsByCategory = {} }) {
   return (
     <main className="app-shell">
       <section className="category-selector">
@@ -20,6 +20,19 @@ export function CategorySelector({ categories, onReviewCategory, onSelectCategor
             <span>Best streak</span>
             <strong>{streak.longestStreak ?? 0} {(streak.longestStreak ?? 0) === 1 ? "day" : "days"}</strong>
           </div>
+        </section>
+        <section className="daily-goal-panel" aria-label="Daily goal progress">
+          <div className="daily-goal-panel-header">
+            <div>
+              <span>Daily goal</span>
+              <strong>{dailyGoal.completedQuestionCount ?? 0} / {dailyGoal.target ?? 5} questions</strong>
+            </div>
+            <strong>{dailyGoal.isCompleted ? "Completed" : "Not completed"}</strong>
+          </div>
+          <div className="daily-goal-track" aria-hidden="true">
+            <div className="daily-goal-fill" style={{ width: (dailyGoal.progressPercent ?? 0) + "%" }} />
+          </div>
+          <p>{dailyGoal.progressPercent ?? 0}% complete today</p>
         </section>
         <div className="category-grid" aria-label="Quiz categories">
           {categories.map((category) => {

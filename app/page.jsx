@@ -6,6 +6,7 @@ import { CategorySelector } from "../components/CategorySelector";
 import { ProgressBar } from "../components/ProgressBar";
 import { QuizCard } from "../components/QuizCard";
 import { quizzes } from "../data/quizData";
+import { DAILY_GOAL_STORAGE_KEY, addCompletedDailyGoalQuestions, getInitialDailyGoalState, normalizeDailyGoalState } from "../lib/dailyGoalLogic";
 import { calculateDifficultyXp, checkAnswer, getDifficultyLabel, getProgressPercent, getQuestionDifficulty, getQuestionXp } from "../lib/quizLogic";
 import { STREAK_STORAGE_KEY, completeLearningDay, getInitialStreakState, getLocalDateKey, normalizeStreakState } from "../lib/streakLogic";
 
@@ -71,6 +72,8 @@ export default function HomePage() {
   const [reviewSessionQuestionIds, setReviewSessionQuestionIds] = useState([]);
   const [streakState, setStreakState] = useState(() => getInitialStreakState());
   const [isStreakLoaded, setIsStreakLoaded] = useState(false);
+  const [dailyGoalState, setDailyGoalState] = useState(() => getInitialDailyGoalState(getLocalDateKey()));
+  const [isDailyGoalLoaded, setIsDailyGoalLoaded] = useState(false);
 
   const selectedQuiz = selectedCategoryId ? quizByCategoryId[selectedCategoryId] : null;
   const activeQuestions = useMemo(() => {
@@ -143,6 +146,20 @@ export default function HomePage() {
       setStreakState(getInitialStreakState());
     } finally {
       setIsStreakLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const todayDateKey = getLocalDateKey();
+      const savedDailyGoalState = window.localStorage.getItem(DAILY_GOAL_STORAGE_KEY);
+      setDailyGoalState(savedDailyGoalState
+        ? normalizeDailyGoalState(JSON.parse(savedDailyGoalState), todayDateKey)
+        : getInitialDailyGoalState(todayDateKey));
+    } catch {
+      setDailyGoalState(getInitialDailyGoalState(getLocalDateKey()));
+    } finally {
+      setIsDailyGoalLoaded(true);
     }
   }, []);
 
@@ -314,11 +331,29 @@ export default function HomePage() {
 
     updateWrongAnswerIds(selectedQuiz.categoryId, currentQuestion.id, nextAnswer.isCorrect);
 
+    if (!isReviewMode) {
+      addTodayDailyGoalQuestion();
+    }
+
     setSubmittedAnswers((answers) => {
       const withoutCurrent = answers.filter((answer) => answer.questionId !== currentQuestion.id);
       return [...withoutCurrent, nextAnswer];
     });
     setIsSubmitted(true);
+  }
+
+  function addTodayDailyGoalQuestion() {
+    setDailyGoalState((currentDailyGoalState) => {
+      const nextDailyGoalState = addCompletedDailyGoalQuestions(currentDailyGoalState, 1, getLocalDateKey());
+
+      try {
+        window.localStorage.setItem(DAILY_GOAL_STORAGE_KEY, JSON.stringify(nextDailyGoalState));
+      } catch {
+        // Ignore storage failures so answer flow keeps working.
+      }
+
+      return nextDailyGoalState;
+    });
   }
 
   function completeTodayStreak() {
@@ -354,7 +389,7 @@ export default function HomePage() {
     setIsSubmitted(false);
   }
 
-  if (!isCategoryLoaded || !isStreakLoaded) {
+  if (!isCategoryLoaded || !isStreakLoaded || !isDailyGoalLoaded) {
     return null;
   }
 
@@ -362,6 +397,7 @@ export default function HomePage() {
     return (
       <CategorySelector
         categories={quizzes}
+        dailyGoal={dailyGoalState}
         onReviewCategory={startWrongAnswerReview}
         onSelectCategory={startCategoryQuiz}
         streak={streakState}

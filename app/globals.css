@@ -154,6 +154,62 @@ h2 {
   font-size: 1.2rem;
 }
 
+.daily-goal-panel {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+  padding: 1rem;
+  border: 1px solid rgba(242, 184, 75, 0.34);
+  border-radius: 8px;
+  background: #fffaf0;
+}
+
+.daily-goal-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.daily-goal-panel-header div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.daily-goal-panel span,
+.daily-goal-panel-header > strong {
+  color: var(--brand);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.daily-goal-panel-header div strong {
+  color: var(--brand-strong);
+  font-size: 1.2rem;
+}
+
+.daily-goal-track {
+  height: 0.7rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eadfcb;
+}
+
+.daily-goal-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--brand));
+  transition: width 180ms ease;
+}
+
+.daily-goal-panel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
 .category-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -690,6 +746,7 @@ h2 {
   }
 
   .progress-panel-header,
+  .daily-goal-panel-header,
   .explanation-card-header,
   .actions,
   .checkpoint-strip {

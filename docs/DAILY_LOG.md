@@ -340,3 +340,45 @@
 - Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
 
 ---
+
+### 23:14 - Daily Goal Tracking
+
+#### Today’s Goal
+- Implement a simple localStorage-only daily goal system.
+- Track completed normal quiz questions for the current local calendar day.
+- Show daily goal count, target, progress percentage, and completion state on the home/category screen.
+
+#### Completed Work
+- Added pure daily goal logic in lib/dailyGoalLogic.js.
+- Added a dedicated versioned localStorage key for daily goal state.
+- Set the default daily goal target to 5 completed normal quiz questions.
+- Added local calendar day normalization so daily goal progress resets on a new local day.
+- Connected daily goal increments to normal quiz answer submission only.
+- Kept wrong-answer review mode from counting toward daily goal progress.
+- Added a daily goal summary to the category selection screen with completed questions, target, percentage, and completed/not completed state.
+- Added focused tests for initial state, increments, completion, capped percentage, new-day reset, and invalid saved-state normalization.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 25/25 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+
+#### Next Tasks
+- Verify daily goal progress locally with npm run dev.
+- Manually answer normal quiz questions and confirm the daily goal count persists after refresh.
+- Confirm wrong-answer review submissions do not change daily goal progress in the browser.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented MVP-friendly daily goal tracking with localStorage only.
+- Kept daily goal logic separate from quiz UI components.
+- Preserved existing category progress, XP, streak, and wrong-answer review behavior.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
