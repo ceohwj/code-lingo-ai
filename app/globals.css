@@ -130,26 +130,41 @@ h2 {
 
 .category-card {
   display: grid;
-  gap: 0.45rem;
-  min-height: 9.5rem;
+  gap: 0.7rem;
+  min-height: 11.75rem;
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: var(--shadow);
   color: var(--ink);
+  text-align: left;
+}
+
+.category-card-main,
+.review-mode-button {
+  width: 100%;
+  border-radius: 8px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
 }
 
-.category-card:hover {
-  border-color: var(--brand);
-  background: #effaf6;
-  transform: translateY(-1px);
+.category-card-main {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 7.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
 }
 
-.category-card span {
+.category-card-main:hover strong {
+  color: var(--brand-strong);
+}
+
+.category-card span,
+.review-mode-button small {
   color: var(--brand);
   font-size: 0.78rem;
   font-weight: 800;
@@ -164,6 +179,24 @@ h2 {
 .category-card small {
   color: var(--muted);
   font-weight: 700;
+}
+
+.review-mode-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(31, 122, 95, 0.22);
+  background: #effaf6;
+  color: var(--brand-strong);
+  font-weight: 800;
+}
+
+.review-mode-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 
 .category-toolbar {
@@ -181,14 +214,73 @@ h2 {
   padding: 0.55rem 0.8rem;
 }
 
-.lesson-topline {
+.progress-panel {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.progress-panel-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.65rem;
+}
+
+.progress-panel-header div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.progress-panel-header strong {
+  font-size: 1.15rem;
+}
+
+.progress-category,
+.progress-percent-pill {
+  color: var(--brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.progress-percent-pill {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(31, 122, 95, 0.18);
+  border-radius: 999px;
+  background: #effaf6;
+  white-space: nowrap;
+}
+
+.progress-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.7rem;
+}
+
+.progress-summary-item {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 4.8rem;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfe;
+}
+
+.progress-summary-item span {
   color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.progress-summary-item strong {
+  color: var(--brand-strong);
+  font-size: 1.45rem;
 }
 
 .progress-track {
@@ -484,9 +576,10 @@ h2 {
     padding: 1rem;
   }
 
-  .lesson-topline,
+  .progress-panel-header,
   .actions,
   .checkpoint-strip {
+    align-items: stretch;
     flex-direction: column;
   }
 
@@ -500,7 +593,8 @@ h2 {
   }
 
   .summary-grid,
-  .category-grid {
+  .category-grid,
+  .progress-summary-grid {
     grid-template-columns: 1fr;
   }
 }

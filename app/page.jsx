@@ -10,6 +10,8 @@ import { calculateXp, checkAnswer, getProgressPercent } from "../lib/quizLogic";
 
 const LEGACY_PYTHON_PROGRESS_KEY = "codelingo-ai-python-basics-progress";
 const SELECTED_CATEGORY_STORAGE_KEY = "codelingo-ai-selected-category";
+const QUIZ_MODE = "quiz";
+const REVIEW_MODE = "review";
 
 const progressStorageKeys = {
   ai: "codelingo-ai-ai-basics-progress",
@@ -21,7 +23,11 @@ const progressStorageKeys = {
 const quizByCategoryId = Object.fromEntries(quizzes.map((quiz) => [quiz.categoryId, quiz]));
 
 function getProgressStorageKey(categoryId) {
-  return progressStorageKeys[categoryId] ?? `codelingo-ai-${categoryId}-progress`;
+  return progressStorageKeys[categoryId] ?? "codelingo-ai-" + categoryId + "-progress";
+}
+
+function getWrongAnswersStorageKey(categoryId) {
+  return "codelingo-ai-" + categoryId + "-wrong-answers";
 }
 
 function getInitialProgressState() {
@@ -33,21 +39,41 @@ function getInitialProgressState() {
   };
 }
 
+function getUniqueQuestionIds(questionIds) {
+  return [...new Set(questionIds.filter((questionId) => typeof questionId === "string"))];
+}
+
 export default function HomePage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [quizMode, setQuizMode] = useState(QUIZ_MODE);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [submittedAnswers, setSubmittedAnswers] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCategoryLoaded, setIsCategoryLoaded] = useState(false);
   const [isProgressLoaded, setIsProgressLoaded] = useState(false);
+  const [wrongAnswerIdsByCategory, setWrongAnswerIdsByCategory] = useState({});
+  const [reviewSessionQuestionIds, setReviewSessionQuestionIds] = useState([]);
 
   const selectedQuiz = selectedCategoryId ? quizByCategoryId[selectedCategoryId] : null;
-  const totalQuestions = selectedQuiz?.questions.length ?? 0;
-  const currentQuestion = selectedQuiz?.questions[currentQuestionIndex];
+  const activeQuestions = useMemo(() => {
+    if (!selectedQuiz) {
+      return [];
+    }
+
+    if (quizMode !== REVIEW_MODE) {
+      return selectedQuiz.questions;
+    }
+
+    const reviewQuestionIdSet = new Set(reviewSessionQuestionIds);
+    return selectedQuiz.questions.filter((question) => reviewQuestionIdSet.has(question.id));
+  }, [quizMode, reviewSessionQuestionIds, selectedQuiz]);
+  const totalQuestions = activeQuestions.length;
+  const currentQuestion = activeQuestions[currentQuestionIndex];
   const correctCount = submittedAnswers.filter((answer) => answer.isCorrect).length;
   const xp = calculateXp(correctCount, selectedQuiz?.xpPerCorrectAnswer ?? 0);
   const progressPercent = getProgressPercent(submittedAnswers.length, totalQuestions);
+  const isReviewMode = quizMode === REVIEW_MODE;
   const isComplete = Boolean(selectedQuiz) && currentQuestionIndex >= totalQuestions;
 
   const currentResult = useMemo(() => {
@@ -55,19 +81,32 @@ export default function HomePage() {
   }, [currentQuestion?.id, submittedAnswers]);
 
   useEffect(() => {
+    const nextWrongAnswerIdsByCategory = {};
+
     try {
+      for (const quiz of quizzes) {
+        const savedWrongAnswers = window.localStorage.getItem(getWrongAnswersStorageKey(quiz.categoryId));
+        nextWrongAnswerIdsByCategory[quiz.categoryId] = savedWrongAnswers
+          ? getUniqueQuestionIds(JSON.parse(savedWrongAnswers))
+          : [];
+      }
+
+      setWrongAnswerIdsByCategory(nextWrongAnswerIdsByCategory);
+
       const savedCategoryId = window.localStorage.getItem(SELECTED_CATEGORY_STORAGE_KEY);
 
       if (savedCategoryId && quizByCategoryId[savedCategoryId]) {
         setSelectedCategoryId(savedCategoryId);
+        setQuizMode(QUIZ_MODE);
         return;
       }
 
       if (window.localStorage.getItem(LEGACY_PYTHON_PROGRESS_KEY)) {
         setSelectedCategoryId("python");
+        setQuizMode(QUIZ_MODE);
       }
     } catch {
-      // Ignore storage failures so the category screen still works.
+      setWrongAnswerIdsByCategory(nextWrongAnswerIdsByCategory);
     } finally {
       setIsCategoryLoaded(true);
     }
@@ -80,6 +119,16 @@ export default function HomePage() {
     }
 
     setIsProgressLoaded(false);
+
+    if (isReviewMode) {
+      const cleanProgress = getInitialProgressState();
+      setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
+      setSubmittedAnswers(cleanProgress.submittedAnswers);
+      setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
+      setIsSubmitted(cleanProgress.isSubmitted);
+      setIsProgressLoaded(true);
+      return;
+    }
 
     try {
       window.localStorage.setItem(SELECTED_CATEGORY_STORAGE_KEY, selectedQuiz.categoryId);
@@ -122,10 +171,10 @@ export default function HomePage() {
     } finally {
       setIsProgressLoaded(true);
     }
-  }, [selectedQuiz]);
+  }, [isReviewMode, selectedQuiz]);
 
   useEffect(() => {
-    if (!isProgressLoaded || !selectedQuiz) {
+    if (!isProgressLoaded || !selectedQuiz || isReviewMode) {
       return;
     }
 
@@ -144,18 +193,57 @@ export default function HomePage() {
     } catch {
       // Ignore storage failures so quiz interactions keep working.
     }
-  }, [currentQuestionIndex, isProgressLoaded, isSubmitted, selectedOptionIndex, selectedQuiz, submittedAnswers, xp]);
+  }, [currentQuestionIndex, isProgressLoaded, isReviewMode, isSubmitted, selectedOptionIndex, selectedQuiz, submittedAnswers, xp]);
 
-  function selectCategory(categoryId) {
+  function updateWrongAnswerIds(categoryId, questionId, isCorrect) {
+    if (!questionId) {
+      return;
+    }
+
+    setWrongAnswerIdsByCategory((currentWrongAnswers) => {
+      const currentQuestionIds = currentWrongAnswers[categoryId] ?? [];
+      const nextQuestionIds = isCorrect
+        ? currentQuestionIds.filter((savedQuestionId) => savedQuestionId !== questionId)
+        : getUniqueQuestionIds([...currentQuestionIds, questionId]);
+      const nextWrongAnswers = {
+        ...currentWrongAnswers,
+        [categoryId]: nextQuestionIds
+      };
+
+      try {
+        window.localStorage.setItem(getWrongAnswersStorageKey(categoryId), JSON.stringify(nextQuestionIds));
+      } catch {
+        // Ignore storage failures so answer flow keeps working.
+      }
+
+      return nextWrongAnswers;
+    });
+  }
+
+  function startCategoryQuiz(categoryId) {
     if (!quizByCategoryId[categoryId]) {
       return;
     }
 
+    setQuizMode(QUIZ_MODE);
+    setReviewSessionQuestionIds([]);
+    setSelectedCategoryId(categoryId);
+  }
+
+  function startWrongAnswerReview(categoryId) {
+    if (!quizByCategoryId[categoryId] || (wrongAnswerIdsByCategory[categoryId] ?? []).length === 0) {
+      return;
+    }
+
+    setQuizMode(REVIEW_MODE);
+    setReviewSessionQuestionIds(wrongAnswerIdsByCategory[categoryId] ?? []);
     setSelectedCategoryId(categoryId);
   }
 
   function changeCategory() {
     setSelectedCategoryId(null);
+    setQuizMode(QUIZ_MODE);
+    setReviewSessionQuestionIds([]);
     setIsProgressLoaded(false);
 
     try {
@@ -166,7 +254,7 @@ export default function HomePage() {
   }
 
   function submitAnswer() {
-    if (selectedOptionIndex === null || !currentQuestion) {
+    if (selectedOptionIndex === null || !currentQuestion || !selectedQuiz) {
       return;
     }
 
@@ -175,6 +263,8 @@ export default function HomePage() {
       selectedOptionIndex,
       isCorrect: checkAnswer(currentQuestion, selectedOptionIndex)
     };
+
+    updateWrongAnswerIds(selectedQuiz.categoryId, currentQuestion.id, nextAnswer.isCorrect);
 
     setSubmittedAnswers((answers) => {
       const withoutCurrent = answers.filter((answer) => answer.questionId !== currentQuestion.id);
@@ -201,35 +291,61 @@ export default function HomePage() {
   }
 
   if (!selectedQuiz) {
-    return <CategorySelector categories={quizzes} onSelectCategory={selectCategory} />;
+    return (
+      <CategorySelector
+        categories={quizzes}
+        onReviewCategory={startWrongAnswerReview}
+        onSelectCategory={startCategoryQuiz}
+        wrongAnswerCountsByCategory={Object.fromEntries(
+          Object.entries(wrongAnswerIdsByCategory).map(([categoryId, questionIds]) => [categoryId, questionIds.length])
+        )}
+      />
+    );
   }
 
   if (!isProgressLoaded) {
     return null;
   }
 
+  if (isReviewMode && totalQuestions === 0) {
+    return (
+      <main className="app-shell">
+        <section className="results">
+          <p className="eyebrow">Review complete</p>
+          <h1>No wrong answers</h1>
+          <p className="subtitle">There are no saved wrong answers for {selectedQuiz.categoryLabel} right now.</p>
+          <div className="actions results-actions">
+            <button className="secondary-button" type="button" onClick={changeCategory}>
+              Choose category
+            </button>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   if (isComplete) {
     return (
       <main className="app-shell">
         <section className="results">
-          <p className="eyebrow">Mission complete</p>
+          <p className="eyebrow">{isReviewMode ? "Review complete" : "Mission complete"}</p>
           <h1>{xp} XP earned</h1>
           <p className="subtitle">
-            You answered {correctCount} of {totalQuestions} {selectedQuiz.categoryLabel} questions correctly.
+            You answered {correctCount} of {totalQuestions} {selectedQuiz.categoryLabel} {isReviewMode ? "review" : "quiz"} questions correctly.
           </p>
           <div className="summary-grid">
-            <ScoreStat value={`${getProgressPercent(correctCount, totalQuestions)}%`} label="Accuracy" />
+            <ScoreStat value={getProgressPercent(correctCount, totalQuestions) + "%"} label="Accuracy" />
             <ScoreStat value={totalQuestions} label="Questions" />
             <ScoreStat value={correctCount} label="Correct" />
           </div>
           <div className="review-list" aria-label="Answer review">
-            {selectedQuiz.questions.map((question, index) => {
+            {activeQuestions.map((question, index) => {
               const answer = submittedAnswers.find((item) => item.questionId === question.id);
               const selectedAnswer = question.options[answer?.selectedOptionIndex];
               const correctAnswer = question.options[question.correctOptionIndex];
 
               return (
-                <article className={`review-item${answer?.isCorrect ? " is-correct" : " is-incorrect"}`} key={question.id}>
+                <article className={"review-item" + (answer?.isCorrect ? " is-correct" : " is-incorrect")} key={question.id}>
                   <div className="review-item-topline">
                     <span>Mission {index + 1}</span>
                     <strong>{answer?.isCorrect ? "Correct" : "Review"}</strong>
@@ -252,7 +368,7 @@ export default function HomePage() {
               Change category
             </button>
             <button className="primary-button" type="button" onClick={restartQuiz}>
-              Try again
+              {isReviewMode ? "Review again" : "Try again"}
             </button>
           </div>
         </section>
@@ -266,7 +382,7 @@ export default function HomePage() {
         <div>
           <p className="eyebrow">CodeLingo AI</p>
           <h1>{selectedQuiz.title}</h1>
-          <p className="subtitle">{selectedQuiz.subtitle}</p>
+          <p className="subtitle">{isReviewMode ? "Review saved wrong answers and clear them by answering correctly." : selectedQuiz.subtitle}</p>
         </div>
         <div className="score-panel" aria-label="Current score">
           <span>{xp}</span>
@@ -276,16 +392,18 @@ export default function HomePage() {
 
       <section className="lesson">
         <div className="category-toolbar">
-          <span>{selectedQuiz.categoryLabel}</span>
+          <span>{selectedQuiz.categoryLabel}{isReviewMode ? " review" : ""}</span>
           <button className="secondary-button compact-button" type="button" onClick={changeCategory}>
             Change category
           </button>
         </div>
         <ProgressBar
           answeredCount={submittedAnswers.length}
+          categoryName={isReviewMode ? selectedQuiz.categoryLabel + " Review" : selectedQuiz.categoryLabel}
           currentQuestionIndex={currentQuestionIndex}
           progressPercent={progressPercent}
           totalQuestions={totalQuestions}
+          xp={xp}
         />
         <QuizCard
           currentResult={currentResult}

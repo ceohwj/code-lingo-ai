@@ -32,6 +32,16 @@ Build an MVP that helps users learn Python, data analysis, and AI/ML through sho
 - Check failing tests
 - Suggest test cases
 
+### 6. Documentation Agent
+- Update DAILY_LOG.md
+- Keep PROJECT_STATUS.md current
+- Summarize completed work and issues
+
+### 7. Architecture Agent
+- Keep folder structure scalable
+- Prevent unnecessary complexity
+- Maintain reusable component structure
+
 ## Coding Rules
 - Keep components small and readable
 - Store quiz data separately from UI logic

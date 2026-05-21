@@ -29,6 +29,8 @@ test("all quizzes contain valid multiple-choice questions", () => {
       assert.equal(ids.has(question.id), false);
       ids.add(question.id);
       assert.ok(question.prompt.length > 0);
+      assert.equal(typeof question.difficulty, "string");
+      assert.ok(question.difficulty.length > 0);
       assert.equal(question.options.length, 4);
       assert.ok(question.options.every((option) => option.length > 0));
       assert.ok(question.correctOptionIndex >= 0);
