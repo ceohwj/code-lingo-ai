@@ -39,7 +39,8 @@ button {
 
 .hero,
 .lesson,
-.results {
+.results,
+.category-selector {
   width: min(100%, 920px);
   margin: 0 auto;
 }
@@ -116,6 +117,70 @@ h2 {
   align-self: start;
 }
 
+.category-selector {
+  align-self: center;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.category-card {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 9.5rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
+}
+
+.category-card:hover {
+  border-color: var(--brand);
+  background: #effaf6;
+  transform: translateY(-1px);
+}
+
+.category-card span {
+  color: var(--brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.category-card strong {
+  align-self: end;
+  font-size: 1.25rem;
+}
+
+.category-card small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.category-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  color: var(--brand-strong);
+  font-weight: 800;
+}
+
+.compact-button {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.8rem;
+}
+
 .lesson-topline {
   display: flex;
   justify-content: space-between;
@@ -159,6 +224,7 @@ h2 {
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.25rem;
+  margin-top: 1rem;
   padding: 0.75rem;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -387,6 +453,10 @@ h2 {
   color: var(--brand-strong);
 }
 
+.results-actions {
+  justify-content: center;
+}
+
 @media (max-width: 680px) {
   .app-shell {
     padding: 1rem;
@@ -429,7 +499,8 @@ h2 {
     max-width: none;
   }
 
-  .summary-grid {
+  .summary-grid,
+  .category-grid {
     grid-template-columns: 1fr;
   }
 }

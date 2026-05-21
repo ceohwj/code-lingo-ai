@@ -1,78 +1,8 @@
-export const pythonBasicsQuiz = {
-  id: "python-basics",
-  title: "Python Basics",
-  subtitle: "Build your first Python instincts, one tiny mission at a time.",
-  xpPerCorrectAnswer: 10,
-  questions: [
-    {
-      id: "py-001",
-      prompt: "Which symbol starts a comment in Python?",
-      options: ["//", "#", "<!--", "--"],
-      correctOptionIndex: 1,
-      explanation: "Python ignores everything after a # on the same line, so it is used for comments."
-    },
-    {
-      id: "py-002",
-      prompt: "What does print('Hello') do?",
-      options: ["Creates a variable", "Displays Hello", "Starts a loop", "Saves a file"],
-      correctOptionIndex: 1,
-      explanation: "The print function sends text or values to the screen."
-    },
-    {
-      id: "py-003",
-      prompt: "Which value is a string?",
-      options: ["42", "3.14", "'Python'", "True"],
-      correctOptionIndex: 2,
-      explanation: "Text wrapped in quotes is a string. Both single and double quotes work in Python."
-    },
-    {
-      id: "py-004",
-      prompt: "What is the result of 2 + 3 * 4?",
-      options: ["20", "14", "24", "9"],
-      correctOptionIndex: 1,
-      explanation: "Multiplication happens before addition, so 3 * 4 is 12, then 2 + 12 is 14."
-    },
-    {
-      id: "py-005",
-      prompt: "Which line creates a variable named score?",
-      options: ["score = 10", "let score = 10", "var score: 10", "score := 10;"],
-      correctOptionIndex: 0,
-      explanation: "Python creates variables with the assignment operator: name = value."
-    },
-    {
-      id: "py-006",
-      prompt: "Which type is used for True or False values?",
-      options: ["str", "int", "bool", "list"],
-      correctOptionIndex: 2,
-      explanation: "Boolean values use the bool type. The two boolean literals are True and False."
-    },
-    {
-      id: "py-007",
-      prompt: "What does len(['a', 'b', 'c']) return?",
-      options: ["2", "3", "abc", "An error"],
-      correctOptionIndex: 1,
-      explanation: "len returns the number of items in a collection. This list has three items."
-    },
-    {
-      id: "py-008",
-      prompt: "Which keyword starts a conditional branch?",
-      options: ["when", "if", "check", "case"],
-      correctOptionIndex: 1,
-      explanation: "Python uses if to run code only when a condition is true."
-    },
-    {
-      id: "py-009",
-      prompt: "Which loop is best for visiting every item in a list?",
-      options: ["for item in list:", "repeat list:", "each list:", "while list item:"],
-      correctOptionIndex: 0,
-      explanation: "A for loop can visit each item in a list using syntax like for item in items:."
-    },
-    {
-      id: "py-010",
-      prompt: "What does input() usually return?",
-      options: ["A number", "A string", "A boolean", "A list"],
-      correctOptionIndex: 1,
-      explanation: "input reads what the user types and returns it as a string."
-    }
-  ]
-};
+import aiBasicsQuiz from "./questions/ai.json" with { type: "json" };
+import bioinformaticsBasicsQuiz from "./questions/bioinformatics.json" with { type: "json" };
+import pythonBasicsQuiz from "./questions/python.json" with { type: "json" };
+import sqlBasicsQuiz from "./questions/sql.json" with { type: "json" };
+
+export { aiBasicsQuiz, bioinformaticsBasicsQuiz, pythonBasicsQuiz, sqlBasicsQuiz };
+
+export const quizzes = [pythonBasicsQuiz, sqlBasicsQuiz, aiBasicsQuiz, bioinformaticsBasicsQuiz];

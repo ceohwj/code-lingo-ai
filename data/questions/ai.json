@@ -1,0 +1,45 @@
+{
+  "id": "ai-basics",
+  "categoryId": "ai",
+  "categoryLabel": "AI",
+  "title": "AI Basics",
+  "subtitle": "Learn the core ideas behind models, data, and predictions.",
+  "xpPerCorrectAnswer": 10,
+  "questions": [
+    {
+      "id": "ai-001",
+      "prompt": "In supervised learning, what does the training data usually include?",
+      "options": ["Only unlabeled text", "Inputs and known target answers", "Only random numbers", "No examples"],
+      "correctOptionIndex": 1,
+      "explanation": "Supervised learning trains on examples where each input is paired with the target answer the model should learn to predict."
+    },
+    {
+      "id": "ai-002",
+      "prompt": "What is overfitting?",
+      "options": ["A model memorizes training data too closely", "A model has no parameters", "A dataset is stored twice", "A model runs faster"],
+      "correctOptionIndex": 0,
+      "explanation": "Overfitting happens when a model performs well on training data but fails to generalize to new examples."
+    },
+    {
+      "id": "ai-003",
+      "prompt": "Which metric is commonly used for classification accuracy?",
+      "options": ["Correct predictions divided by total predictions", "Training time in seconds", "File size in megabytes", "Number of columns only"],
+      "correctOptionIndex": 0,
+      "explanation": "Accuracy measures the share of predictions that match the true labels across all evaluated examples."
+    },
+    {
+      "id": "ai-004",
+      "prompt": "What is a feature in machine learning?",
+      "options": ["A payment plan", "An input variable used by a model", "A database backup", "A user account"],
+      "correctOptionIndex": 1,
+      "explanation": "Features are input variables, such as age, word count, or gene expression values, that help a model make predictions."
+    },
+    {
+      "id": "ai-005",
+      "prompt": "Why do we keep test data separate from training data?",
+      "options": ["To estimate performance on unseen examples", "To make the app prettier", "To delete labels", "To reduce monitor brightness"],
+      "correctOptionIndex": 0,
+      "explanation": "A separate test set helps estimate how well the model may perform on data it did not learn from directly."
+    }
+  ]
+}

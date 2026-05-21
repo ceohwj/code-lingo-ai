@@ -1,25 +1,41 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { pythonBasicsQuiz } from "../data/quizData.js";
+import { pythonBasicsQuiz, quizzes } from "../data/quizData.js";
 import { calculateXp, checkAnswer, getFeedback, getProgressPercent } from "../lib/quizLogic.js";
 
-test("Python basics quiz contains 10 valid multiple-choice questions", () => {
+test("quiz data contains the required categories", () => {
+  assert.deepEqual(
+    quizzes.map((quiz) => quiz.categoryLabel),
+    ["Python", "SQL", "AI", "Bioinformatics"]
+  );
+});
+
+test("all quizzes contain valid multiple-choice questions", () => {
   assert.equal(pythonBasicsQuiz.questions.length, 10);
 
   const ids = new Set();
 
-  for (const question of pythonBasicsQuiz.questions) {
-    assert.equal(typeof question.id, "string");
-    assert.equal(ids.has(question.id), false);
-    ids.add(question.id);
-    assert.ok(question.prompt.length > 0);
-    assert.equal(question.options.length, 4);
-    assert.ok(question.options.every((option) => option.length > 0));
-    assert.ok(question.correctOptionIndex >= 0);
-    assert.ok(question.correctOptionIndex < question.options.length);
-    assert.equal(typeof question.explanation, "string");
-    assert.ok(question.explanation.length > 20);
+  for (const quiz of quizzes) {
+    assert.equal(typeof quiz.id, "string");
+    assert.equal(typeof quiz.categoryId, "string");
+    assert.equal(typeof quiz.categoryLabel, "string");
+    assert.equal(typeof quiz.title, "string");
+    assert.equal(typeof quiz.subtitle, "string");
+    assert.ok(quiz.questions.length > 0);
+
+    for (const question of quiz.questions) {
+      assert.equal(typeof question.id, "string");
+      assert.equal(ids.has(question.id), false);
+      ids.add(question.id);
+      assert.ok(question.prompt.length > 0);
+      assert.equal(question.options.length, 4);
+      assert.ok(question.options.every((option) => option.length > 0));
+      assert.ok(question.correctOptionIndex >= 0);
+      assert.ok(question.correctOptionIndex < question.options.length);
+      assert.equal(typeof question.explanation, "string");
+      assert.ok(question.explanation.length > 20);
+    }
   }
 });
 

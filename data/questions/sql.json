@@ -1,0 +1,45 @@
+{
+  "id": "sql-basics",
+  "categoryId": "sql",
+  "categoryLabel": "SQL",
+  "title": "SQL Basics",
+  "subtitle": "Practice the query patterns behind everyday data work.",
+  "xpPerCorrectAnswer": 10,
+  "questions": [
+    {
+      "id": "sql-001",
+      "prompt": "Which SQL keyword selects columns from a table?",
+      "options": ["GET", "SELECT", "PICK", "SHOW COLUMNS"],
+      "correctOptionIndex": 1,
+      "explanation": "SELECT chooses the columns or expressions that should appear in the query result."
+    },
+    {
+      "id": "sql-002",
+      "prompt": "Which clause filters rows before they appear in the result?",
+      "options": ["WHERE", "ORDER BY", "GROUP BY", "LIMIT"],
+      "correctOptionIndex": 0,
+      "explanation": "WHERE keeps only rows that match a condition, such as price > 100 or status = 'active'."
+    },
+    {
+      "id": "sql-003",
+      "prompt": "What does ORDER BY usually control?",
+      "options": ["The table name", "The row sort order", "The database password", "The number of joins"],
+      "correctOptionIndex": 1,
+      "explanation": "ORDER BY sorts result rows by one or more columns, often with ASC or DESC direction."
+    },
+    {
+      "id": "sql-004",
+      "prompt": "Which aggregate function counts rows?",
+      "options": ["SUM()", "AVG()", "COUNT()", "ROUND()"],
+      "correctOptionIndex": 2,
+      "explanation": "COUNT() returns how many rows or non-null values match the query, depending on its argument."
+    },
+    {
+      "id": "sql-005",
+      "prompt": "Which join keeps all rows from the left table and matching rows from the right table?",
+      "options": ["INNER JOIN", "LEFT JOIN", "CROSS JOIN", "SELF JOIN"],
+      "correctOptionIndex": 1,
+      "explanation": "LEFT JOIN preserves every row from the left table, filling unmatched right-table values with NULL."
+    }
+  ]
+}

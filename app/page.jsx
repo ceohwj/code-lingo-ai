@@ -1,26 +1,169 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { pythonBasicsQuiz } from "../data/quizData";
-import { calculateXp, checkAnswer, getFeedback, getProgressPercent } from "../lib/quizLogic";
+import { CategorySelector } from "../components/CategorySelector";
+import { ProgressBar } from "../components/ProgressBar";
+import { QuizCard } from "../components/QuizCard";
+import { quizzes } from "../data/quizData";
+import { calculateXp, checkAnswer, getProgressPercent } from "../lib/quizLogic";
+
+const LEGACY_PYTHON_PROGRESS_KEY = "codelingo-ai-python-basics-progress";
+const SELECTED_CATEGORY_STORAGE_KEY = "codelingo-ai-selected-category";
+
+const progressStorageKeys = {
+  ai: "codelingo-ai-ai-basics-progress",
+  bioinformatics: "codelingo-ai-bioinformatics-basics-progress",
+  python: LEGACY_PYTHON_PROGRESS_KEY,
+  sql: "codelingo-ai-sql-basics-progress"
+};
+
+const quizByCategoryId = Object.fromEntries(quizzes.map((quiz) => [quiz.categoryId, quiz]));
+
+function getProgressStorageKey(categoryId) {
+  return progressStorageKeys[categoryId] ?? `codelingo-ai-${categoryId}-progress`;
+}
+
+function getInitialProgressState() {
+  return {
+    currentQuestionIndex: 0,
+    isSubmitted: false,
+    selectedOptionIndex: null,
+    submittedAnswers: []
+  };
+}
 
 export default function HomePage() {
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [submittedAnswers, setSubmittedAnswers] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isCategoryLoaded, setIsCategoryLoaded] = useState(false);
+  const [isProgressLoaded, setIsProgressLoaded] = useState(false);
 
-  const totalQuestions = pythonBasicsQuiz.questions.length;
-  const currentQuestion = pythonBasicsQuiz.questions[currentQuestionIndex];
+  const selectedQuiz = selectedCategoryId ? quizByCategoryId[selectedCategoryId] : null;
+  const totalQuestions = selectedQuiz?.questions.length ?? 0;
+  const currentQuestion = selectedQuiz?.questions[currentQuestionIndex];
   const correctCount = submittedAnswers.filter((answer) => answer.isCorrect).length;
-  const xp = calculateXp(correctCount, pythonBasicsQuiz.xpPerCorrectAnswer);
+  const xp = calculateXp(correctCount, selectedQuiz?.xpPerCorrectAnswer ?? 0);
   const progressPercent = getProgressPercent(submittedAnswers.length, totalQuestions);
-  const isComplete = currentQuestionIndex >= totalQuestions;
+  const isComplete = Boolean(selectedQuiz) && currentQuestionIndex >= totalQuestions;
 
   const currentResult = useMemo(() => {
     return submittedAnswers.find((answer) => answer.questionId === currentQuestion?.id);
   }, [currentQuestion?.id, submittedAnswers]);
+
+  useEffect(() => {
+    try {
+      const savedCategoryId = window.localStorage.getItem(SELECTED_CATEGORY_STORAGE_KEY);
+
+      if (savedCategoryId && quizByCategoryId[savedCategoryId]) {
+        setSelectedCategoryId(savedCategoryId);
+        return;
+      }
+
+      if (window.localStorage.getItem(LEGACY_PYTHON_PROGRESS_KEY)) {
+        setSelectedCategoryId("python");
+      }
+    } catch {
+      // Ignore storage failures so the category screen still works.
+    } finally {
+      setIsCategoryLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!selectedQuiz) {
+      setIsProgressLoaded(false);
+      return;
+    }
+
+    setIsProgressLoaded(false);
+
+    try {
+      window.localStorage.setItem(SELECTED_CATEGORY_STORAGE_KEY, selectedQuiz.categoryId);
+
+      const savedProgress = window.localStorage.getItem(getProgressStorageKey(selectedQuiz.categoryId));
+
+      if (!savedProgress) {
+        const cleanProgress = getInitialProgressState();
+        setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
+        setSubmittedAnswers(cleanProgress.submittedAnswers);
+        setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
+        setIsSubmitted(cleanProgress.isSubmitted);
+        return;
+      }
+
+      const parsedProgress = JSON.parse(savedProgress);
+      const savedQuestionIndex = Number(parsedProgress.currentQuestionIndex);
+      const savedCompletedQuestions = Array.isArray(parsedProgress.completedQuestions)
+        ? parsedProgress.completedQuestions
+        : [];
+      const savedSelectedOptionIndex = Number.isInteger(parsedProgress.selectedOptionIndex)
+        ? parsedProgress.selectedOptionIndex
+        : null;
+
+      const cleanProgress = getInitialProgressState();
+      setCurrentQuestionIndex(
+        savedQuestionIndex >= 0 && savedQuestionIndex <= selectedQuiz.questions.length
+          ? savedQuestionIndex
+          : cleanProgress.currentQuestionIndex
+      );
+      setSubmittedAnswers(savedCompletedQuestions);
+      setSelectedOptionIndex(savedSelectedOptionIndex);
+      setIsSubmitted(Boolean(parsedProgress.isSubmitted));
+    } catch {
+      const cleanProgress = getInitialProgressState();
+      setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
+      setSubmittedAnswers(cleanProgress.submittedAnswers);
+      setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
+      setIsSubmitted(cleanProgress.isSubmitted);
+    } finally {
+      setIsProgressLoaded(true);
+    }
+  }, [selectedQuiz]);
+
+  useEffect(() => {
+    if (!isProgressLoaded || !selectedQuiz) {
+      return;
+    }
+
+    try {
+      window.localStorage.setItem(
+        getProgressStorageKey(selectedQuiz.categoryId),
+        JSON.stringify({
+          categoryId: selectedQuiz.categoryId,
+          completedQuestions: submittedAnswers,
+          currentQuestionIndex,
+          isSubmitted,
+          selectedOptionIndex,
+          xp
+        })
+      );
+    } catch {
+      // Ignore storage failures so quiz interactions keep working.
+    }
+  }, [currentQuestionIndex, isProgressLoaded, isSubmitted, selectedOptionIndex, selectedQuiz, submittedAnswers, xp]);
+
+  function selectCategory(categoryId) {
+    if (!quizByCategoryId[categoryId]) {
+      return;
+    }
+
+    setSelectedCategoryId(categoryId);
+  }
+
+  function changeCategory() {
+    setSelectedCategoryId(null);
+    setIsProgressLoaded(false);
+
+    try {
+      window.localStorage.removeItem(SELECTED_CATEGORY_STORAGE_KEY);
+    } catch {
+      // Ignore storage failures so navigation still works.
+    }
+  }
 
   function submitAnswer() {
     if (selectedOptionIndex === null || !currentQuestion) {
@@ -53,6 +196,18 @@ export default function HomePage() {
     setIsSubmitted(false);
   }
 
+  if (!isCategoryLoaded) {
+    return null;
+  }
+
+  if (!selectedQuiz) {
+    return <CategorySelector categories={quizzes} onSelectCategory={selectCategory} />;
+  }
+
+  if (!isProgressLoaded) {
+    return null;
+  }
+
   if (isComplete) {
     return (
       <main className="app-shell">
@@ -60,7 +215,7 @@ export default function HomePage() {
           <p className="eyebrow">Mission complete</p>
           <h1>{xp} XP earned</h1>
           <p className="subtitle">
-            You answered {correctCount} of {totalQuestions} Python basics questions correctly.
+            You answered {correctCount} of {totalQuestions} {selectedQuiz.categoryLabel} questions correctly.
           </p>
           <div className="summary-grid">
             <ScoreStat value={`${getProgressPercent(correctCount, totalQuestions)}%`} label="Accuracy" />
@@ -68,7 +223,7 @@ export default function HomePage() {
             <ScoreStat value={correctCount} label="Correct" />
           </div>
           <div className="review-list" aria-label="Answer review">
-            {pythonBasicsQuiz.questions.map((question, index) => {
+            {selectedQuiz.questions.map((question, index) => {
               const answer = submittedAnswers.find((item) => item.questionId === question.id);
               const selectedAnswer = question.options[answer?.selectedOptionIndex];
               const correctAnswer = question.options[question.correctOptionIndex];
@@ -92,9 +247,14 @@ export default function HomePage() {
               );
             })}
           </div>
-          <button className="primary-button" type="button" onClick={restartQuiz}>
-            Try again
-          </button>
+          <div className="actions results-actions">
+            <button className="secondary-button" type="button" onClick={changeCategory}>
+              Change category
+            </button>
+            <button className="primary-button" type="button" onClick={restartQuiz}>
+              Try again
+            </button>
+          </div>
         </section>
       </main>
     );
@@ -105,8 +265,8 @@ export default function HomePage() {
       <section className="hero">
         <div>
           <p className="eyebrow">CodeLingo AI</p>
-          <h1>{pythonBasicsQuiz.title}</h1>
-          <p className="subtitle">{pythonBasicsQuiz.subtitle}</p>
+          <h1>{selectedQuiz.title}</h1>
+          <p className="subtitle">{selectedQuiz.subtitle}</p>
         </div>
         <div className="score-panel" aria-label="Current score">
           <span>{xp}</span>
@@ -115,81 +275,27 @@ export default function HomePage() {
       </section>
 
       <section className="lesson">
-        <div className="lesson-topline">
-          <span>
-            Question {currentQuestionIndex + 1} of {totalQuestions}
-          </span>
-          <span>{progressPercent}% complete</span>
+        <div className="category-toolbar">
+          <span>{selectedQuiz.categoryLabel}</span>
+          <button className="secondary-button compact-button" type="button" onClick={changeCategory}>
+            Change category
+          </button>
         </div>
-        <div className="progress-track" aria-label="Quiz progress">
-          <div className="progress-fill" style={{ width: `${progressPercent}%` }} />
-        </div>
-
-        <article className="question-panel">
-          <div className="checkpoint-strip" aria-label="Lesson progress">
-            <div className="checkpoint-copy">
-              <span>Lesson checkpoint</span>
-              <strong>
-                Question {currentQuestionIndex + 1}/{totalQuestions}
-              </strong>
-            </div>
-            <div className="checkpoint-dots" aria-hidden="true">
-              {Array.from({ length: totalQuestions }).map((_, index) => (
-                <span
-                  className={`checkpoint-dot${index < submittedAnswers.length ? " is-complete" : ""}${
-                    index === currentQuestionIndex ? " is-current" : ""
-                  }`}
-                  key={index}
-                />
-              ))}
-            </div>
-          </div>
-          <h2>{currentQuestion.prompt}</h2>
-          <div className="options" role="radiogroup" aria-label="Answer options">
-            {currentQuestion.options.map((option, index) => {
-              const isSelected = selectedOptionIndex === index;
-              const isCorrect = currentQuestion.correctOptionIndex === index;
-              const resultClass = isSubmitted && isCorrect ? " is-correct" : "";
-              const incorrectClass = isSubmitted && isSelected && !isCorrect ? " is-incorrect" : "";
-
-              return (
-                <button
-                  className={`option-button${isSelected ? " is-selected" : ""}${resultClass}${incorrectClass}`}
-                  type="button"
-                  role="radio"
-                  aria-checked={isSelected}
-                  disabled={isSubmitted}
-                  key={option}
-                  onClick={() => setSelectedOptionIndex(index)}
-                >
-                  <span className="option-letter">{String.fromCharCode(65 + index)}</span>
-                  <span>{option}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {isSubmitted ? (
-            <div className={`explanation ${currentResult?.isCorrect ? "success" : "warning"}`} role="status">
-              <strong>{getFeedback(Boolean(currentResult?.isCorrect))}</strong>
-              <p>{currentQuestion.explanation}</p>
-            </div>
-          ) : null}
-
-          <div className="actions">
-            <button className="secondary-button" type="button" onClick={restartQuiz}>
-              Restart
-            </button>
-            <button
-              className="primary-button"
-              type="button"
-              disabled={selectedOptionIndex === null}
-              onClick={isSubmitted ? goToNextQuestion : submitAnswer}
-            >
-              {isSubmitted ? "Continue" : "Check answer"}
-            </button>
-          </div>
-        </article>
+        <ProgressBar
+          answeredCount={submittedAnswers.length}
+          currentQuestionIndex={currentQuestionIndex}
+          progressPercent={progressPercent}
+          totalQuestions={totalQuestions}
+        />
+        <QuizCard
+          currentResult={currentResult}
+          isSubmitted={isSubmitted}
+          onRestart={restartQuiz}
+          onSelectOption={setSelectedOptionIndex}
+          onSubmitOrContinue={isSubmitted ? goToNextQuestion : submitAnswer}
+          question={currentQuestion}
+          selectedOptionIndex={selectedOptionIndex}
+        />
       </section>
     </main>
   );
