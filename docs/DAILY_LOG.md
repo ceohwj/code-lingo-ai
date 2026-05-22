@@ -704,3 +704,40 @@
 - Preserved existing quiz, review, XP, streak, daily goal, dashboard, achievement, and recommendation behavior.
 
 ---
+
+### 03:05 - Dashboard Information Hierarchy Refinement
+
+#### Today’s Goal
+- Review and refine the home/dashboard UI after adding category progress, achievements, recommended review, and weak-area insights.
+- Improve information hierarchy so today's goal, current streak, recommended review, weak areas, category progress, and achievements are easier to scan.
+- Preserve all existing quiz, review, XP, streak, daily goal, dashboard, achievement, recommendation, and weak-area behavior.
+
+#### Completed Work
+- Reordered the home dashboard into clearer visual groups.
+- Placed today's action-focused items near the top: daily goal, streak, recommended review, and weak areas.
+- Kept category progress and achievements visible below the action-focused dashboard area.
+- Added section headings for Learning focus and Learning paths.
+- Refined dashboard spacing, dividers, card weight, and mobile stacking.
+- Reused existing dashboard/category panel styles and did not add new features or external UI libraries.
+- Did not change business logic, localStorage structure, quiz state, review state, XP, streaks, daily goals, achievements, recommendations, or weak-area logic.
+- Updated PROJECT_STATUS.md and ROADMAP.md.
+
+#### Issues
+- Full browser-level regression across quiz, review, and dashboard flows is still pending.
+
+#### Verification
+- npm test: passed, 60/60 tests.
+- npm run build: passed.
+- Browser smoke check: passed for dashboard section order and key headings.
+
+#### Next Tasks
+- Manually verify the refined dashboard on a narrow mobile viewport.
+- Run a full browser-level regression for category selection, normal quiz completion, wrong-answer review, and dashboard return states.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Refined the home dashboard information hierarchy as a UI-only change.
+- Preserved existing quiz, review, XP, streak, daily goal, dashboard, achievement, recommendation, and weak-area behavior.
+
+---

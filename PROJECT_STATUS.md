@@ -57,6 +57,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Daily goal target defaults to 5 completed questions
 - Home category screen shows daily goal count, target, progress percentage, and completion state
 - Category dashboard helps users resume partially completed tracks
+- Home dashboard information hierarchy groups today's learning actions above category progress and achievements
 
 ### Architecture / Testing
 - Reusable QuizCard, ProgressBar, CategorySelector, and ExplanationCard components
@@ -77,16 +78,15 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Project structure stabilization
 - Daily reporting workflow
 - Multi-agent development setup
-- Browser-level regression verification for newly added dashboard and retention UI
+- Browser-level regression verification for full quiz and review flows
 
 ## Issues
-- Browser-level regression verification is still pending for the newest dashboard and retention UI.
-- The in-app browser blocked localhost navigation during the latest Codex smoke-check attempt.
+- Full browser-level regression across quiz, review, and dashboard flows is still pending.
 
 ## Local Verification
 - npm test passed locally
 - npm run build passed locally
-- Browser smoke check attempted, but localhost navigation was blocked by the in-app browser.
+- Browser smoke check confirmed the refined dashboard section order and key headings.
 - npm run dev started successfully locally
 - Category selection screen was confirmed
 - Python / SQL / AI / Bioinformatics buttons were confirmed
@@ -111,12 +111,11 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 [Codex Result]
 - Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
 - Completed agent review before implementation.
-- Implemented and verified a derived adaptive review recommendation queue from existing wrong-answer, difficulty, and category progress state.
-- Added derived weak-area insights from wrong-answer history, category progress, question difficulty, and adaptive review recommendation signals.
-- Added pure recommendation and weak-area insight logic in lib with hook orchestration for dashboard consumption.
-- Extracted wrong-answer history localStorage orchestration into a hook and kept repeated misses ordered as most recent.
-- Added Recommended Review and Weak Areas dashboard sections without mutating quiz, XP, streak, daily goal, achievements, recommendations, or category progress state.
-- Added focused tests for recommendations, weak-area insights, and wrong-answer recency ordering.
+- Refined the home dashboard UI after category progress, achievements, recommended review, and weak-area insights.
+- Grouped today's actionable learning items near the top: daily goal, streak, recommended review, and weak areas.
+- Moved category progress and achievements into lower-priority visual blocks while keeping them visible.
+- Improved section headings, spacing, and mobile stacking without changing business logic or localStorage data.
+- Browser smoke check confirmed the refined dashboard section order and key headings.
 - npm test passed, 60/60 tests.
 - npm run build passed.
 ~~~

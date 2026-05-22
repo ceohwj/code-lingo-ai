@@ -31,6 +31,7 @@ Completed:
 - [x] localStorage progress save and restore
 - [x] Category-specific progress storage
 - [x] Improved quiz progress summary
+- [x] Refined dashboard information hierarchy
 - [x] Mobile-friendly core layouts
 - [x] Initial and focused logic tests
 - [x] Project status and daily log workflow
