@@ -1,8 +1,7 @@
 # ROADMAP.md
 
 # Vision
-Build a coding learning platform that users continuously use daily,
-inspired by Duolingo-style learning loops and AI-assisted education.
+Build a coding learning platform that users continuously use daily, inspired by Duolingo-style learning loops and AI-assisted education.
 
 Core focus:
 - Learning effectiveness
@@ -23,18 +22,27 @@ Core Priorities:
 - Reliable progress saving
 - Beginner-friendly UX
 
-Features:
-- Fix build/test errors
-- Clean project structure
-- Improve quiz UI
-- Separate quiz data from UI logic
-- Add localStorage progress save
-- Improve mobile responsiveness
-- Add reusable quiz components
+Completed:
+- [x] Basic quiz screen
+- [x] Category selection before quiz start
+- [x] Reusable quiz components
+- [x] Separate quiz data from UI logic
+- [x] JSON question data structure
+- [x] localStorage progress save and restore
+- [x] Category-specific progress storage
+- [x] Improved quiz progress summary
+- [x] Mobile-friendly core layouts
+- [x] Initial and focused logic tests
+- [x] Project status and daily log workflow
+
+Next Priorities:
+- [ ] Browser-level regression checks for key quiz flows
+- [ ] Continue reducing page-level state complexity when safe
+- [ ] Keep verification notes current as the local environment changes
 
 Success Criteria:
 - Users can complete quizzes without bugs
-- Build/test consistently pass
+- Build/test consistently pass in a fully configured local environment
 - Codebase remains maintainable
 
 ---
@@ -48,20 +56,32 @@ Core Priorities:
 - User motivation
 - Habit formation
 
-Features:
-- XP system
-- Streak system
-- Difficulty levels
-- Topic categories
-- Daily quiz mode
-- Wrong-answer review mode
-- Explanation cards
-- Quiz progression system
+Completed:
+- [x] XP system
+- [x] Difficulty levels
+- [x] Topic categories
+- [x] Wrong-answer review mode
+- [x] Review recommendations
+- [x] Weak-area insights
+- [x] Explanation cards
+- [x] Optional common mistake helper text
+- [x] Quiz progression system
+- [x] Daily streak tracking
+- [x] Daily goal tracking
+- [x] Category progress dashboard
+
+Next Priorities:
+- [ ] Expand question coverage per category
+- [ ] Add concept tags to quiz content
+- [ ] Add hints to selected questions
+- [ ] Improve explanation quality and consistency
+- [ ] Add lightweight learning statistics dashboard
 
 Future Expansion:
 - Adaptive difficulty
 - Personalized review system
 - Spaced repetition
+- Daily quiz mode
 
 Success Criteria:
 - Users feel progression and motivation
@@ -80,19 +100,24 @@ Core Priorities:
 - Real-world examples
 
 Learning Tracks:
-- Python basics
-- Pandas
-- NumPy
-- SQL
-- Machine learning
-- XAI
-- Bio/healthcare data examples
+- [x] Python basics
+- [x] SQL basics
+- [x] AI basics
+- [x] Bioinformatics basics
+- [ ] Pandas
+- [ ] NumPy
+- [ ] Machine learning
+- [ ] XAI
+- [ ] Bio/healthcare data examples
 
 Content Improvements:
-- Difficulty-based quizzes
-- Explanation quality improvements
-- Real dataset examples
-- Practical mini challenges
+- [x] Difficulty-based quizzes
+- [x] Explanation support
+- [x] Optional common mistake support
+- [ ] Concept-tagged questions
+- [ ] Hint-supported questions
+- [ ] Real dataset examples
+- [ ] Practical mini challenges
 
 Success Criteria:
 - Users can learn progressively
@@ -110,18 +135,15 @@ Core Priorities:
 - Intelligent feedback
 - Adaptive learning support
 
-Features:
-- Wrong answer explanation
-- Personalized hints
-- Concept summaries
-- Review recommendations
-- AI-generated quizzes
-- Learning weakness analysis
-
-Future Expansion:
-- AI tutor chat
-- Personalized curriculum
-- Dynamic quiz generation
+Future Features:
+- [ ] Personalized wrong-answer explanations
+- [ ] Personalized hints
+- [ ] Concept summaries
+- [ ] AI-generated quizzes
+- [ ] Learning weakness analysis
+- [ ] AI tutor chat
+- [ ] Personalized curriculum
+- [ ] Dynamic quiz generation
 
 Success Criteria:
 - Users receive meaningful feedback
@@ -139,18 +161,20 @@ Core Priorities:
 - User retention
 - Motivation systems
 
-Features:
-- Achievement system
-- XP milestones
-- Weekly challenges
-- Learning statistics dashboard
-- Daily goals
-- Shareable progress cards
+Completed:
+- [x] Daily streaks
+- [x] Daily goals
+- [x] Category progress dashboard
+- [x] Achievement system
 
-Future Expansion:
-- Friend system
-- Leaderboards
-- Community challenges
+Future Features:
+- [ ] XP milestones
+- [ ] Weekly challenges
+- [ ] Learning statistics dashboard
+- [ ] Shareable progress cards
+- [ ] Friend system
+- [ ] Leaderboards
+- [ ] Community challenges
 
 Success Criteria:
 - Users return consistently
@@ -168,13 +192,13 @@ Core Priorities:
 - Database integration
 - Analytics infrastructure
 
-Features:
-- Backend API integration
-- Database migration
-- Authentication system
-- Cloud deployment
-- Learning analytics
-- Content management structure
+Future Features:
+- [ ] Backend API integration
+- [ ] Database migration
+- [ ] Authentication system
+- [ ] Cloud deployment
+- [ ] Learning analytics
+- [ ] Content management structure
 
 Success Criteria:
 - Architecture scales safely
@@ -192,15 +216,15 @@ Core Priorities:
 - Clear technical storytelling
 - Deployable product quality
 
-Features:
-- Improve README
-- Add screenshots
-- Add demo video/GIF
-- Write Velog development logs
-- Document architecture
-- Add deployment guide
-- Improve accessibility
-- Improve performance optimization
+Future Features:
+- [ ] Improve README
+- [ ] Add screenshots
+- [ ] Add demo video/GIF
+- [ ] Write Velog development logs
+- [ ] Document architecture
+- [ ] Add deployment guide
+- [ ] Improve accessibility
+- [ ] Improve performance optimization
 
 Success Criteria:
 - Strong GitHub portfolio project

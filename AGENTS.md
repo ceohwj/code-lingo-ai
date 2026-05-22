@@ -79,6 +79,11 @@ Each quiz should contain:
 - difficulty
 - xpReward
 
+Optional quiz schema fields:
+- commonMistake
+- conceptTag
+- hint
+
 Must Evaluate:
 - Is quiz difficulty balanced?
 - Are explanations educational?

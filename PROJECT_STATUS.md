@@ -1,69 +1,92 @@
 # PROJECT_STATUS.md
 
 ## Current Status
-Quiz MVP supports category selection, reusable quiz UI components, dedicated explanation cards, difficulty-based XP, daily streak tracking, daily goal tracking, improved progress summary UI, clearer wrong-answer review mode, JSON question files, and category-specific browser progress restore.
+CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, difficulty-based XP, retention tracking, a category progress dashboard, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
 
-## Done
-- Basic quiz screen
+## Completed Features
+
+### Quiz Core
+- Basic multiple-choice quiz screen
 - Python beginner quiz data
-- Answer check logic
-- Correct/incorrect feedback
-- Explanation display
-- XP system
-- Progress bar
-- Basic responsive UI
-- Initial tests
-- Build check
-- Learning checkpoint UI
-- Final review summary
-- localStorage progress save and restore
+- Python, SQL, AI, and Bioinformatics categories
 - Category selection before quiz start
 - Separate selected category storage
-- Reusable QuizCard, ProgressBar, and CategorySelector components
 - Question data organized under data/questions/*.json
-- Local verification for category flow, XP, refresh restore, and category-specific progress
-- Improved quiz progress summary after category selection
+- localStorage progress save and restore
+- Category-specific progress storage with legacy Python progress key compatibility
 - Selected category name shown in quiz progress area
 - Progress summary shows current question, total questions, progress percentage, and current XP
-- Wrong-answer review mode before quiz start
-- Incorrect answers saved separately by category
-- Review mode reuses QuizCard and ProgressBar without overwriting normal quiz progress
-- Question data includes difficulty metadata for future scaling
-- Review sessions keep a stable question list while saved wrong answers update
-- Category cards show clear wrong-answer counts
-- Disabled review buttons show a clearer no-review state
-- End-of-review summary shows reviewed, corrected, and remaining wrong answers
-- Review mode does not award XP or overwrite normal quiz progress
+- Category progress dashboard shows completed questions, total questions, completion percentage, earned XP, and status
+- Category progress states visually distinguish not started, in progress, and completed
+
+### Learning Feedback
+- Correct/incorrect answer checking
+- Immediate feedback messaging
+- Dedicated reusable ExplanationCard after each submitted answer
+- Explanation card shows correct answer, explanation, earned XP, and difficulty
+- Optional commonMistake helper text supported in quiz schema
 - Scalable easy / medium / hard difficulty support
 - Difficulty-based XP rewards separated in quiz logic
 - Current question difficulty and XP reward displayed in quiz UI
-- Versioned localStorage payload metadata added for future adaptive learning compatibility
-- Dedicated explanation card after each submitted answer
-- Explanation card shows correct answer, explanation, earned XP, and difficulty
-- Optional common mistake helper text supported in quiz schema
-- Explanation rendering is reusable through ExplanationCard
-- Daily streak logic added with local calendar day tracking
+- Learning checkpoint UI
+- Final quiz summary
+
+### Review System
+- Wrong-answer review mode before quiz start
+- Adaptive review recommendations derived from wrong answers, difficulty, and category progress
+- Recommended Review dashboard section prioritizes recent misses, harder misses, and low-progress categories
+- Weak Areas dashboard section derives concise insights from wrong answers, category progress, difficulty patterns, and adaptive review signals
+- Incorrect answers saved separately by category
+- Review mode reuses QuizCard and ProgressBar without overwriting normal quiz progress
+- Review sessions keep a stable question list while saved wrong answers update
+- Category cards show clear wrong-answer counts
+- Disabled review buttons show clearer no-review state
+- End-of-review summary shows reviewed, corrected, and remaining wrong answers
+- Review mode does not award XP or overwrite normal quiz progress
+- Review mode does not trigger streak or daily goal completion
+
+### Retention System
+- XP system
+- localStorage achievement tracking with unlock-once milestone state
+- Achievement summary on the home category screen with locked and unlocked states
+- Milestones for first quiz completed, first correct answer, 3-day streak, 10 correct answers, and category completion
+- Daily streak logic with local calendar day tracking
 - Home category screen shows current streak, today completed state, and best streak
 - Normal quiz completion marks daily streak once per day
-- Wrong-answer review mode does not trigger daily streak completion
-- Streak tests cover initial state, first completion, duplicate same-day completion, next-day continuation, missed-day reset, and invalid saved-state normalization
-- Daily goal logic tracks completed normal quiz questions by local calendar day
+- Daily goal tracking for completed normal quiz questions by local calendar day
 - Daily goal target defaults to 5 completed questions
 - Home category screen shows daily goal count, target, progress percentage, and completion state
-- Wrong-answer review mode does not count toward daily goal progress
-- Daily goal tests cover initial state, increments, completion, capped percentage, new-day reset, and invalid saved-state normalization
+- Category dashboard helps users resume partially completed tracks
+
+### Architecture / Testing
+- Reusable QuizCard, ProgressBar, CategorySelector, and ExplanationCard components
+- Quiz logic separated from UI logic in lib helpers
+- Streak and daily goal localStorage state management extracted into small reusable hooks
+- Category progress dashboard logic separated into pure helpers and a localStorage hook
+- Achievement logic centralized in pure lib helpers with React/localStorage orchestration in hooks
+- Adaptive review recommendation logic centralized in pure lib helpers with hook orchestration
+- Weak-area insight logic centralized in pure lib helpers with hook orchestration
+- Wrong-answer history localStorage orchestration extracted into a hook, with pure helpers for saved ID normalization and recency ordering
+- Versioned localStorage payload metadata added for future adaptive learning compatibility
+- Initial tests and focused logic tests for quiz data, difficulty XP, streaks, daily goals, category progress, achievements, wrong-answer history, adaptive review recommendations, and weak-area insights
+- npm test and npm run build pass in the current local Codex environment
+- Local verification previously confirmed category flow, XP, refresh restore, and category-specific progress behavior
+- README expanded to describe the scalable Duolingo-style platform MVP, architecture, persistence, workflow, testing, and future plans
 
 ## In Progress
 - Project structure stabilization
 - Daily reporting workflow
 - Multi-agent development setup
+- Browser-level regression verification for newly added dashboard and retention UI
 
 ## Issues
-- Codex environment cannot run Next build/dev because the local Next SWC binary fails code signature validation and wasm fallback packages are not installed.
-- npm is unavailable inside the Codex environment, so Codex used direct commands where possible.
+- Browser-level regression verification is still pending for the newest dashboard and retention UI.
+- The in-app browser blocked localhost navigation during the latest Codex smoke-check attempt.
 
 ## Local Verification
 - npm test passed locally
+- npm run build passed locally
+- Browser smoke check attempted, but localhost navigation was blocked by the in-app browser.
 - npm run dev started successfully locally
 - Category selection screen was confirmed
 - Python / SQL / AI / Bioinformatics buttons were confirmed
@@ -72,18 +95,28 @@ Quiz MVP supports category selection, reusable quiz UI components, dedicated exp
 - Progress persists after refresh
 - Category-specific progress is stored separately
 
+## Known Technical Debt
+
+- localStorage schema is growing as progress, streak, daily goal, review, and achievements expand.
+- Cross-feature dependencies are increasing between XP, streak, daily goal, category progress, and future achievements.
+- Date-based reset logic may need shared utility functions later.
+- app/page.jsx may still orchestrate too many learning systems.
+- No centralized analytics layer yet.
+- No backend sync or authentication yet.
+- achievement unlock conditions may become difficult to maintain as milestones increase
+
+
 ## Recent Codex Report
 ~~~txt
 [Codex Result]
 - Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
-- Completed the requested agent review before implementation and chose the MVP-friendly daily goal approach.
-- Added localStorage-only daily goal state under a dedicated versioned key.
-- Added pure daily goal logic for default target 5, local calendar day reset, progress percentage, completion state, and saved-state normalization.
-- Added focused daily goal tests for initial state, increments, target completion, capped progress, new-day reset, and invalid saved state.
-- Added a home/category screen daily goal summary showing completed questions today, target, percent, and completed/not completed state.
-- Connected daily goal progress only to normal quiz answer submission; wrong-answer review mode does not count.
-- npm test could not run in Codex because npm is unavailable.
-- node --test passed in Codex, 25/25 tests.
-- npm run build could not run in Codex because npm is unavailable.
-- Direct Next build failed in Codex because the environment cannot load the Next SWC binary.
+- Completed agent review before implementation.
+- Implemented and verified a derived adaptive review recommendation queue from existing wrong-answer, difficulty, and category progress state.
+- Added derived weak-area insights from wrong-answer history, category progress, question difficulty, and adaptive review recommendation signals.
+- Added pure recommendation and weak-area insight logic in lib with hook orchestration for dashboard consumption.
+- Extracted wrong-answer history localStorage orchestration into a hook and kept repeated misses ordered as most recent.
+- Added Recommended Review and Weak Areas dashboard sections without mutating quiz, XP, streak, daily goal, achievements, recommendations, or category progress state.
+- Added focused tests for recommendations, weak-area insights, and wrong-answer recency ordering.
+- npm test passed, 60/60 tests.
+- npm run build passed.
 ~~~

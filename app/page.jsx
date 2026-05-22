@@ -6,9 +6,14 @@ import { CategorySelector } from "../components/CategorySelector";
 import { ProgressBar } from "../components/ProgressBar";
 import { QuizCard } from "../components/QuizCard";
 import { quizzes } from "../data/quizData";
-import { DAILY_GOAL_STORAGE_KEY, addCompletedDailyGoalQuestions, getInitialDailyGoalState, normalizeDailyGoalState } from "../lib/dailyGoalLogic";
+import { useAchievementState } from "../hooks/useAchievementState";
+import { useAdaptiveReviewRecommendations } from "../hooks/useAdaptiveReviewRecommendations";
+import { useCategoryProgressSummaries } from "../hooks/useCategoryProgressSummaries";
+import { useDailyGoalState } from "../hooks/useDailyGoalState";
+import { useStreakState } from "../hooks/useStreakState";
+import { useWeakAreaInsights } from "../hooks/useWeakAreaInsights";
+import { useWrongAnswerHistory } from "../hooks/useWrongAnswerHistory";
 import { calculateDifficultyXp, checkAnswer, getDifficultyLabel, getProgressPercent, getQuestionDifficulty, getQuestionXp } from "../lib/quizLogic";
-import { STREAK_STORAGE_KEY, completeLearningDay, getInitialStreakState, getLocalDateKey, normalizeStreakState } from "../lib/streakLogic";
 
 const LEGACY_PYTHON_PROGRESS_KEY = "codelingo-ai-python-basics-progress";
 const SELECTED_CATEGORY_STORAGE_KEY = "codelingo-ai-selected-category";
@@ -28,10 +33,6 @@ function getProgressStorageKey(categoryId) {
   return progressStorageKeys[categoryId] ?? "codelingo-ai-" + categoryId + "-progress";
 }
 
-function getWrongAnswersStorageKey(categoryId) {
-  return "codelingo-ai-" + categoryId + "-wrong-answers";
-}
-
 function getInitialProgressState() {
   return {
     currentQuestionIndex: 0,
@@ -39,24 +40,6 @@ function getInitialProgressState() {
     selectedOptionIndex: null,
     submittedAnswers: []
   };
-}
-
-function getUniqueQuestionIds(questionIds) {
-  return [...new Set(questionIds.filter((questionId) => typeof questionId === "string"))];
-}
-
-function parseSavedWrongAnswerIds(savedWrongAnswers) {
-  const parsedWrongAnswers = JSON.parse(savedWrongAnswers);
-
-  if (Array.isArray(parsedWrongAnswers)) {
-    return getUniqueQuestionIds(parsedWrongAnswers);
-  }
-
-  if (Array.isArray(parsedWrongAnswers.questionIds)) {
-    return getUniqueQuestionIds(parsedWrongAnswers.questionIds);
-  }
-
-  return [];
 }
 
 export default function HomePage() {
@@ -68,12 +51,22 @@ export default function HomePage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCategoryLoaded, setIsCategoryLoaded] = useState(false);
   const [isProgressLoaded, setIsProgressLoaded] = useState(false);
-  const [wrongAnswerIdsByCategory, setWrongAnswerIdsByCategory] = useState({});
   const [reviewSessionQuestionIds, setReviewSessionQuestionIds] = useState([]);
-  const [streakState, setStreakState] = useState(() => getInitialStreakState());
-  const [isStreakLoaded, setIsStreakLoaded] = useState(false);
-  const [dailyGoalState, setDailyGoalState] = useState(() => getInitialDailyGoalState(getLocalDateKey()));
-  const [isDailyGoalLoaded, setIsDailyGoalLoaded] = useState(false);
+  const { categoryProgressByCategory, refreshCategoryProgressSummaries } = useCategoryProgressSummaries(quizzes);
+  const { completeTodayStreak, isStreakLoaded, streakState } = useStreakState();
+  const { addTodayDailyGoalQuestion, dailyGoalState, isDailyGoalLoaded } = useDailyGoalState();
+  const { isWrongAnswerHistoryLoaded, updateWrongAnswerIds, wrongAnswerCountsByCategory, wrongAnswerIdsByCategory } = useWrongAnswerHistory(quizzes);
+  const { reviewRecommendations } = useAdaptiveReviewRecommendations({
+    categories: quizzes,
+    categoryProgressByCategory,
+    wrongAnswerIdsByCategory
+  });
+  const { weakAreaInsights } = useWeakAreaInsights({
+    categories: quizzes,
+    categoryProgressByCategory,
+    reviewRecommendations,
+    wrongAnswerIdsByCategory
+  });
 
   const selectedQuiz = selectedCategoryId ? quizByCategoryId[selectedCategoryId] : null;
   const activeQuestions = useMemo(() => {
@@ -103,20 +96,23 @@ export default function HomePage() {
   const currentResult = useMemo(() => {
     return submittedAnswers.find((answer) => answer.questionId === currentQuestion?.id);
   }, [currentQuestion?.id, submittedAnswers]);
+  const achievementSession = useMemo(() => ({
+    categoryId: selectedQuiz?.categoryId ?? null,
+    isComplete,
+    isReviewMode,
+    submittedAnswers,
+    xp
+  }), [isComplete, isReviewMode, selectedQuiz?.categoryId, submittedAnswers, xp]);
+  const { achievements, isAchievementLoaded } = useAchievementState({
+    categories: quizzes,
+    categoryProgressByCategory,
+    currentSession: achievementSession,
+    dailyGoalState,
+    streakState
+  });
 
   useEffect(() => {
-    const nextWrongAnswerIdsByCategory = {};
-
     try {
-      for (const quiz of quizzes) {
-        const savedWrongAnswers = window.localStorage.getItem(getWrongAnswersStorageKey(quiz.categoryId));
-        nextWrongAnswerIdsByCategory[quiz.categoryId] = savedWrongAnswers
-          ? parseSavedWrongAnswerIds(savedWrongAnswers)
-          : [];
-      }
-
-      setWrongAnswerIdsByCategory(nextWrongAnswerIdsByCategory);
-
       const savedCategoryId = window.localStorage.getItem(SELECTED_CATEGORY_STORAGE_KEY);
 
       if (savedCategoryId && quizByCategoryId[savedCategoryId]) {
@@ -130,38 +126,12 @@ export default function HomePage() {
         setQuizMode(QUIZ_MODE);
       }
     } catch {
-      setWrongAnswerIdsByCategory(nextWrongAnswerIdsByCategory);
+      // Ignore storage failures and show the category selector.
     } finally {
       setIsCategoryLoaded(true);
     }
   }, []);
 
-  useEffect(() => {
-    try {
-      const savedStreakState = window.localStorage.getItem(STREAK_STORAGE_KEY);
-      setStreakState(savedStreakState
-        ? normalizeStreakState(JSON.parse(savedStreakState), getLocalDateKey())
-        : getInitialStreakState());
-    } catch {
-      setStreakState(getInitialStreakState());
-    } finally {
-      setIsStreakLoaded(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      const todayDateKey = getLocalDateKey();
-      const savedDailyGoalState = window.localStorage.getItem(DAILY_GOAL_STORAGE_KEY);
-      setDailyGoalState(savedDailyGoalState
-        ? normalizeDailyGoalState(JSON.parse(savedDailyGoalState), todayDateKey)
-        : getInitialDailyGoalState(todayDateKey));
-    } catch {
-      setDailyGoalState(getInitialDailyGoalState(getLocalDateKey()));
-    } finally {
-      setIsDailyGoalLoaded(true);
-    }
-  }, []);
 
   useEffect(() => {
     if (!selectedQuiz) {
@@ -249,39 +219,6 @@ export default function HomePage() {
     }
   }, [currentQuestionIndex, isProgressLoaded, isReviewMode, isSubmitted, selectedOptionIndex, selectedQuiz, submittedAnswers, xp]);
 
-  function updateWrongAnswerIds(categoryId, questionId, isCorrect) {
-    if (!questionId) {
-      return;
-    }
-
-    setWrongAnswerIdsByCategory((currentWrongAnswers) => {
-      const currentQuestionIds = currentWrongAnswers[categoryId] ?? [];
-      const nextQuestionIds = isCorrect
-        ? currentQuestionIds.filter((savedQuestionId) => savedQuestionId !== questionId)
-        : getUniqueQuestionIds([...currentQuestionIds, questionId]);
-      const nextWrongAnswers = {
-        ...currentWrongAnswers,
-        [categoryId]: nextQuestionIds
-      };
-
-      try {
-        window.localStorage.setItem(
-          getWrongAnswersStorageKey(categoryId),
-          JSON.stringify({
-            schemaVersion: 1,
-            categoryId,
-            questionIds: nextQuestionIds,
-            updatedAt: new Date().toISOString()
-          })
-        );
-      } catch {
-        // Ignore storage failures so answer flow keeps working.
-      }
-
-      return nextWrongAnswers;
-    });
-  }
-
   function startCategoryQuiz(categoryId) {
     if (!quizByCategoryId[categoryId]) {
       return;
@@ -303,6 +240,7 @@ export default function HomePage() {
   }
 
   function changeCategory() {
+    refreshCategoryProgressSummaries();
     setSelectedCategoryId(null);
     setQuizMode(QUIZ_MODE);
     setReviewSessionQuestionIds([]);
@@ -342,33 +280,6 @@ export default function HomePage() {
     setIsSubmitted(true);
   }
 
-  function addTodayDailyGoalQuestion() {
-    setDailyGoalState((currentDailyGoalState) => {
-      const nextDailyGoalState = addCompletedDailyGoalQuestions(currentDailyGoalState, 1, getLocalDateKey());
-
-      try {
-        window.localStorage.setItem(DAILY_GOAL_STORAGE_KEY, JSON.stringify(nextDailyGoalState));
-      } catch {
-        // Ignore storage failures so answer flow keeps working.
-      }
-
-      return nextDailyGoalState;
-    });
-  }
-
-  function completeTodayStreak() {
-    setStreakState((currentStreakState) => {
-      const nextStreakState = completeLearningDay(currentStreakState, getLocalDateKey());
-
-      try {
-        window.localStorage.setItem(STREAK_STORAGE_KEY, JSON.stringify(nextStreakState));
-      } catch {
-        // Ignore storage failures so quiz completion keeps working.
-      }
-
-      return nextStreakState;
-    });
-  }
 
   function goToNextQuestion() {
     const nextQuestionIndex = currentQuestionIndex + 1;
@@ -389,21 +300,23 @@ export default function HomePage() {
     setIsSubmitted(false);
   }
 
-  if (!isCategoryLoaded || !isStreakLoaded || !isDailyGoalLoaded) {
+  if (!isCategoryLoaded || !isStreakLoaded || !isDailyGoalLoaded || !isAchievementLoaded || !isWrongAnswerHistoryLoaded) {
     return null;
   }
 
   if (!selectedQuiz) {
     return (
       <CategorySelector
+        achievements={achievements}
         categories={quizzes}
+        categoryProgressByCategory={categoryProgressByCategory}
         dailyGoal={dailyGoalState}
         onReviewCategory={startWrongAnswerReview}
+        reviewRecommendations={reviewRecommendations}
         onSelectCategory={startCategoryQuiz}
         streak={streakState}
-        wrongAnswerCountsByCategory={Object.fromEntries(
-          Object.entries(wrongAnswerIdsByCategory).map(([categoryId, questionIds]) => [categoryId, questionIds.length])
-        )}
+        weakAreaInsights={weakAreaInsights}
+        wrongAnswerCountsByCategory={wrongAnswerCountsByCategory}
       />
     );
   }

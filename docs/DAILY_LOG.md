@@ -51,7 +51,7 @@
 - Kept the existing Python progress key compatible with restore flow.
 - Split quiz UI into QuizCard, ProgressBar, and CategorySelector components.
 - Moved question content into data/questions/*.json and kept a quiz data registry.
-- node --test passed in Codex.
+- node --test passed in Codex, 32/32 tests.
 - Direct Next build/dev failed in Codex because the environment cannot load the Next SWC binary and npm is unavailable.
 - Local verification confirmed npm test, npm run dev, category flow, XP, refresh persistence, and category-specific progress storage.
 ~~~
@@ -380,5 +380,327 @@
 - Kept daily goal logic separate from quiz UI components.
 - Preserved existing category progress, XP, streak, and wrong-answer review behavior.
 - Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
+
+### 23:27 - State Management Refactor Review
+
+#### Today’s Goal
+- Review app/page.jsx state management after review mode, difficulty, explanation cards, streak, and daily goal additions.
+- Identify whether the page is handling too many responsibilities.
+- Extract only safe and obvious reusable logic without changing user-facing behavior.
+
+#### Completed Work
+- Confirmed app/page.jsx had grown to 549 lines and was carrying quiz flow plus habit-tracking localStorage state responsibilities.
+- Chose a minimal low-risk refactor instead of a broad architecture rewrite.
+- Extracted streak localStorage loading, normalization, saving, and completion action into hooks/useStreakState.js.
+- Extracted daily goal localStorage loading, normalization, saving, and increment action into hooks/useDailyGoalState.js.
+- Updated app/page.jsx to consume the hooks while preserving existing quiz, review mode, XP, streak, and daily goal behavior.
+- Preserved all existing localStorage keys and saved data compatibility.
+- Did not change user-facing UI or add new features.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+- Codex terminal could not connect to http://127.0.0.1:3000, so browser verification should be done locally or in the in-app browser session that has the server available.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 25/25 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+- curl http://127.0.0.1:3000: failed from Codex terminal because no server was reachable there.
+
+#### Next Tasks
+- Consider extracting quiz progress storage only after more behavior accumulates or tests can cover that integration safely.
+- Verify the unchanged category, quiz, review, streak, and daily goal flows in the running browser.
+- Add browser-level regression checks once the local dev server is consistently reachable from Codex.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented a minimal hook extraction for streak and daily goal state management.
+- Kept the refactor low-risk and preserved current user-facing behavior and localStorage compatibility.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
+
+# 2026-05-22
+
+### 00:01 - Category Progress Dashboard
+
+#### Today’s Goal
+- Implement a simple category progress dashboard on the home/category screen.
+- Derive progress from existing quiz progress localStorage state.
+- Preserve quiz, review, streak, daily goal, XP, and saved data behavior.
+
+#### Completed Work
+- Added pure category progress logic in lib/categoryProgressLogic.js.
+- Preserved existing progress storage keys, including the legacy Python progress key.
+- Added per-category summary calculation for completed questions, total questions, completion percentage, earned XP, and status.
+- Added a category progress hook in hooks/useCategoryProgressSummaries.js to read existing localStorage progress data.
+- Updated CategorySelector to show progress summary on each category card.
+- Visually distinguished not started, in progress, and completed category states.
+- Added focused tests for storage key compatibility, empty progress, saved progress, duplicate or unknown question IDs, completed status, invalid saved progress, and status mapping.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+- Codex terminal could not connect to http://127.0.0.1:3000, so browser verification should be done in the running in-app browser session.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 32/32 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+- curl http://127.0.0.1:3000: failed from Codex terminal because no server was reachable there.
+
+#### Next Tasks
+- Verify the category progress dashboard visually in the in-app browser.
+- Complete or partially complete a category locally and confirm the card state updates after returning home.
+- Consider extracting quiz progress restore only after browser-level regression coverage is available.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented a minimal category progress dashboard derived from existing localStorage progress data.
+- Kept dashboard logic separate from quiz UI components and preserved all current behavior.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
+
+### 00:20 - Documentation Reorganization
+
+#### Today’s Goal
+- Refactor project documentation for long-term maintainability.
+- Group PROJECT_STATUS.md completed features into logical sections.
+- Mark completed roadmap items clearly and keep DAILY_LOG chronological.
+
+#### Completed Work
+- Reorganized PROJECT_STATUS.md completed work into Quiz Core, Learning Feedback, Review System, Retention System, and Architecture / Testing sections.
+- Updated ROADMAP.md with completed checklist items and clearer future priorities.
+- Added optional quiz schema fields commonMistake, conceptTag, and hint to AGENTS.md.
+- Preserved existing project information while reducing duplicated status detail.
+- Kept DAILY_LOG.md chronological and appended this entry only.
+- Did not modify application code or add new product features.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 32/32 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+- Documentation-only change: application code was not modified for this task.
+
+#### Next Tasks
+- Keep PROJECT_STATUS.md as a concise grouped status summary.
+- Keep ROADMAP.md focused on future milestones and completed checklist markers.
+- Continue appending chronological implementation notes to DAILY_LOG.md only.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Reorganized documentation without changing app behavior.
+- Updated PROJECT_STATUS.md, ROADMAP.md, AGENTS.md, and appended this DAILY_LOG section.
+
+---
+
+### 01:00 - README Portfolio Update
+
+#### Today’s Goal
+- Rewrite README.md to reflect the current scalable Duolingo-style coding learning platform MVP.
+- Include product overview, learning loop, current features, architecture, persistence, Codex workflow, testing approach, roadmap summary, and future plans.
+- Keep the README concise, professional, and technically accurate.
+
+#### Completed Work
+- Expanded README.md from a simple quiz MVP description into a portfolio-ready project overview.
+- Added a dedicated Current Features section covering difficulty-based XP, explanation cards, wrong-answer review mode, daily streak, daily goal, and category progress dashboard.
+- Added short architecture guidance for components, hooks, lib, and data separation.
+- Added localStorage persistence strategy and compatibility notes.
+- Added AI-assisted Codex workflow and testing approach sections.
+- Added a Future Plans section aligned with ROADMAP.md.
+- Did not modify application code for this task.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 32/32 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+- Documentation-only change: application code was not modified for this task.
+
+#### Next Tasks
+- Add screenshots or a short demo GIF to README after browser UI is visually verified.
+- Add deployment notes once the app is ready for public hosting.
+- Keep README aligned with PROJECT_STATUS.md and ROADMAP.md as features evolve.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Updated README.md for current product scope, architecture, workflow, testing, and roadmap presentation.
+- Updated PROJECT_STATUS.md and appended this DAILY_LOG section.
+
+---
+
+### 01:32 - Achievement Milestone System
+
+#### Today’s Goal
+- Implement a simple localStorage-based achievement and milestone system.
+- Derive unlock status from existing quiz progress, XP, streak, daily goal, and category progress state without mutating those systems.
+- Add a home/dashboard achievement summary and focused achievement tests.
+
+#### Completed Work
+- Added pure achievement definitions, normalization, fact derivation, unlock-once logic, and summary mapping in lib/achievementLogic.js.
+- Added useAchievementState to orchestrate achievement localStorage and React state separately from quiz UI components.
+- Added achievement summary UI to CategorySelector with clear locked and unlocked states.
+- Wired achievement facts to existing category progress, current quiz session, XP, daily goal, and streak state.
+- Preserved review-mode behavior so review answers do not unlock quiz completion or XP-based achievement context.
+- Added focused achievement logic tests for saved-state normalization, unlock milestones, review-mode isolation, and unlock-once behavior.
+- Updated PROJECT_STATUS.md and ROADMAP.md for the completed achievement system.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+- Browser-level UI verification was not available from the Codex terminal in this environment.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 41/41 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+
+#### Next Tasks
+- Visually verify achievement locked/unlocked states in the running app browser.
+- Consider adding achievement timestamps or lightweight toast feedback after the base UI is verified.
+- Continue watching app/page.jsx orchestration complexity as more retention systems are added.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented the achievement milestone system with pure logic, hook orchestration, UI summary, tests, and documentation updates.
+- Preserved existing quiz, review, XP, streak, daily goal, and category dashboard behavior.
+
+---
+
+### 01:43 - Adaptive Review Recommendations
+
+#### Today’s Goal
+- Implement a simple adaptive review queue system.
+- Derive review recommendations from existing wrong-answer, difficulty, and category progress state.
+- Keep recommendations as derived state only and preserve all existing quiz, review, XP, streak, daily goal, dashboard, and achievement behavior.
+
+#### Completed Work
+- Added pure adaptive review recommendation scoring in lib/adaptiveReviewLogic.js.
+- Added useAdaptiveReviewRecommendations for dashboard-facing recommendation orchestration.
+- Added a Recommended Review section to the home/category screen.
+- Prioritized saved misses using recent wrong-answer order, harder missed question difficulty, and lower category progress.
+- Reused the existing wrong-answer review start flow instead of adding new mutations or backend logic.
+- Added focused adaptive review logic tests for empty state, invalid IDs, difficulty priority, low-progress priority, recency focus, recommendation limits, and score behavior.
+- Updated PROJECT_STATUS.md and ROADMAP.md for the completed recommendation system.
+
+#### Issues
+- npm is unavailable inside the Codex environment, so npm test and npm run build cannot start here.
+- Direct Next build still fails in Codex because the Next SWC darwin/arm64 binary cannot be loaded and wasm fallback packages are not installed.
+- Browser-level UI verification was not available from the Codex terminal in this environment.
+
+#### Verification
+- npm test: failed to start in Codex because npm is unavailable.
+- node --test: passed in Codex, 48/48 tests.
+- npm run build: failed to start in Codex because npm is unavailable.
+- Direct Next build: attempted and failed due to the known Codex SWC environment limitation.
+
+#### Next Tasks
+- Visually verify the Recommended Review section in the running app browser.
+- Confirm a recommended category opens the existing wrong-answer review mode with the expected saved questions.
+- Consider adding conceptTag-based recommendations later after quiz content tags are expanded.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented adaptive review recommendations as derived state with pure logic, hook orchestration, UI summary, tests, and documentation updates.
+- Preserved existing quiz, review, XP, streak, daily goal, dashboard, and achievement behavior.
+
+---
+
+### 02:10 - Adaptive Review Verification and Hook Cleanup
+
+#### Today’s Goal
+- Verify the adaptive review recommendation system against the requested architecture constraints.
+- Keep recommendation logic derived from wrong-answer history, difficulty, and category progress.
+- Move adaptive-review-adjacent localStorage orchestration out of app/page.jsx where safe.
+
+#### Completed Work
+- Confirmed adaptive review recommendations are centralized in lib/adaptiveReviewLogic.js.
+- Confirmed useAdaptiveReviewRecommendations derives dashboard recommendations without mutating progress, XP, streak, daily goal, achievements, or category progress.
+- Added hooks/useWrongAnswerHistory.js for wrong-answer localStorage loading, saving, and count derivation.
+- Added lib/wrongAnswerHistoryLogic.js for pure saved-history normalization and recency ordering.
+- Updated repeated wrong answers to move to the most recent position so recommendation recency reflects current misses.
+- Kept the Recommended Review dashboard section connected to the existing wrong-answer review flow.
+- Added focused wrong-answer history tests for normalization, versioned payload parsing, corrected answer removal, and repeated-miss recency.
+- Updated PROJECT_STATUS.md and ROADMAP.md.
+
+#### Issues
+- Browser-level visual regression verification remains pending for the newest dashboard sections.
+- In-app browser localhost navigation was blocked during smoke-check attempts.
+
+#### Verification
+- npm test: passed, 52/52 tests.
+- npm run build: passed.
+- Browser smoke check: attempted against localhost, blocked by the in-app browser.
+
+#### Next Tasks
+- Visually verify the Recommended Review section in the browser.
+- Confirm a recommended review opens the expected category review session after a saved miss.
+- Consider conceptTag-based review recommendations later after quiz content tags are expanded.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Verified and tightened the adaptive review system with hook-based wrong-answer storage orchestration and pure recency helpers.
+- Preserved existing quiz, review, XP, streak, daily goal, dashboard, and achievement behavior.
+
+---
+
+### 02:35 - Weak Area Insights
+
+#### Today’s Goal
+- Implement a simple weak-area insight system.
+- Derive insights from existing wrong-answer history, category progress, question difficulty, and adaptive review recommendation data.
+- Keep insight generation as derived state only without mutating quiz, review, XP, streak, daily goal, achievements, recommendations, or category progress.
+
+#### Completed Work
+- Added pure weak-area insight generation in lib/weakAreaInsightLogic.js.
+- Added useWeakAreaInsights for dashboard-facing hook orchestration.
+- Added a small Weak Areas section to the home/category screen.
+- Detected low-progress categories, repeated wrong-answer categories, and repeated difficulty patterns.
+- Reused existing dashboard panel and grid UI patterns without adding external UI libraries.
+- Wired insights from existing category progress, wrong-answer history, and adaptive review recommendation state.
+- Added focused weak-area insight tests for empty state, low progress, not-started categories, repeated wrong answers, difficulty patterns, unknown IDs, recommendation priority support, and limits.
+- Updated PROJECT_STATUS.md and ROADMAP.md for the completed weak-area insight system.
+
+#### Issues
+- Browser-level visual regression verification remains pending for the newest dashboard sections.
+- In-app browser localhost navigation was previously blocked during smoke-check attempts.
+
+#### Verification
+- npm test: passed, 60/60 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Visually verify the Weak Areas section in the browser.
+- Confirm weak-area insight text stays readable after real wrong-answer data accumulates.
+- Consider conceptTag-based weak-area insights later after quiz content tags are expanded.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented weak-area insights as derived state with pure logic, hook orchestration, dashboard UI, tests, and documentation updates.
+- Preserved existing quiz, review, XP, streak, daily goal, dashboard, achievement, and recommendation behavior.
 
 ---
