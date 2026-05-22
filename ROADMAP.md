@@ -69,6 +69,7 @@ Completed:
 - [x] Concept focus analytics
 - [x] Explanation cards
 - [x] Optional common mistake helper text
+- [x] Optional beginner-friendly hints for selected questions
 - [x] Quiz progression system
 - [x] Daily streak tracking
 - [x] Daily goal tracking
@@ -76,8 +77,7 @@ Completed:
 
 Next Priorities:
 - [ ] Expand question coverage per category
-- [ ] Add hints to selected questions
-- [ ] Improve explanation quality and consistency
+- [ ] Continue improving explanation quality and consistency
 - [ ] Add lightweight learning statistics dashboard
 
 Future Expansion:
@@ -118,7 +118,7 @@ Content Improvements:
 - [x] Explanation support
 - [x] Optional common mistake support
 - [x] Concept-tagged questions
-- [ ] Hint-supported questions
+- [x] Hint-supported questions
 - [ ] Real dataset examples
 - [ ] Practical mini challenges
 

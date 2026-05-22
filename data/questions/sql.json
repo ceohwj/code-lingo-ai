@@ -38,6 +38,7 @@
         "where",
         "filtering"
       ],
+      "hint": "Filtering means keeping only rows that meet a condition.",
       "explanation": "WHERE keeps only rows that match a condition, such as price > 100 or status = 'active'.",
       "commonMistake": "Learners often reach for ORDER BY, but sorting happens after rows are filtered with WHERE."
     },
@@ -73,6 +74,7 @@
         "aggregates",
         "count"
       ],
+      "hint": "Aggregate functions summarize rows. This one answers 'how many?'.",
       "explanation": "COUNT() returns how many rows or non-null values match the query, depending on its argument."
     },
     {
@@ -90,7 +92,8 @@
         "joins",
         "left-join"
       ],
-      "explanation": "LEFT JOIN preserves every row from the left table, filling unmatched right-table values with NULL."
+      "hint": "The word left is the clue: keep every row from the table written on the left side.",
+      "explanation": "LEFT JOIN preserves every row from the left table. When a row has no match in the right table, SQL fills the right-table columns with NULL."
     }
   ],
   "difficultyLevels": [

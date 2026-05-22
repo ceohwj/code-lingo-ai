@@ -224,6 +224,12 @@ For every feature task:
 
 ---
 
+# Documentation Rules
+
+- Before writing timestamps in docs/DAILY_LOG.md, check the local time with `date` and use the verified local time.
+
+---
+
 # Current Tech Stack
 
 - Next.js

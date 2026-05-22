@@ -45,6 +45,7 @@ Documentation Rules:
 * Mark completed roadmap items clearly when implemented.
 * Avoid duplicating detailed daily logs inside PROJECT_STATUS.md.
 * Keep documentation readable and scalable as the project grows.
+* Before writing timestamps in docs/DAILY_LOG.md, check the local time with `date` and use the verified local time.
 
 After finishing work:
 * Update PROJECT_STATUS.md

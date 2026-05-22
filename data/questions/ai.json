@@ -21,6 +21,7 @@
         "supervised-learning",
         "training-data"
       ],
+      "hint": "Supervised learning means the model gets examples with the answer already known.",
       "explanation": "Supervised learning trains on examples where each input is paired with the target answer the model should learn to predict."
     },
     {
@@ -38,7 +39,8 @@
         "overfitting",
         "generalization"
       ],
-      "explanation": "Overfitting happens when a model performs well on training data but fails to generalize to new examples.",
+      "hint": "Think about a model that studies the practice set so closely that it struggles on new examples.",
+      "explanation": "Overfitting happens when a model learns the training data too closely. It may score well on practice examples but fail to generalize to new examples.",
       "commonMistake": "Overfitting is often confused with high accuracy, but the problem is poor performance on new unseen data."
     },
     {
@@ -73,6 +75,7 @@
         "features",
         "model-inputs"
       ],
+      "hint": "Features are the pieces of information a model reads before making a prediction.",
       "explanation": "Features are input variables, such as age, word count, or gene expression values, that help a model make predictions."
     },
     {

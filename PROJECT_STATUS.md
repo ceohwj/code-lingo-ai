@@ -13,6 +13,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Separate selected category storage
 - Question data organized under data/questions/*.json
 - Lightweight conceptTags metadata added across quiz questions, with multiple tags supported per question
+- Optional beginner-friendly hints added to selected concept-tagged quiz questions
 - localStorage progress save and restore
 - Category-specific progress storage with legacy Python progress key compatibility
 - Selected category name shown in quiz progress area
@@ -27,6 +28,8 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Dedicated reusable ExplanationCard after each submitted answer
 - Explanation card shows correct answer, explanation, earned XP, and difficulty
 - Optional commonMistake helper text supported in quiz schema
+- Optional hint text is displayed before answering when available and does not affect scoring
+- Selected explanations refined for clearer beginner learning feedback
 - Scalable easy / medium / hard difficulty support
 - Difficulty-based XP rewards separated in quiz logic
 - Session XP is separated from saved category total XP
@@ -75,7 +78,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Concept analytics logic centralized in pure lib helpers with hook orchestration
 - Wrong-answer history localStorage orchestration extracted into a hook, with pure helpers for saved ID normalization and recency ordering
 - Versioned localStorage payload metadata added for future adaptive learning compatibility
-- Initial tests and focused logic tests for quiz data, difficulty XP, quiz retry XP persistence, streaks, daily goals, category progress, achievements, wrong-answer history, adaptive review recommendations, weak-area insights, and concept analytics
+- Initial tests and focused logic tests for quiz data, hint support, difficulty XP, quiz retry XP persistence, streaks, daily goals, category progress, achievements, wrong-answer history, adaptive review recommendations, weak-area insights, and concept analytics
 - npm test and npm run build pass in the current local Codex environment
 - Local verification previously confirmed category flow, XP, refresh restore, and category-specific progress behavior
 - README expanded to describe the scalable Duolingo-style platform MVP, architecture, persistence, workflow, testing, and future plans
@@ -118,13 +121,12 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 [Codex Result]
 - Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
 - Completed agent review before implementation.
-- Fixed the Try again XP reset bug by separating session XP from saved category total XP.
-- Added pure quiz progress merge/persistence helpers in lib.
-- Updated quiz retry so it resets only current-session UI state and preserves saved completed questions, category progress, daily goal, streak, achievements, recommendations, weak areas, and concept analytics.
-- Displayed session XP and total XP separately in the quiz progress and completion UI.
-- Kept wrong-answer review mode at 0 XP.
-- Added focused retry and XP persistence tests.
-- npm test passed, 76/76 tests.
+- Added optional beginner-friendly hints to selected concept-tagged quiz questions.
+- Added pure hint normalization support in quiz logic.
+- Displayed hints in the quiz UI only when available, without changing scoring, XP, progress, retry, review, streak, daily goal, achievements, recommendations, weak areas, or concept analytics behavior.
+- Refined selected explanations for clearer beginner learning feedback.
+- Added focused tests for optional hint schema and hint normalization.
+- Added the verified-local-time DAILY_LOG timestamp rule to AGENTS.md.
+- npm test passed, 78/78 tests.
 - npm run build passed.
-- Browser smoke check was attempted but could not complete in Codex because the local dev server/browser navigation was unavailable.
 ~~~

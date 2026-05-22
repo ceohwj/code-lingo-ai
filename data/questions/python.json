@@ -56,6 +56,7 @@
         "strings",
         "data-types"
       ],
+      "hint": "Look for the option wrapped in quote marks. Quotes usually signal text in Python.",
       "explanation": "Text wrapped in quotes is a string. Both single and double quotes work in Python."
     },
     {
@@ -91,7 +92,8 @@
         "variables",
         "assignment"
       ],
-      "explanation": "Python creates variables with the assignment operator: name = value."
+      "hint": "Python assignment usually reads like name equals value, without let or var.",
+      "explanation": "Python creates variables with the assignment operator: name = value. The variable name goes on the left, and the value being stored goes on the right."
     },
     {
       "difficulty": "medium",
@@ -159,6 +161,7 @@
         "loops",
         "lists"
       ],
+      "hint": "For a list, think about the loop form that names one item at a time.",
       "explanation": "A for loop can visit each item in a list using syntax like for item in items:."
     },
     {

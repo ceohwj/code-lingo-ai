@@ -1,5 +1,6 @@
 "use client";
 
+import { getQuestionHint } from "../lib/quizLogic";
 import { ExplanationCard } from "./ExplanationCard";
 
 export function QuizCard({
@@ -15,6 +16,7 @@ export function QuizCard({
 }) {
   const correctAnswer = question.options[question.correctOptionIndex];
   const earnedXp = currentResult?.isCorrect ? currentResult.xpAwarded ?? xpReward : 0;
+  const hint = getQuestionHint(question);
 
   return (
     <article className="question-panel">
@@ -23,6 +25,12 @@ export function QuizCard({
         <span>{xpReward} XP</span>
       </div>
       <h2>{question.prompt}</h2>
+      {hint ? (
+        <div className="hint-panel" aria-label="Question hint">
+          <strong>Hint</strong>
+          <p>{hint}</p>
+        </div>
+      ) : null}
       <div className="options" role="radiogroup" aria-label="Answer options">
         {question.options.map((option, index) => {
           const isSelected = selectedOptionIndex === index;

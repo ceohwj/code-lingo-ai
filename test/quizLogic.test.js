@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { pythonBasicsQuiz, quizzes } from "../data/quizData.js";
-import { DEFAULT_XP_BY_DIFFICULTY, SUPPORTED_DIFFICULTIES, calculateDifficultyXp, calculateXp, checkAnswer, getFeedback, getProgressPercent, getQuestionXp } from "../lib/quizLogic.js";
+import { DEFAULT_XP_BY_DIFFICULTY, SUPPORTED_DIFFICULTIES, calculateDifficultyXp, calculateXp, checkAnswer, getFeedback, getProgressPercent, getQuestionHint, getQuestionXp } from "../lib/quizLogic.js";
 
 test("quiz data contains the required categories", () => {
   assert.deepEqual(
@@ -46,12 +46,23 @@ test("all quizzes contain valid multiple-choice questions", () => {
         assert.equal(typeof question.commonMistake, "string");
         assert.ok(question.commonMistake.length > 20);
       }
+      if (question.hint !== undefined) {
+        assert.equal(typeof question.hint, "string");
+        assert.ok(question.hint.length > 20);
+      }
     }
   }
 });
 
 test("at least one question includes optional common mistake helper text", () => {
   assert.ok(quizzes.some((quiz) => quiz.questions.some((question) => question.commonMistake)));
+});
+
+test("selected quiz questions include optional beginner-friendly hints", () => {
+  const hintedQuestions = quizzes.flatMap((quiz) => quiz.questions).filter((question) => question.hint);
+
+  assert.ok(hintedQuestions.length >= 8);
+  assert.ok(hintedQuestions.every((question) => getQuestionHint(question).length > 20));
 });
 
 test("quiz content includes easy medium and hard questions", () => {
@@ -109,6 +120,13 @@ test("difficulty XP totals only correct answers", () => {
   ];
 
   assert.equal(calculateDifficultyXp(answers, questions), 35);
+});
+
+test("question hints are optional and normalized", () => {
+  assert.equal(getQuestionHint({ hint: "  Think about rows.  " }), "Think about rows.");
+  assert.equal(getQuestionHint({ hint: "" }), "");
+  assert.equal(getQuestionHint({}), "");
+  assert.equal(getQuestionHint({ hint: ["not", "valid"] }), "");
 });
 
 test("progress percentage is rounded and safe for empty quizzes", () => {

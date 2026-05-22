@@ -905,6 +905,27 @@ h2 {
   gap: 0.8rem;
 }
 
+.hint-panel {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(242, 184, 75, 0.28);
+  border-radius: 8px;
+  background: #fff9e8;
+}
+
+.hint-panel strong {
+  color: var(--brand-strong);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.hint-panel p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .option-button {
   display: grid;
   grid-template-columns: 2.25rem 1fr;

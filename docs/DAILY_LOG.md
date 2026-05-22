@@ -782,7 +782,7 @@
 
 ---
 
-### 04:20 - Retry XP Persistence Fix
+### 11:09 KST - Retry XP Persistence Fix
 
 #### Today’s Goal
 - Fix the bug where clicking Try again after completing a quiz reset accumulated XP.
@@ -818,5 +818,44 @@
 - Fixed Try again so it resets only current-session state and does not overwrite saved category XP with zero.
 - Preserved existing quiz, review, XP, streak, daily goal, dashboard, achievement, recommendation, weak-area, and concept analytics behavior.
 - Added focused pure-logic tests and verified npm test and npm run build.
+
+---
+
+### 11:15 KST - Hint and Explanation Quality Improvement
+
+#### Today’s Goal
+- Improve hint and explanation quality using the existing conceptTag structure.
+- Add optional beginner-friendly hints to selected quiz questions.
+- Display hints only when available without changing scoring or learning state behavior.
+
+#### Completed Work
+- Added optional hint text to selected Python, SQL, AI, and Bioinformatics questions.
+- Used existing conceptTags to keep hints tied to concepts such as strings, assignment, joins, overfitting, FASTA, and base pairing.
+- Added getQuestionHint in lib/quizLogic.js for pure hint normalization.
+- Displayed a small hint panel in QuizCard only when a question has a valid hint.
+- Refined selected explanations to be clearer for beginners.
+- Kept hints non-blocking and disconnected from scoring, XP, progress, retry, review, streak, daily goal, achievements, recommendations, weak areas, and concept analytics.
+- Added focused tests for optional hint schema and hint normalization.
+- Added the verified-local-time DAILY_LOG timestamp rule to AGENTS.md.
+- Updated PROJECT_STATUS.md and ROADMAP.md.
+
+#### Issues
+- Full browser-level regression across quiz, review, retry, dashboard, and hint display flows is still pending.
+- Direct JSX syntax checking with node --check is not supported for .jsx files, so UI validation was covered by npm run build.
+
+#### Verification
+- npm test: passed, 78/78 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Manually verify hint display in the browser for one hinted question and one non-hinted question.
+- Continue improving explanation quality as more questions are added.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Completed agent review before implementation.
+- Added MVP-friendly optional hint support with pure normalization, selected quiz data updates, UI rendering, tests, and documentation.
+- Preserved existing quiz, XP, progress, retry, review, streak, daily goal, achievements, recommendations, weak-area, and concept analytics behavior.
 
 ---
