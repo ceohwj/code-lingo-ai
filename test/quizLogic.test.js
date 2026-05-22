@@ -39,6 +39,9 @@ test("all quizzes contain valid multiple-choice questions", () => {
       assert.ok(question.correctOptionIndex < question.options.length);
       assert.equal(typeof question.explanation, "string");
       assert.ok(question.explanation.length > 20);
+      assert.ok(Array.isArray(question.conceptTags));
+      assert.ok(question.conceptTags.length > 0);
+      assert.ok(question.conceptTags.every((conceptTag) => typeof conceptTag === "string" && conceptTag.length > 0));
       if (question.commonMistake !== undefined) {
         assert.equal(typeof question.commonMistake, "string");
         assert.ok(question.commonMistake.length > 20);
@@ -55,6 +58,15 @@ test("quiz content includes easy medium and hard questions", () => {
   const difficulties = new Set(quizzes.flatMap((quiz) => quiz.questions.map((question) => question.difficulty)));
 
   assert.deepEqual([...difficulties].sort(), [...SUPPORTED_DIFFICULTIES].sort());
+});
+
+test("quiz content includes lightweight concept tags", () => {
+  const conceptTags = new Set(quizzes.flatMap((quiz) => quiz.questions.flatMap((question) => question.conceptTags)));
+
+  assert.ok(conceptTags.has("loops"));
+  assert.ok(conceptTags.has("joins"));
+  assert.ok(conceptTags.has("overfitting"));
+  assert.ok(conceptTags.has("sequence-alignment"));
 });
 
 test("checkAnswer returns true for the correct option", () => {

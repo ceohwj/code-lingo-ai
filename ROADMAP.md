@@ -31,6 +31,7 @@ Completed:
 - [x] localStorage progress save and restore
 - [x] Category-specific progress storage
 - [x] Improved quiz progress summary
+- [x] Retry preserves saved category XP and completed-question progress
 - [x] Refined dashboard information hierarchy
 - [x] Mobile-friendly core layouts
 - [x] Initial and focused logic tests
@@ -38,6 +39,7 @@ Completed:
 
 Next Priorities:
 - [ ] Browser-level regression checks for key quiz flows
+- [ ] Browser-level retry check for session XP versus total XP behavior
 - [ ] Continue reducing page-level state complexity when safe
 - [ ] Keep verification notes current as the local environment changes
 
@@ -64,6 +66,7 @@ Completed:
 - [x] Wrong-answer review mode
 - [x] Review recommendations
 - [x] Weak-area insights
+- [x] Concept focus analytics
 - [x] Explanation cards
 - [x] Optional common mistake helper text
 - [x] Quiz progression system
@@ -73,7 +76,6 @@ Completed:
 
 Next Priorities:
 - [ ] Expand question coverage per category
-- [ ] Add concept tags to quiz content
 - [ ] Add hints to selected questions
 - [ ] Improve explanation quality and consistency
 - [ ] Add lightweight learning statistics dashboard
@@ -115,7 +117,7 @@ Content Improvements:
 - [x] Difficulty-based quizzes
 - [x] Explanation support
 - [x] Optional common mistake support
-- [ ] Concept-tagged questions
+- [x] Concept-tagged questions
 - [ ] Hint-supported questions
 - [ ] Real dataset examples
 - [ ] Practical mini challenges

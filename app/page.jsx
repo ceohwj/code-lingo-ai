@@ -9,10 +9,12 @@ import { quizzes } from "../data/quizData";
 import { useAchievementState } from "../hooks/useAchievementState";
 import { useAdaptiveReviewRecommendations } from "../hooks/useAdaptiveReviewRecommendations";
 import { useCategoryProgressSummaries } from "../hooks/useCategoryProgressSummaries";
+import { useConceptFocusInsights } from "../hooks/useConceptFocusInsights";
 import { useDailyGoalState } from "../hooks/useDailyGoalState";
 import { useStreakState } from "../hooks/useStreakState";
 import { useWeakAreaInsights } from "../hooks/useWeakAreaInsights";
 import { useWrongAnswerHistory } from "../hooks/useWrongAnswerHistory";
+import { getPersistedQuizProgress, getQuestionIdSet, mergeCompletedAnswers } from "../lib/quizProgressLogic";
 import { calculateDifficultyXp, checkAnswer, getDifficultyLabel, getProgressPercent, getQuestionDifficulty, getQuestionXp } from "../lib/quizLogic";
 
 const LEGACY_PYTHON_PROGRESS_KEY = "codelingo-ai-python-basics-progress";
@@ -48,6 +50,9 @@ export default function HomePage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
   const [submittedAnswers, setSubmittedAnswers] = useState([]);
+  const [savedCompletedAnswers, setSavedCompletedAnswers] = useState([]);
+  const [savedTotalXp, setSavedTotalXp] = useState(0);
+  const [sessionBaselineQuestionIds, setSessionBaselineQuestionIds] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCategoryLoaded, setIsCategoryLoaded] = useState(false);
   const [isProgressLoaded, setIsProgressLoaded] = useState(false);
@@ -65,6 +70,12 @@ export default function HomePage() {
     categories: quizzes,
     categoryProgressByCategory,
     reviewRecommendations,
+    wrongAnswerIdsByCategory
+  });
+  const { conceptFocusInsights } = useConceptFocusInsights({
+    categories: quizzes,
+    reviewRecommendations,
+    weakAreaInsights,
     wrongAnswerIdsByCategory
   });
 
@@ -88,7 +99,25 @@ export default function HomePage() {
   const currentDifficulty = getQuestionDifficulty(currentQuestion);
   const currentDifficultyLabel = getDifficultyLabel(currentDifficulty);
   const currentQuestionXp = getQuestionXp(currentQuestion, selectedQuiz?.xpByDifficulty);
-  const xp = isReviewMode ? 0 : calculateDifficultyXp(submittedAnswers, selectedQuiz?.questions ?? [], selectedQuiz?.xpByDifficulty);
+  const sessionXp = isReviewMode ? 0 : calculateDifficultyXp(submittedAnswers, selectedQuiz?.questions ?? [], selectedQuiz?.xpByDifficulty);
+  const persistedProgress = useMemo(() => {
+    if (!selectedQuiz || isReviewMode) {
+      return {
+        completedQuestions: savedCompletedAnswers,
+        totalXp: savedTotalXp
+      };
+    }
+
+    return getPersistedQuizProgress({
+      questions: selectedQuiz.questions,
+      savedCompletedAnswers,
+      savedTotalXp,
+      sessionAnswers: submittedAnswers,
+      sessionBaselineQuestionIds,
+      xpByDifficulty: selectedQuiz.xpByDifficulty
+    });
+  }, [isReviewMode, savedCompletedAnswers, savedTotalXp, selectedQuiz, sessionBaselineQuestionIds, submittedAnswers]);
+  const totalXp = isReviewMode ? savedTotalXp : persistedProgress.totalXp;
   const progressPercent = getProgressPercent(submittedAnswers.length, totalQuestions);
   const remainingWrongAnswerCount = selectedCategoryId ? wrongAnswerIdsByCategory[selectedCategoryId]?.length ?? 0 : 0;
   const isComplete = Boolean(selectedQuiz) && currentQuestionIndex >= totalQuestions;
@@ -101,8 +130,8 @@ export default function HomePage() {
     isComplete,
     isReviewMode,
     submittedAnswers,
-    xp
-  }), [isComplete, isReviewMode, selectedQuiz?.categoryId, submittedAnswers, xp]);
+    xp: sessionXp
+  }), [isComplete, isReviewMode, selectedQuiz?.categoryId, sessionXp, submittedAnswers]);
   const { achievements, isAchievementLoaded } = useAchievementState({
     categories: quizzes,
     categoryProgressByCategory,
@@ -145,6 +174,7 @@ export default function HomePage() {
       const cleanProgress = getInitialProgressState();
       setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
       setSubmittedAnswers(cleanProgress.submittedAnswers);
+      setSessionBaselineQuestionIds([]);
       setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
       setIsSubmitted(cleanProgress.isSubmitted);
       setIsProgressLoaded(true);
@@ -160,6 +190,9 @@ export default function HomePage() {
         const cleanProgress = getInitialProgressState();
         setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
         setSubmittedAnswers(cleanProgress.submittedAnswers);
+        setSavedCompletedAnswers([]);
+        setSavedTotalXp(0);
+        setSessionBaselineQuestionIds([]);
         setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
         setIsSubmitted(cleanProgress.isSubmitted);
         return;
@@ -170,6 +203,9 @@ export default function HomePage() {
       const savedCompletedQuestions = Array.isArray(parsedProgress.completedQuestions)
         ? parsedProgress.completedQuestions
         : [];
+      const savedXp = Number.isFinite(parsedProgress.xp)
+        ? parsedProgress.xp
+        : calculateDifficultyXp(savedCompletedQuestions, selectedQuiz.questions, selectedQuiz.xpByDifficulty);
       const savedSelectedOptionIndex = Number.isInteger(parsedProgress.selectedOptionIndex)
         ? parsedProgress.selectedOptionIndex
         : null;
@@ -181,12 +217,18 @@ export default function HomePage() {
           : cleanProgress.currentQuestionIndex
       );
       setSubmittedAnswers(savedCompletedQuestions);
+      setSavedCompletedAnswers(savedCompletedQuestions);
+      setSavedTotalXp(savedXp);
+      setSessionBaselineQuestionIds([...getQuestionIdSet(savedCompletedQuestions)]);
       setSelectedOptionIndex(savedSelectedOptionIndex);
       setIsSubmitted(Boolean(parsedProgress.isSubmitted));
     } catch {
       const cleanProgress = getInitialProgressState();
       setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
       setSubmittedAnswers(cleanProgress.submittedAnswers);
+      setSavedCompletedAnswers([]);
+      setSavedTotalXp(0);
+      setSessionBaselineQuestionIds([]);
       setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
       setIsSubmitted(cleanProgress.isSubmitted);
     } finally {
@@ -205,19 +247,19 @@ export default function HomePage() {
         JSON.stringify({
           schemaVersion: 2,
           categoryId: selectedQuiz.categoryId,
-          completedQuestions: submittedAnswers,
+          completedQuestions: persistedProgress.completedQuestions,
           currentQuestionIndex,
           isSubmitted,
           mode: QUIZ_MODE,
           selectedOptionIndex,
-          xp,
+          xp: persistedProgress.totalXp,
           xpByDifficulty: selectedQuiz.xpByDifficulty
         })
       );
     } catch {
       // Ignore storage failures so quiz interactions keep working.
     }
-  }, [currentQuestionIndex, isProgressLoaded, isReviewMode, isSubmitted, selectedOptionIndex, selectedQuiz, submittedAnswers, xp]);
+  }, [currentQuestionIndex, isProgressLoaded, isReviewMode, isSubmitted, persistedProgress, selectedOptionIndex, selectedQuiz]);
 
   function startCategoryQuiz(categoryId) {
     if (!quizByCategoryId[categoryId]) {
@@ -294,6 +336,12 @@ export default function HomePage() {
   }
 
   function restartQuiz() {
+    if (!isReviewMode) {
+      setSavedCompletedAnswers((currentSavedAnswers) => mergeCompletedAnswers(currentSavedAnswers, submittedAnswers));
+      setSavedTotalXp(totalXp);
+      setSessionBaselineQuestionIds([]);
+    }
+
     setCurrentQuestionIndex(0);
     setSelectedOptionIndex(null);
     setSubmittedAnswers([]);
@@ -310,6 +358,7 @@ export default function HomePage() {
         achievements={achievements}
         categories={quizzes}
         categoryProgressByCategory={categoryProgressByCategory}
+        conceptFocusInsights={conceptFocusInsights}
         dailyGoal={dailyGoalState}
         onReviewCategory={startWrongAnswerReview}
         reviewRecommendations={reviewRecommendations}
@@ -347,7 +396,7 @@ export default function HomePage() {
       <main className="app-shell">
         <section className="results">
           <p className="eyebrow">{isReviewMode ? "Review complete" : "Mission complete"}</p>
-          <h1>{isReviewMode ? "Review summary" : xp + " XP earned"}</h1>
+          <h1>{isReviewMode ? "Review summary" : sessionXp + " XP earned"}</h1>
           <p className="subtitle">
             {isReviewMode
               ? "You reviewed " + totalQuestions + " saved " + selectedQuiz.categoryLabel + " questions."
@@ -365,6 +414,7 @@ export default function HomePage() {
                 <ScoreStat value={getProgressPercent(correctCount, totalQuestions) + "%"} label="Accuracy" />
                 <ScoreStat value={totalQuestions} label="Questions" />
                 <ScoreStat value={correctCount} label="Correct" />
+                <ScoreStat value={totalXp} label="Total XP" />
               </>
             )}
           </div>
@@ -415,8 +465,9 @@ export default function HomePage() {
           <p className="subtitle">{isReviewMode ? "Review saved wrong answers and clear them by answering correctly." : selectedQuiz.subtitle}</p>
         </div>
         <div className="score-panel" aria-label="Current score">
-          <span>{xp}</span>
-          <small>XP</small>
+          <span>{sessionXp}</span>
+          <small>Session XP</small>
+          {!isReviewMode ? <small>Total {totalXp} XP</small> : null}
         </div>
       </section>
 
@@ -434,7 +485,8 @@ export default function HomePage() {
           currentQuestionIndex={currentQuestionIndex}
           progressPercent={progressPercent}
           totalQuestions={totalQuestions}
-          xp={xp}
+          totalXp={isReviewMode ? undefined : totalXp}
+          xp={sessionXp}
         />
         <QuizCard
           currentResult={currentResult}

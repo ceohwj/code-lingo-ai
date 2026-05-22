@@ -741,3 +741,82 @@
 - Preserved existing quiz, review, XP, streak, daily goal, dashboard, achievement, recommendation, and weak-area behavior.
 
 ---
+
+### 03:40 - Concept Focus Analytics
+
+#### Today’s Goal
+- Implement foundational concept-tag support across quiz content and learning analytics.
+- Add lightweight concept tags to quiz question data, including multiple tags per question where useful.
+- Derive concept-level learning statistics from wrong-answer history, weak-area insights, and adaptive review recommendation data.
+- Add a small Concept Focus dashboard section without mutating quiz, review, XP, streak, daily goal, achievements, recommendations, weak areas, or category progress.
+
+#### Completed Work
+- Added conceptTags arrays across Python, SQL, AI, and Bioinformatics question data.
+- Added pure concept analytics logic in lib/conceptAnalyticsLogic.js.
+- Added useConceptFocusInsights for dashboard-facing hook orchestration.
+- Added a Concept Focus section to the home dashboard.
+- Derived frequently missed concepts from wrong-answer history.
+- Derived review-needed concepts from adaptive review recommendations.
+- Used weak-area insights as supporting concept signals.
+- Added focused concept analytics tests for tag normalization, readable labels, empty state, missed concepts, review signals, weak-area support, unknown IDs, and limits.
+- Updated quiz data tests to require lightweight concept tags.
+- Updated PROJECT_STATUS.md and ROADMAP.md.
+
+#### Issues
+- Full browser-level regression across quiz, review, dashboard, and concept focus flows is still pending.
+
+#### Verification
+- npm test: passed, 69/69 tests.
+- npm run build: passed.
+- Browser smoke check: passed for Concept Focus and key dashboard headings.
+
+#### Next Tasks
+- Manually verify Concept Focus with real wrong-answer data across multiple categories.
+- Consider conceptTag-based weak-area and adaptive review refinement after more content is added.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Implemented concept-tag analytics as derived state with pure logic, hook orchestration, dashboard UI, tests, and documentation updates.
+- Preserved existing quiz, review, XP, streak, daily goal, dashboard, achievement, recommendation, and weak-area behavior.
+
+---
+
+### 04:20 - Retry XP Persistence Fix
+
+#### Today’s Goal
+- Fix the bug where clicking Try again after completing a quiz reset accumulated XP.
+- Separate current quiz session XP from saved category total XP.
+- Preserve completed questions, category progress, daily goal, streak, achievements, recommendations, weak areas, and concept analytics.
+
+#### Completed Work
+- Added pure quiz progress persistence helpers in lib/quizProgressLogic.js.
+- Separated session XP from saved category total XP in app/page.jsx.
+- Updated Try again so it restarts only session-specific UI state.
+- Preserved saved completed-question progress and category total XP across retry and refresh.
+- Kept wrong-answer review mode at 0 XP.
+- Displayed session XP and total XP separately in the quiz progress and completion UI.
+- Updated category cards to label earned XP as total XP.
+- Added focused tests for retry/reset and XP persistence behavior.
+- Updated PROJECT_STATUS.md and ROADMAP.md.
+
+#### Issues
+- Browser smoke verification for the latest retry XP flow could not complete in Codex because the local dev server/browser navigation was unavailable.
+
+#### Verification
+- npm test: passed, 76/76 tests.
+- npm run build: passed.
+- Browser smoke check: attempted, blocked by the local Codex dev-server/browser environment.
+
+#### Next Tasks
+- Manually verify Try again in the browser by completing a quiz, checking total XP, clicking Try again, and confirming total XP remains after refresh.
+- Run a full browser-level regression for normal quiz, review mode, dashboard sections, and retry behavior.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Completed agent review before implementation.
+- Fixed Try again so it resets only current-session state and does not overwrite saved category XP with zero.
+- Preserved existing quiz, review, XP, streak, daily goal, dashboard, achievement, recommendation, weak-area, and concept analytics behavior.
+- Added focused pure-logic tests and verified npm test and npm run build.
+
+---

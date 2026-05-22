@@ -17,6 +17,10 @@
         "No examples"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "supervised-learning",
+        "training-data"
+      ],
       "explanation": "Supervised learning trains on examples where each input is paired with the target answer the model should learn to predict."
     },
     {
@@ -30,6 +34,10 @@
         "A model runs faster"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "overfitting",
+        "generalization"
+      ],
       "explanation": "Overfitting happens when a model performs well on training data but fails to generalize to new examples.",
       "commonMistake": "Overfitting is often confused with high accuracy, but the problem is poor performance on new unseen data."
     },
@@ -44,6 +52,10 @@
         "Number of columns only"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "classification",
+        "metrics"
+      ],
       "explanation": "Accuracy measures the share of predictions that match the true labels across all evaluated examples."
     },
     {
@@ -57,6 +69,10 @@
         "A user account"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "features",
+        "model-inputs"
+      ],
       "explanation": "Features are input variables, such as age, word count, or gene expression values, that help a model make predictions."
     },
     {
@@ -70,6 +86,10 @@
         "To reduce monitor brightness"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "evaluation",
+        "test-data"
+      ],
       "explanation": "A separate test set helps estimate how well the model may perform on data it did not learn from directly."
     }
   ],

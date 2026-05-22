@@ -1,6 +1,6 @@
 "use client";
 
-export function CategorySelector({ achievements = [], categories, categoryProgressByCategory = {}, dailyGoal = {}, onReviewCategory, onSelectCategory, reviewRecommendations = [], streak = {}, weakAreaInsights = [], wrongAnswerCountsByCategory = {} }) {
+export function CategorySelector({ achievements = [], categories, categoryProgressByCategory = {}, conceptFocusInsights = [], dailyGoal = {}, onReviewCategory, onSelectCategory, reviewRecommendations = [], streak = {}, weakAreaInsights = [], wrongAnswerCountsByCategory = {} }) {
   return (
     <main className="app-shell">
       <section className="category-selector">
@@ -97,6 +97,28 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
               </div>
             )}
           </section>
+
+          <section className="concept-focus-panel" aria-label="Concept focus">
+            <div className="concept-focus-header">
+              <div>
+                <span>Concept Focus</span>
+                <strong>{conceptFocusInsights.length === 0 ? "No concept pattern yet" : conceptFocusInsights.length + " concept" + (conceptFocusInsights.length === 1 ? "" : "s")}</strong>
+              </div>
+            </div>
+            {conceptFocusInsights.length === 0 ? (
+              <p className="concept-focus-empty">Concept patterns will appear after more review data.</p>
+            ) : (
+              <div className="concept-focus-grid">
+                {conceptFocusInsights.map((concept) => (
+                  <article className="concept-focus-item" key={concept.id}>
+                    <span>{concept.conceptLabel}</span>
+                    <strong>{concept.message}</strong>
+                    <small>{concept.categoryLabels.join(", ") || "Review"}</small>
+                  </article>
+                ))}
+              </div>
+            )}
+          </section>
         </section>
 
         <section className="dashboard-section dashboard-section-secondary" aria-labelledby="learning-paths-heading">
@@ -131,7 +153,7 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
                     </div>
                     <div className="category-progress-meta">
                       <span>{progress.completedQuestionCount} / {progress.totalQuestions} done</span>
-                      <span>{progress.earnedXp} XP</span>
+                      <span>{progress.earnedXp} total XP</span>
                     </div>
                   </div>
                   <p className="wrong-answer-count">{wrongAnswerText}</p>

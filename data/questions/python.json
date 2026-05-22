@@ -17,6 +17,10 @@
         "--"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "comments",
+        "syntax"
+      ],
       "explanation": "Python ignores everything after a # on the same line, so it is used for comments.",
       "commonMistake": "Many beginners use // because they have seen it in JavaScript or Java, but Python comments start with #."
     },
@@ -31,6 +35,10 @@
         "Saves a file"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "output",
+        "functions"
+      ],
       "explanation": "The print function sends text or values to the screen."
     },
     {
@@ -44,6 +52,10 @@
         "True"
       ],
       "correctOptionIndex": 2,
+      "conceptTags": [
+        "strings",
+        "data-types"
+      ],
       "explanation": "Text wrapped in quotes is a string. Both single and double quotes work in Python."
     },
     {
@@ -57,6 +69,10 @@
         "9"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "operators",
+        "precedence"
+      ],
       "explanation": "Multiplication happens before addition, so 3 * 4 is 12, then 2 + 12 is 14.",
       "commonMistake": "A common mistake is adding 2 + 3 first. Python follows operator precedence, so multiplication runs before addition."
     },
@@ -71,6 +87,10 @@
         "score := 10;"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "variables",
+        "assignment"
+      ],
       "explanation": "Python creates variables with the assignment operator: name = value."
     },
     {
@@ -84,6 +104,10 @@
         "list"
       ],
       "correctOptionIndex": 2,
+      "conceptTags": [
+        "booleans",
+        "data-types"
+      ],
       "explanation": "Boolean values use the bool type. The two boolean literals are True and False."
     },
     {
@@ -97,6 +121,10 @@
         "An error"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "lists",
+        "built-in-functions"
+      ],
       "explanation": "len returns the number of items in a collection. This list has three items."
     },
     {
@@ -110,6 +138,10 @@
         "case"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "conditionals",
+        "control-flow"
+      ],
       "explanation": "Python uses if to run code only when a condition is true."
     },
     {
@@ -123,6 +155,10 @@
         "while list item:"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "loops",
+        "lists"
+      ],
       "explanation": "A for loop can visit each item in a list using syntax like for item in items:."
     },
     {
@@ -136,6 +172,10 @@
         "A list"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "input",
+        "strings"
+      ],
       "explanation": "input reads what the user types and returns it as a string."
     }
   ],

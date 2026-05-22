@@ -17,6 +17,10 @@
         "Hemoglobin"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "dna",
+        "genetic-information"
+      ],
       "explanation": "DNA stores genetic instructions using nucleotide sequences built from A, T, C, and G bases."
     },
     {
@@ -30,6 +34,10 @@
         "SQL indexes"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "fasta",
+        "sequence-data"
+      ],
       "explanation": "FASTA is a text format for biological sequences, with a header line followed by sequence letters."
     },
     {
@@ -43,6 +51,10 @@
         "Uracil"
       ],
       "correctOptionIndex": 2,
+      "conceptTags": [
+        "base-pairing",
+        "dna"
+      ],
       "explanation": "In DNA, adenine pairs with thymine, while cytosine pairs with guanine.",
       "commonMistake": "It is easy to mix DNA and RNA pairing rules. In DNA, adenine pairs with thymine, not uracil."
     },
@@ -57,6 +69,10 @@
         "Counting browser tabs"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "sequence-alignment",
+        "sequence-comparison"
+      ],
       "explanation": "Sequence alignment places sequences together to reveal similarities, differences, and possible evolutionary relationships."
     },
     {
@@ -70,6 +86,10 @@
         "Network cable length"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "gene-expression",
+        "omics-data"
+      ],
       "explanation": "Gene expression data measures how strongly genes are transcribed or represented in a biological sample."
     }
   ],

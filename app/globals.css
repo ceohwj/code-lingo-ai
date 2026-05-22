@@ -406,6 +406,77 @@ h2 {
   text-transform: uppercase;
 }
 
+.concept-focus-panel {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0;
+  padding: 1rem;
+  border: 1px solid rgba(82, 112, 171, 0.24);
+  border-radius: 8px;
+  background: #f6f8ff;
+}
+
+.concept-focus-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.concept-focus-header div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.concept-focus-header span,
+.concept-focus-item span {
+  color: #425f9c;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.concept-focus-header strong {
+  color: var(--brand-strong);
+  font-size: 1.1rem;
+}
+
+.concept-focus-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.concept-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.7rem;
+}
+
+.concept-focus-item {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.85rem;
+  border: 1px solid rgba(82, 112, 171, 0.28);
+  border-left: 0.3rem solid #5270ab;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.concept-focus-item strong {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.concept-focus-item small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .achievement-panel {
   display: grid;
   gap: 0.85rem;
@@ -1096,6 +1167,7 @@ h2 {
   .daily-goal-panel-header,
   .recommended-review-header,
   .weak-area-header,
+  .concept-focus-header,
   .achievement-panel-header,
   .explanation-card-header,
   .actions,
@@ -1137,6 +1209,7 @@ h2 {
   .streak-panel,
   .recommended-review-grid,
   .weak-area-grid,
+  .concept-focus-grid,
   .achievement-grid,
   .progress-summary-grid {
     grid-template-columns: 1fr;

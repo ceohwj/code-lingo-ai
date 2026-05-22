@@ -17,6 +17,10 @@
         "SHOW COLUMNS"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "select",
+        "query-basics"
+      ],
       "explanation": "SELECT chooses the columns or expressions that should appear in the query result."
     },
     {
@@ -30,6 +34,10 @@
         "LIMIT"
       ],
       "correctOptionIndex": 0,
+      "conceptTags": [
+        "where",
+        "filtering"
+      ],
       "explanation": "WHERE keeps only rows that match a condition, such as price > 100 or status = 'active'.",
       "commonMistake": "Learners often reach for ORDER BY, but sorting happens after rows are filtered with WHERE."
     },
@@ -44,6 +52,10 @@
         "The number of joins"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "sorting",
+        "order-by"
+      ],
       "explanation": "ORDER BY sorts result rows by one or more columns, often with ASC or DESC direction."
     },
     {
@@ -57,6 +69,10 @@
         "ROUND()"
       ],
       "correctOptionIndex": 2,
+      "conceptTags": [
+        "aggregates",
+        "count"
+      ],
       "explanation": "COUNT() returns how many rows or non-null values match the query, depending on its argument."
     },
     {
@@ -70,6 +86,10 @@
         "SELF JOIN"
       ],
       "correctOptionIndex": 1,
+      "conceptTags": [
+        "joins",
+        "left-join"
+      ],
       "explanation": "LEFT JOIN preserves every row from the left table, filling unmatched right-table values with NULL."
     }
   ],
