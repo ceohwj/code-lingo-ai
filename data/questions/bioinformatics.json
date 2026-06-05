@@ -94,6 +94,97 @@
       ],
       "hint": "Expression is about how strongly a gene is being used or represented in a sample.",
       "explanation": "Gene expression data measures how strongly genes are transcribed or represented in a biological sample."
+    },
+    {
+      "difficulty": "easy",
+      "id": "bio-006",
+      "prompt": "Which base appears in RNA instead of thymine?",
+      "options": [
+        "Uracil",
+        "Guanine",
+        "Cytosine",
+        "Adenine"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "rna",
+        "base-pairing"
+      ],
+      "hint": "RNA uses a different partner for adenine than DNA does.",
+      "explanation": "RNA uses uracil instead of thymine, so adenine pairs with uracil in RNA contexts."
+    },
+    {
+      "difficulty": "medium",
+      "id": "bio-007",
+      "prompt": "In sequencing data, what does read depth usually describe?",
+      "options": [
+        "How many times a position is covered by reads",
+        "The physical depth of a lab freezer",
+        "The number of colors in a heatmap",
+        "How long a SQL query takes"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "sequencing",
+        "read-depth"
+      ],
+      "explanation": "Read depth describes how many sequencing reads cover a position, which helps estimate confidence in the observed sequence."
+    },
+    {
+      "difficulty": "easy",
+      "id": "bio-008",
+      "prompt": "Which file format is commonly used for sequencing reads with quality scores?",
+      "options": [
+        "FASTQ",
+        "PNG",
+        "CSV-only",
+        "HTML"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "fastq",
+        "sequencing",
+        "quality-scores"
+      ],
+      "hint": "This format is similar in name to FASTA but includes quality information for reads.",
+      "explanation": "FASTQ is commonly used for sequencing reads because it stores both sequence letters and per-base quality scores."
+    },
+    {
+      "difficulty": "medium",
+      "id": "bio-009",
+      "prompt": "What is a reference genome used for in sequence analysis?",
+      "options": [
+        "A baseline sequence to compare reads against",
+        "A spreadsheet password",
+        "A color palette for charts",
+        "A way to erase sample names"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "reference-genome",
+        "sequence-alignment"
+      ],
+      "hint": "Think of it as the known sequence that new reads can be mapped onto.",
+      "explanation": "A reference genome provides a baseline sequence so sequencing reads can be aligned, compared, and interpreted more consistently."
+    },
+    {
+      "difficulty": "hard",
+      "id": "bio-010",
+      "prompt": "What does variant calling try to identify?",
+      "options": [
+        "Differences between sample sequences and a reference",
+        "The size of a web button",
+        "The number of SQL columns",
+        "A chart title font"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "variant-calling",
+        "reference-genome",
+        "genomic-variation"
+      ],
+      "hint": "After reads are compared to a reference, this step looks for meaningful sequence differences.",
+      "explanation": "Variant calling identifies sequence differences, such as substitutions or small insertions and deletions, between a sample and a reference genome."
     }
   ],
   "difficultyLevels": [

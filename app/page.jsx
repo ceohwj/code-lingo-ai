@@ -1,61 +1,65 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { CategorySelector } from "../components/CategorySelector";
 import { ProgressBar } from "../components/ProgressBar";
 import { QuizCard } from "../components/QuizCard";
+import { QuizHero } from "../components/QuizHero";
+import { QuizResults } from "../components/QuizResults";
 import { quizzes } from "../data/quizData";
 import { useAchievementState } from "../hooks/useAchievementState";
 import { useAdaptiveReviewRecommendations } from "../hooks/useAdaptiveReviewRecommendations";
 import { useCategoryProgressSummaries } from "../hooks/useCategoryProgressSummaries";
 import { useConceptFocusInsights } from "../hooks/useConceptFocusInsights";
 import { useDailyGoalState } from "../hooks/useDailyGoalState";
+import { useLearningProgressState } from "../hooks/useLearningProgressState";
+import { LEGACY_PYTHON_PROGRESS_KEY, useQuizProgressStorageState } from "../hooks/useQuizProgressStorageState";
+import { useQuizSessionState } from "../hooks/useQuizSessionState";
 import { useStreakState } from "../hooks/useStreakState";
 import { useWeakAreaInsights } from "../hooks/useWeakAreaInsights";
 import { useWrongAnswerHistory } from "../hooks/useWrongAnswerHistory";
-import { getPersistedQuizProgress, getQuestionIdSet, mergeCompletedAnswers } from "../lib/quizProgressLogic";
-import { calculateDifficultyXp, checkAnswer, getDifficultyLabel, getProgressPercent, getQuestionDifficulty, getQuestionXp } from "../lib/quizLogic";
+import { createAnswerSubmission } from "../lib/createAnswerSubmission";
+import { mergeCompletedAnswers } from "../lib/quizProgressLogic";
+import { updateSubmittedAnswers } from "../lib/updateSubmittedAnswers";
 
-const LEGACY_PYTHON_PROGRESS_KEY = "codelingo-ai-python-basics-progress";
 const SELECTED_CATEGORY_STORAGE_KEY = "codelingo-ai-selected-category";
 const QUIZ_MODE = "quiz";
 const REVIEW_MODE = "review";
 
-const progressStorageKeys = {
-  ai: "codelingo-ai-ai-basics-progress",
-  bioinformatics: "codelingo-ai-bioinformatics-basics-progress",
-  python: LEGACY_PYTHON_PROGRESS_KEY,
-  sql: "codelingo-ai-sql-basics-progress"
-};
-
 const quizByCategoryId = Object.fromEntries(quizzes.map((quiz) => [quiz.categoryId, quiz]));
 
-function getProgressStorageKey(categoryId) {
-  return progressStorageKeys[categoryId] ?? "codelingo-ai-" + categoryId + "-progress";
+function getEmptyCategoryProgress(category) {
+  return {
+    completedQuestionCount: 0,
+    earnedXp: 0,
+    totalQuestions: category.questions.length
+  };
 }
 
-function getInitialProgressState() {
-  return {
-    currentQuestionIndex: 0,
-    isSubmitted: false,
-    selectedOptionIndex: null,
-    submittedAnswers: []
-  };
+function getNextXpMilestone(totalXp) {
+  const safeTotalXp = Number.isFinite(totalXp) ? Math.max(totalXp, 0) : 0;
+  return Math.floor(safeTotalXp / 100) * 100 + 100;
 }
 
 export default function HomePage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [quizMode, setQuizMode] = useState(QUIZ_MODE);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
-  const [submittedAnswers, setSubmittedAnswers] = useState([]);
+  const {
+    currentQuestionIndex,
+    isSubmitted,
+    resetQuizSessionState,
+    selectedOptionIndex,
+    setCurrentQuestionIndex,
+    setIsSubmitted,
+    setSelectedOptionIndex,
+    setSubmittedAnswers,
+    submittedAnswers
+  } = useQuizSessionState();
   const [savedCompletedAnswers, setSavedCompletedAnswers] = useState([]);
   const [savedTotalXp, setSavedTotalXp] = useState(0);
   const [sessionBaselineQuestionIds, setSessionBaselineQuestionIds] = useState([]);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCategoryLoaded, setIsCategoryLoaded] = useState(false);
-  const [isProgressLoaded, setIsProgressLoaded] = useState(false);
   const [reviewSessionQuestionIds, setReviewSessionQuestionIds] = useState([]);
   const { categoryProgressByCategory, refreshCategoryProgressSummaries } = useCategoryProgressSummaries(quizzes);
   const { completeTodayStreak, isStreakLoaded, streakState } = useStreakState();
@@ -78,6 +82,28 @@ export default function HomePage() {
     weakAreaInsights,
     wrongAnswerIdsByCategory
   });
+  const learningStats = useMemo(() => {
+    const categoryProgressSummaries = quizzes.map((category) => (
+      categoryProgressByCategory[category.categoryId] ?? getEmptyCategoryProgress(category)
+    ));
+    const totalXpFromCategories = categoryProgressSummaries.reduce((total, progress) => total + progress.earnedXp, 0);
+    const completedQuestionCount = categoryProgressSummaries.reduce((total, progress) => total + progress.completedQuestionCount, 0);
+    const savedWrongAnswerCount = Object.values(wrongAnswerCountsByCategory).reduce((total, count) => total + count, 0);
+    const answeredSignalCount = completedQuestionCount + savedWrongAnswerCount;
+    const accuracyPercent = answeredSignalCount > 0
+      ? Math.round((completedQuestionCount / answeredSignalCount) * 100)
+      : 0;
+
+    return {
+      accuracyPercent,
+      currentStreak: streakState.currentStreak ?? 0,
+      dailyGoalCompleted: dailyGoalState.completedQuestionCount ?? 0,
+      dailyGoalProgressPercent: dailyGoalState.progressPercent ?? 0,
+      dailyGoalTarget: dailyGoalState.target ?? 5,
+      questionsCompleted: completedQuestionCount,
+      totalXp: totalXpFromCategories
+    };
+  }, [categoryProgressByCategory, dailyGoalState, streakState, wrongAnswerCountsByCategory]);
 
   const selectedQuiz = selectedCategoryId ? quizByCategoryId[selectedCategoryId] : null;
   const activeQuestions = useMemo(() => {
@@ -92,35 +118,30 @@ export default function HomePage() {
     const reviewQuestionIdSet = new Set(reviewSessionQuestionIds);
     return selectedQuiz.questions.filter((question) => reviewQuestionIdSet.has(question.id));
   }, [quizMode, reviewSessionQuestionIds, selectedQuiz]);
-  const totalQuestions = activeQuestions.length;
-  const currentQuestion = activeQuestions[currentQuestionIndex];
-  const correctCount = submittedAnswers.filter((answer) => answer.isCorrect).length;
   const isReviewMode = quizMode === REVIEW_MODE;
-  const currentDifficulty = getQuestionDifficulty(currentQuestion);
-  const currentDifficultyLabel = getDifficultyLabel(currentDifficulty);
-  const currentQuestionXp = getQuestionXp(currentQuestion, selectedQuiz?.xpByDifficulty);
-  const sessionXp = isReviewMode ? 0 : calculateDifficultyXp(submittedAnswers, selectedQuiz?.questions ?? [], selectedQuiz?.xpByDifficulty);
-  const persistedProgress = useMemo(() => {
-    if (!selectedQuiz || isReviewMode) {
-      return {
-        completedQuestions: savedCompletedAnswers,
-        totalXp: savedTotalXp
-      };
-    }
-
-    return getPersistedQuizProgress({
-      questions: selectedQuiz.questions,
-      savedCompletedAnswers,
-      savedTotalXp,
-      sessionAnswers: submittedAnswers,
-      sessionBaselineQuestionIds,
-      xpByDifficulty: selectedQuiz.xpByDifficulty
-    });
-  }, [isReviewMode, savedCompletedAnswers, savedTotalXp, selectedQuiz, sessionBaselineQuestionIds, submittedAnswers]);
-  const totalXp = isReviewMode ? savedTotalXp : persistedProgress.totalXp;
-  const progressPercent = getProgressPercent(submittedAnswers.length, totalQuestions);
+  const {
+    accuracyPercent,
+    correctCount,
+    currentDifficultyLabel,
+    currentQuestion,
+    currentQuestionXp,
+    isComplete,
+    persistedProgress,
+    progressPercent,
+    sessionXp,
+    totalQuestions,
+    totalXp
+  } = useLearningProgressState({
+    activeQuestions,
+    currentQuestionIndex,
+    isReviewMode,
+    savedCompletedAnswers,
+    savedTotalXp,
+    selectedQuiz,
+    sessionBaselineQuestionIds,
+    submittedAnswers
+  });
   const remainingWrongAnswerCount = selectedCategoryId ? wrongAnswerIdsByCategory[selectedCategoryId]?.length ?? 0 : 0;
-  const isComplete = Boolean(selectedQuiz) && currentQuestionIndex >= totalQuestions;
 
   const currentResult = useMemo(() => {
     return submittedAnswers.find((answer) => answer.questionId === currentQuestion?.id);
@@ -138,6 +159,46 @@ export default function HomePage() {
     currentSession: achievementSession,
     dailyGoalState,
     streakState
+  });
+  const nextMilestone = useMemo(() => {
+    const nextXpMilestone = getNextXpMilestone(learningStats.totalXp);
+    const nextAchievement = achievements.find((achievement) => !achievement.isUnlocked);
+    const dailyGoalTarget = dailyGoalState.target ?? 5;
+    const dailyGoalCompleted = dailyGoalState.completedQuestionCount ?? 0;
+
+    return {
+      dailyMissionRemaining: Math.max(dailyGoalTarget - dailyGoalCompleted, 0),
+      nextAchievementDescription: nextAchievement?.description ?? "All current achievement targets are complete.",
+      nextAchievementTitle: nextAchievement?.title ?? "All achievements unlocked",
+      nextXpMilestone,
+      xpUntilNextMilestone: Math.max(nextXpMilestone - learningStats.totalXp, 0)
+    };
+  }, [achievements, dailyGoalState, learningStats]);
+  const weeklySnapshot = useMemo(() => ({
+    questionsCompleted: learningStats.questionsCompleted,
+    snapshotNote: "Exact weekly history is not tracked yet, so this snapshot uses current saved progress as a weekly placeholder.",
+    weeklyAccuracy: learningStats.accuracyPercent,
+    xpEarned: learningStats.totalXp
+  }), [learningStats]);
+  const persistSelectedCategory = useCallback((categoryId) => {
+    window.localStorage.setItem(SELECTED_CATEGORY_STORAGE_KEY, categoryId);
+  }, []);
+  const { isProgressLoaded, markProgressUnloaded } = useQuizProgressStorageState({
+    currentQuestionIndex,
+    isReviewMode,
+    isSubmitted,
+    persistSelectedCategory,
+    persistedProgress,
+    resetQuizSessionState,
+    selectedOptionIndex,
+    selectedQuiz,
+    setCurrentQuestionIndex,
+    setIsSubmitted,
+    setSavedCompletedAnswers,
+    setSavedTotalXp,
+    setSelectedOptionIndex,
+    setSessionBaselineQuestionIds,
+    setSubmittedAnswers
   });
 
   useEffect(() => {
@@ -160,106 +221,6 @@ export default function HomePage() {
       setIsCategoryLoaded(true);
     }
   }, []);
-
-
-  useEffect(() => {
-    if (!selectedQuiz) {
-      setIsProgressLoaded(false);
-      return;
-    }
-
-    setIsProgressLoaded(false);
-
-    if (isReviewMode) {
-      const cleanProgress = getInitialProgressState();
-      setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
-      setSubmittedAnswers(cleanProgress.submittedAnswers);
-      setSessionBaselineQuestionIds([]);
-      setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
-      setIsSubmitted(cleanProgress.isSubmitted);
-      setIsProgressLoaded(true);
-      return;
-    }
-
-    try {
-      window.localStorage.setItem(SELECTED_CATEGORY_STORAGE_KEY, selectedQuiz.categoryId);
-
-      const savedProgress = window.localStorage.getItem(getProgressStorageKey(selectedQuiz.categoryId));
-
-      if (!savedProgress) {
-        const cleanProgress = getInitialProgressState();
-        setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
-        setSubmittedAnswers(cleanProgress.submittedAnswers);
-        setSavedCompletedAnswers([]);
-        setSavedTotalXp(0);
-        setSessionBaselineQuestionIds([]);
-        setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
-        setIsSubmitted(cleanProgress.isSubmitted);
-        return;
-      }
-
-      const parsedProgress = JSON.parse(savedProgress);
-      const savedQuestionIndex = Number(parsedProgress.currentQuestionIndex);
-      const savedCompletedQuestions = Array.isArray(parsedProgress.completedQuestions)
-        ? parsedProgress.completedQuestions
-        : [];
-      const savedXp = Number.isFinite(parsedProgress.xp)
-        ? parsedProgress.xp
-        : calculateDifficultyXp(savedCompletedQuestions, selectedQuiz.questions, selectedQuiz.xpByDifficulty);
-      const savedSelectedOptionIndex = Number.isInteger(parsedProgress.selectedOptionIndex)
-        ? parsedProgress.selectedOptionIndex
-        : null;
-
-      const cleanProgress = getInitialProgressState();
-      setCurrentQuestionIndex(
-        savedQuestionIndex >= 0 && savedQuestionIndex <= selectedQuiz.questions.length
-          ? savedQuestionIndex
-          : cleanProgress.currentQuestionIndex
-      );
-      setSubmittedAnswers(savedCompletedQuestions);
-      setSavedCompletedAnswers(savedCompletedQuestions);
-      setSavedTotalXp(savedXp);
-      setSessionBaselineQuestionIds([...getQuestionIdSet(savedCompletedQuestions)]);
-      setSelectedOptionIndex(savedSelectedOptionIndex);
-      setIsSubmitted(Boolean(parsedProgress.isSubmitted));
-    } catch {
-      const cleanProgress = getInitialProgressState();
-      setCurrentQuestionIndex(cleanProgress.currentQuestionIndex);
-      setSubmittedAnswers(cleanProgress.submittedAnswers);
-      setSavedCompletedAnswers([]);
-      setSavedTotalXp(0);
-      setSessionBaselineQuestionIds([]);
-      setSelectedOptionIndex(cleanProgress.selectedOptionIndex);
-      setIsSubmitted(cleanProgress.isSubmitted);
-    } finally {
-      setIsProgressLoaded(true);
-    }
-  }, [isReviewMode, selectedQuiz]);
-
-  useEffect(() => {
-    if (!isProgressLoaded || !selectedQuiz || isReviewMode) {
-      return;
-    }
-
-    try {
-      window.localStorage.setItem(
-        getProgressStorageKey(selectedQuiz.categoryId),
-        JSON.stringify({
-          schemaVersion: 2,
-          categoryId: selectedQuiz.categoryId,
-          completedQuestions: persistedProgress.completedQuestions,
-          currentQuestionIndex,
-          isSubmitted,
-          mode: QUIZ_MODE,
-          selectedOptionIndex,
-          xp: persistedProgress.totalXp,
-          xpByDifficulty: selectedQuiz.xpByDifficulty
-        })
-      );
-    } catch {
-      // Ignore storage failures so quiz interactions keep working.
-    }
-  }, [currentQuestionIndex, isProgressLoaded, isReviewMode, isSubmitted, persistedProgress, selectedOptionIndex, selectedQuiz]);
 
   function startCategoryQuiz(categoryId) {
     if (!quizByCategoryId[categoryId]) {
@@ -286,7 +247,7 @@ export default function HomePage() {
     setSelectedCategoryId(null);
     setQuizMode(QUIZ_MODE);
     setReviewSessionQuestionIds([]);
-    setIsProgressLoaded(false);
+    markProgressUnloaded();
 
     try {
       window.localStorage.removeItem(SELECTED_CATEGORY_STORAGE_KEY);
@@ -300,14 +261,12 @@ export default function HomePage() {
       return;
     }
 
-    const nextAnswer = {
-      schemaVersion: 1,
-      questionId: currentQuestion.id,
-      questionDifficulty: getQuestionDifficulty(currentQuestion),
-      selectedOptionIndex,
-      isCorrect: checkAnswer(currentQuestion, selectedOptionIndex),
-      xpAwarded: checkAnswer(currentQuestion, selectedOptionIndex) && !isReviewMode ? getQuestionXp(currentQuestion, selectedQuiz.xpByDifficulty) : 0
-    };
+    const nextAnswer = createAnswerSubmission({
+      isReviewMode,
+      question: currentQuestion,
+      quiz: selectedQuiz,
+      selectedOptionIndex
+    });
 
     updateWrongAnswerIds(selectedQuiz.categoryId, currentQuestion.id, nextAnswer.isCorrect);
 
@@ -315,13 +274,9 @@ export default function HomePage() {
       addTodayDailyGoalQuestion();
     }
 
-    setSubmittedAnswers((answers) => {
-      const withoutCurrent = answers.filter((answer) => answer.questionId !== currentQuestion.id);
-      return [...withoutCurrent, nextAnswer];
-    });
+    setSubmittedAnswers((answers) => updateSubmittedAnswers(answers, nextAnswer));
     setIsSubmitted(true);
   }
-
 
   function goToNextQuestion() {
     const nextQuestionIndex = currentQuestionIndex + 1;
@@ -342,10 +297,7 @@ export default function HomePage() {
       setSessionBaselineQuestionIds([]);
     }
 
-    setCurrentQuestionIndex(0);
-    setSelectedOptionIndex(null);
-    setSubmittedAnswers([]);
-    setIsSubmitted(false);
+    resetQuizSessionState();
   }
 
   if (!isCategoryLoaded || !isStreakLoaded || !isDailyGoalLoaded || !isAchievementLoaded || !isWrongAnswerHistoryLoaded) {
@@ -360,11 +312,14 @@ export default function HomePage() {
         categoryProgressByCategory={categoryProgressByCategory}
         conceptFocusInsights={conceptFocusInsights}
         dailyGoal={dailyGoalState}
+        learningStats={learningStats}
+        nextMilestone={nextMilestone}
         onReviewCategory={startWrongAnswerReview}
         reviewRecommendations={reviewRecommendations}
         onSelectCategory={startCategoryQuiz}
         streak={streakState}
         weakAreaInsights={weakAreaInsights}
+        weeklySnapshot={weeklySnapshot}
         wrongAnswerCountsByCategory={wrongAnswerCountsByCategory}
       />
     );
@@ -393,83 +348,32 @@ export default function HomePage() {
 
   if (isComplete) {
     return (
-      <main className="app-shell">
-        <section className="results">
-          <p className="eyebrow">{isReviewMode ? "Review complete" : "Mission complete"}</p>
-          <h1>{isReviewMode ? "Review summary" : sessionXp + " XP earned"}</h1>
-          <p className="subtitle">
-            {isReviewMode
-              ? "You reviewed " + totalQuestions + " saved " + selectedQuiz.categoryLabel + " questions."
-              : "You answered " + correctCount + " of " + totalQuestions + " " + selectedQuiz.categoryLabel + " quiz questions correctly."}
-          </p>
-          <div className="summary-grid">
-            {isReviewMode ? (
-              <>
-                <ScoreStat value={totalQuestions} label="Reviewed" />
-                <ScoreStat value={correctCount} label="Corrected" />
-                <ScoreStat value={remainingWrongAnswerCount} label="Remaining" />
-              </>
-            ) : (
-              <>
-                <ScoreStat value={getProgressPercent(correctCount, totalQuestions) + "%"} label="Accuracy" />
-                <ScoreStat value={totalQuestions} label="Questions" />
-                <ScoreStat value={correctCount} label="Correct" />
-                <ScoreStat value={totalXp} label="Total XP" />
-              </>
-            )}
-          </div>
-          <div className="review-list" aria-label="Answer review">
-            {activeQuestions.map((question, index) => {
-              const answer = submittedAnswers.find((item) => item.questionId === question.id);
-              const selectedAnswer = question.options[answer?.selectedOptionIndex];
-              const correctAnswer = question.options[question.correctOptionIndex];
-
-              return (
-                <article className={"review-item" + (answer?.isCorrect ? " is-correct" : " is-incorrect")} key={question.id}>
-                  <div className="review-item-topline">
-                    <span>Mission {index + 1}</span>
-                    <strong>{answer?.isCorrect ? "Correct" : "Review"}</strong>
-                  </div>
-                  <h2>{question.prompt}</h2>
-                  <p>
-                    Your answer: <strong>{selectedAnswer}</strong>
-                  </p>
-                  {!answer?.isCorrect ? (
-                    <p>
-                      Correct answer: <strong>{correctAnswer}</strong>
-                    </p>
-                  ) : null}
-                </article>
-              );
-            })}
-          </div>
-          <div className="actions results-actions">
-            <button className="secondary-button" type="button" onClick={changeCategory}>
-              Change category
-            </button>
-            <button className="primary-button" type="button" onClick={restartQuiz}>
-              {isReviewMode ? "Review again" : "Try again"}
-            </button>
-          </div>
-        </section>
-      </main>
+      <QuizResults
+        accuracyPercent={accuracyPercent}
+        answers={submittedAnswers}
+        categoryLabel={selectedQuiz.categoryLabel}
+        correctCount={correctCount}
+        isReviewMode={isReviewMode}
+        onChangeCategory={changeCategory}
+        onRestart={restartQuiz}
+        questions={activeQuestions}
+        remainingWrongAnswerCount={remainingWrongAnswerCount}
+        sessionXp={sessionXp}
+        totalQuestions={totalQuestions}
+        totalXp={totalXp}
+      />
     );
   }
 
   return (
     <main className="app-shell">
-      <section className="hero">
-        <div>
-          <p className="eyebrow">CodeLingo AI</p>
-          <h1>{selectedQuiz.title}</h1>
-          <p className="subtitle">{isReviewMode ? "Review saved wrong answers and clear them by answering correctly." : selectedQuiz.subtitle}</p>
-        </div>
-        <div className="score-panel" aria-label="Current score">
-          <span>{sessionXp}</span>
-          <small>Session XP</small>
-          {!isReviewMode ? <small>Total {totalXp} XP</small> : null}
-        </div>
-      </section>
+      <QuizHero
+        isReviewMode={isReviewMode}
+        sessionXp={sessionXp}
+        subtitle={selectedQuiz.subtitle}
+        title={selectedQuiz.title}
+        totalXp={totalXp}
+      />
 
       <section className="lesson">
         <div className="category-toolbar">
@@ -501,14 +405,5 @@ export default function HomePage() {
         />
       </section>
     </main>
-  );
-}
-
-function ScoreStat({ value, label }) {
-  return (
-    <div>
-      <span>{value}</span>
-      <small>{label}</small>
-    </div>
   );
 }

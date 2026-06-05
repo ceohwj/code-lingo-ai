@@ -62,6 +62,7 @@ export function QuizCard({
           difficultyLabel={difficultyLabel}
           earnedXp={earnedXp}
           explanation={question.explanation}
+          isCorrect={Boolean(currentResult?.isCorrect)}
         />
       ) : null}
 

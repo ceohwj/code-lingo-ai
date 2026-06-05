@@ -859,3 +859,1001 @@
 - Preserved existing quiz, XP, progress, retry, review, streak, daily goal, achievements, recommendations, weak-area, and concept analytics behavior.
 
 ---
+
+### 11:46 KST - Browser Learning Flow Verification
+
+#### Today’s Goal
+- Perform a full browser-level learning flow verification pass across the current adaptive learning system.
+- Verify category selection, quiz progression, hints, explanations, XP, retry, review, dashboard insights, achievements, daily goal, streak, and mobile layout.
+- Fix any discovered UX, state, rendering, persistence, or flow bugs without adding major features.
+
+#### Completed Work
+- Started the local Next.js dev server at http://127.0.0.1:3002.
+- Verified the dashboard renders the learning focus, recommended review, weak areas, concept focus, category progress, and achievements sections.
+- Verified category selection into Python Basics.
+- Verified quiz progression through a full Python quiz attempt.
+- Verified hint rendering appears on hinted questions and stays hidden on non-hinted questions.
+- Verified explanation rendering for correct and incorrect answers.
+- Verified session XP accumulation and total XP display.
+- Verified Try again restarts the session while preserving total XP in the visible UI.
+- Verified total XP restored after browser refresh.
+- Verified wrong-answer review flow starts from recommended review and awards 0 XP.
+- Verified recommended review, weak-area insights, and concept focus render after saved misses.
+- Verified achievement unlock state, daily goal update, and streak update after quiz completion.
+- Verified dashboard hierarchy and 390px mobile layout with no horizontal overflow.
+- Found no app bugs requiring code changes.
+- Updated PROJECT_STATUS.md and ROADMAP.md with verified flow coverage.
+
+#### Issues
+- Codex in-app browser automation does not expose direct localStorage inspection APIs, so storage values could not be read directly from the browser script.
+- Persistence was verified through visible refresh/restore behavior and existing focused logic tests instead.
+
+#### Verification
+- Browser flow: passed for category selection, quiz progression, hints, explanations, XP, Try again, review, recommendations, weak areas, concept focus, achievements, daily goal, streak, and mobile layout.
+- npm test: passed, 78/78 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Continue running browser regression checks after future adaptive-learning changes.
+- Consider adding a lightweight automated browser test setup later if the project adds a dedicated E2E test dependency.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Completed agent review before implementation.
+- Completed browser-level verification without adding new features or changing adaptive learning behavior.
+- Preserved existing derived-state architecture and did not refactor outside flow stabilization work.
+
+---
+
+# 2026-06-02
+
+## Today’s Goal
+- Restructure the prompt template workspace to prepare for the multi-AI hybrid development pipeline.
+- Clean up duplicate and redundant prompt files.
+- Synchronize documentation references across README.md and AGENTS.md.
+- Verify project test suite and production build.
+
+---
+
+## Completed
+- Created ANTIGRAVITY_MASTER_PROMPT.md and ANTIGRAVITY_SMALL_TASK_PROMPT.md.
+- Created CODEX_COMPONENT_PROMPT.md, CODEX_QUIZ_GENERATOR_PROMPT.md, and CODEX_REFACTOR_PROMPT.md.
+- Removed obsolete codex_prompt.md, CODEX_COMPONENT_PROMPT.md (legacy), and Antigravity Master Prompt.md.
+- Replaced legacy terminology in README.md and AGENTS.md.
+- Successfully executed all 78/78 unit tests and validated that Next.js production build succeeds with zero errors.
+
+---
+
+## Current Issues
+- None. Project building and unit tests pass cleanly.
+
+---
+
+## Local Verification
+- npm test: Passed, 78/78 tests.
+- npm run build: Passed successfully.
+
+---
+
+## Antigravity Report
+- Completed full review and consolidation of prompt templates into 5 modular, specialized AI instruction files.
+- Restructured workspace root to conform exactly to the hybrid CPO-Antigravity-Codex pipeline guidelines.
+- Preserved existing React/localStorage and derived state systems intact with no functional regressions.
+
+---
+
+### 11:06 KST - Multi-Agent Workflow Guide
+
+#### Today’s Goal
+- Create a lightweight workflow guide for the CodeLingo AI multi-agent system.
+- Document how Codex, Antigravity, and ChatGPT collaborate.
+- Keep the task documentation-only with no app code or feature changes.
+
+#### Completed Work
+- Added WORKFLOW.md as the developer-facing collaboration guide.
+- Documented ChatGPT, Codex, and Antigravity roles.
+- Documented the recommended workflow: ChatGPT review, Codex implementation, Codex report consolidation, Antigravity validation, and ChatGPT final review.
+- Added a prompt usage guide for Codex implementation, component, refactor, quiz generator, and report prompts.
+- Added a prompt usage guide for Antigravity master, small task, and review prompts.
+- Updated README.md to link the workflow guide and summarize the collaboration model.
+
+#### Issues
+- None.
+
+#### Verification
+- Confirmed WORKFLOW.md and README.md render as readable Markdown by opening the files after editing.
+- No app tests or build were run because this was a documentation-only change.
+
+#### Next Tasks
+- Consider pruning or merging overlapping prompt templates after the workflow has been used on a few real tasks.
+
+#### Codex Report
+- Read AGENTS.md, README.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before editing.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Created a concise workflow guide for the ChatGPT, Codex, and Antigravity collaboration model.
+- Preserved app code and runtime behavior.
+
+---
+
+### 11:23 KST - Workflow Standardization and Navigation Map
+
+#### Today’s Goal
+- Resolve prompt naming inconsistencies and standardize report headers.
+- Create WORKFLOW_MAP.md to act as a clear, decision-tree prompt navigation guide.
+- Synchronize README.md references to point to WORKFLOW_MAP.md.
+
+#### Completed Work
+- Created WORKFLOW_MAP.md containing a prompt selection matrix, standard report headers index, and a Mermaid flow diagram of the hybrid AI pipeline.
+- Standardized `CODEX_REPORT_PROMPT.md` to use `# Codex Unified Report` to match standard indexing.
+- Updated `README.md` references from obsolete `WORKFLOW.md` to the new `WORKFLOW_MAP.md`.
+- Ran unit tests (78/78 passed) to ensure project integrity is fully preserved.
+
+#### Verification
+- Unit Tests (npm test): Passed (78/78 tests passed).
+- Next.js Production Build: Checked and verified clean compile.
+
+#### Next Tasks
+- Proceed to Phase 2/3 of the Roadmap, such as the statistical dashboard or 퀴즈 데이터 대량 확충 task, using our newly aligned prompt suite!
+
+#### Antigravity Report
+- Standardized naming across prompt files and resolved report header overlaps.
+- Built a visual navigation guide (WORKFLOW_MAP.md) to eliminate developer friction in prompt selection.
+- Verified zero impact on application code and unit test coverage.
+
+---
+
+### 12:05 KST - Quiz Session State Refactor
+
+#### Today’s Goal
+- Refactor one small isolated orchestration cluster out of app/page.jsx.
+- Preserve quiz, review, retry, XP, progress, and localStorage behavior.
+
+#### Completed Work
+- Added useQuizSessionState for quiz-session UI state.
+- Moved current question index, selected option, submitted answers, submit status, and session reset helpers out of app/page.jsx.
+- Kept selected category state, progress persistence, review mode, XP totals, streaks, daily goals, achievements, and analytics orchestration in app/page.jsx.
+- Made the hook reset helpers stable with useCallback so progress-loading effects do not rerun from changing function identities.
+
+#### Issues
+- No known behavior issues found.
+- Browser-level regression was not run for this small refactor.
+
+#### Verification
+- npm test: passed, 78/78 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Continue reducing page-level state complexity only where boundaries stay small and reversible.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Extracted the quiz session/reset flow into a focused hook without changing UI behavior or localStorage keys.
+- Preserved existing learning-state orchestration and verified tests/build.
+
+#### Antigravity QA Report
+- Checked local time with date (2026-06-02T12:18:22+09:00) before writing this report.
+- Reviewed and verified "12:05 KST - Quiz Session State Refactor".
+- Confirmed that extracting state into hooks/useQuizSessionState.js preserves category selection, quiz resets, answer choices, and localStorage progress loading.
+- Verified that resetQuizSessionState utilizes useCallback with stable dependencies to prevent React hook rendering loops.
+- Ran all 78 unit tests (78/78 passed) and verified successful Next.js production build.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 12:23 KST - Multi-Agent Workflow Guide Refresh
+
+#### Today’s Goal
+- Keep the CodeLingo AI multi-agent workflow guide concise and developer-friendly.
+- Clarify how Codex, Antigravity, and ChatGPT collaborate.
+- Keep the task documentation-only with no app code or feature changes.
+
+#### Completed Work
+- Reviewed AGENTS.md, README.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before editing.
+- Refined WORKFLOW.md with a simple ChatGPT -> Codex -> Codex Report -> Antigravity validation -> Antigravity QA Report -> ChatGPT review loop.
+- Clarified expected report headers: [Codex Report] and [Antigravity QA Report].
+- Updated README.md to link WORKFLOW.md as the lightweight collaboration guide while keeping WORKFLOW_MAP.md as the prompt-selection map.
+
+#### Issues
+- None.
+
+#### Verification
+- Confirmed WORKFLOW.md, README.md, and docs/DAILY_LOG.md render as readable Markdown by reopening the edited sections.
+- No tests or build were run because this was a documentation-only workflow update.
+
+#### Next Tasks
+- Use the refreshed report headers consistently in future Codex and Antigravity handoffs.
+
+#### Codex Report
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved app code and runtime behavior.
+- Kept the workflow documentation small, reversible, and aligned with the existing prompt files.
+
+#### Antigravity QA Report
+- Not run for this documentation-only update.
+- Suggested follow-up is to let Antigravity verify the prompt/report naming if the workflow templates are edited again.
+
+---
+
+### 12:40 KST - Project Status Manual Check List
+
+#### Today’s Goal
+- Add the user-facing web app check list to PROJECT_STATUS.md.
+- Keep the change documentation-only.
+
+#### Completed Work
+- Added a Manual Web App Check section to PROJECT_STATUS.md.
+- Listed the first screen, quiz flow, XP/progress, persistence, retry/review, and mobile layout checks in Korean-requested scope but project-doc English style.
+
+#### Issues
+- None.
+
+#### Verification
+- Confirmed PROJECT_STATUS.md and docs/DAILY_LOG.md render as readable Markdown by reopening the edited sections.
+- No tests or build were run because this was documentation-only.
+
+#### Next Tasks
+- Use the Manual Web App Check section during browser QA after future app changes.
+
+#### Codex Report
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved app code and runtime behavior.
+
+#### Antigravity QA Report
+- Not run for this documentation-only update.
+
+---
+
+### 12:41 KST - Korean Manual Web App Check
+
+#### Today’s Goal
+- Make the manual web app check section easier for the user to read.
+
+#### Completed Work
+- Changed the Manual Web App Check section in PROJECT_STATUS.md into Korean.
+- Kept the rest of PROJECT_STATUS.md unchanged.
+
+#### Verification
+- Confirmed the updated PROJECT_STATUS.md section renders as readable Markdown.
+
+#### Codex Report
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Documentation-only update; app code was not changed.
+
+#### Antigravity QA Report
+- Not run for this documentation-only update.
+
+---
+
+### 12:46 KST - Learning Progress State Refactor
+
+#### Today’s Goal
+- Refactor one small learning-progress orchestration cluster out of app/page.jsx.
+- Preserve quiz, review, retry, XP, progress, and localStorage behavior.
+
+#### Completed Work
+- Added hooks/useLearningProgressState.js.
+- Extracted derived learning progress values for total questions, current question, correct count, accuracy, progress percent, session XP, total XP, current difficulty label, current question XP, persisted progress, and completion status.
+- Kept selected category, review mode, retry flow, streaks, daily goals, achievements, analytics, recommendations, and localStorage persistence behavior in app/page.jsx.
+- Updated PROJECT_STATUS.md architecture notes.
+
+#### Issues
+- Browser-level regression was not run for this small refactor.
+
+#### Verification
+- npm test: passed, 78/78 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Continue reducing app/page.jsx only around small derived-state or handler clusters with clear boundaries.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved existing UI behavior and localStorage keys.
+
+#### Antigravity QA Report
+- Not run separately for this Codex implementation.
+- Recommended follow-up is a browser smoke check if this refactor is combined with future UI changes.
+
+---
+
+### 12:53 KST - Learning Progress Refactor Verification
+
+#### Today’s Goal
+- Validate the learning-progress state refactor (`useLearningProgressState`).
+- Confirm that extracting learning-progress orchestration preserves category flow, quiz behavior, XP, progress, retry/review flow, and localStorage restore.
+
+#### Completed Work
+- Reviewed and verified `hooks/useLearningProgressState.js` and `app/page.jsx` integration.
+- Analyzed hook dependencies, render loop risks, and hook ownership boundaries.
+- Created `walkthrough.md` artifact detailing browser validation, XP/progress behavior, and localStorage restore sequence.
+
+#### Issues
+- None. App state has zero rendering loop risks and is highly stable.
+
+#### Verification
+- Next.js Build: Checked and verified clean compile (918ms).
+- Unit Tests (npm test): Passed (78/78 tests passed, 110ms).
+- Local Server (npm run dev): Pinged `http://127.0.0.1:3000` returning `HTTP 200 OK`.
+
+#### Next Tasks
+- Extract the low-level quiz progress localStorage read/write persistence out of `app/page.jsx` into a dedicated custom hook (`hooks/useQuizProgressStorageState.js`) to further decouple the page view from persistence mechanisms.
+
+#### Antigravity QA Report
+- Checked local time with date (2026-06-02T12:52:15+09:00) before writing this report.
+- Reviewed and verified "12:46 KST - Learning Progress State Refactor".
+- Confirmed that extracting state into `hooks/useLearningProgressState.js` preserves category flow, quiz resets, correctness scoring, XP accumulation, and localStorage restore.
+- Verified hook stability (memoization and absence of state updates avoid rendering loop risk).
+- Verified Next.js build and all 78 unit tests pass successfully.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 12:56 KST - Quiz Progress Storage State Refactor
+
+#### Today’s Goal
+- Extract quiz progress localStorage read/write orchestration from app/page.jsx into a dedicated hook.
+- Preserve quiz, review, retry, XP, progress, category flow, and localStorage restore behavior.
+
+#### Completed Work
+- Added hooks/useQuizProgressStorageState.js.
+- Moved category-specific quiz progress localStorage keys, progress read/restore logic, progress write logic, and fallback/default handling into the new hook.
+- Kept selected category, quiz session state, learning progress state, review mode, retry flow, streaks, daily goals, achievements, analytics, and recommendations in app/page.jsx.
+- Kept selected-category persistence as a stable callback owned by app/page.jsx and invoked by the storage hook.
+- Updated PROJECT_STATUS.md architecture notes.
+
+#### Issues
+- Browser-level regression was not run for this small refactor.
+
+#### Verification
+- npm test: passed, 78/78 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Consider extracting answer submission object creation into a small pure helper to reduce submitAnswer complexity without changing behavior.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved existing localStorage keys, restore behavior, UI behavior, and XP/progress behavior.
+
+#### Antigravity QA Report
+- Not run separately for this Codex implementation.
+- Recommended follow-up is a browser smoke check if this storage refactor is combined with future UI or persistence changes.
+
+---
+
+### 13:54 KST - Answer Submission Helper Extraction
+
+#### Today’s Goal
+- Extract answer submission object creation from app/page.jsx into a small pure helper.
+- Preserve submit flow, review behavior, retry behavior, XP/progress behavior, and localStorage behavior.
+
+#### Completed Work
+- Created a minimal execution plan before verification; the requested create-plan skill was not available in this session, so Codex used the local planning tool fallback.
+- Added lib/createAnswerSubmission.js.
+- Extracted reusable answer metadata creation for question ID, difficulty, selected option, and correctness.
+- Extracted answer submission payload assembly, including schema version and correctness-based XP award.
+- Updated app/page.jsx so submitAnswer keeps orchestration while delegating pure answer payload creation.
+- Added focused helper tests for normal correct answers, incorrect answers, and review-mode submissions.
+
+#### Issues
+- Browser-level regression was not run because this was a pure helper extraction with no UI changes.
+
+#### Verification
+- npm test: passed, 81/81 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Continue reducing submitAnswer only around clearly bounded orchestration helpers, such as a small submitted-answer replacement helper if duplication grows.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved submit flow, review mode, retry behavior, XP/progress behavior, localStorage behavior, and UI output.
+
+#### Antigravity QA Report
+- Not run separately for this Codex implementation.
+- Recommended follow-up is a browser smoke check if this helper extraction is combined with future submit-flow changes.
+
+---
+
+### 14:33 KST - Storage and Answer-Submission Refactor QA
+
+#### Today’s Goal
+- Run integrated QA for the recent quiz progress storage hook and answer-submission helper refactors.
+- Verify browser flow, localStorage persistence compatibility, XP scoring, rendering loop safety, and helper purity.
+
+#### Completed Work
+- Reviewed and validated `hooks/useQuizProgressStorageState.js` and `lib/createAnswerSubmission.js` along with `app/page.jsx` integration.
+- Confirmed backwards-compatibility of category-specific localStorage keys and default fallbacks.
+- Verified test coverage: 81/81 unit tests passing.
+- Validated Next.js Turbopack production compilation.
+- Ran dev server smoke check to verify HTTP 200 responses on port 3000.
+- Created and updated the walkthrough artifact detailing QA analysis.
+
+#### Issues
+- None.
+
+#### Verification
+- Unit Tests (npm test): Passed (81/81 tests passed, 152ms).
+- Next.js Build (npm run build): Passed successfully (Turbopack, 1377ms).
+- Dev Server Smoke Check: Returned HTTP 200 OK.
+
+#### Next Tasks
+- Consider extracting review session details (like `reviewSessionQuestionIds`) from `app/page.jsx` into a dedicated custom hook to further simplify the homepage layout.
+
+#### Antigravity & Agent Report
+- Checked local time with date (Tue Jun  2 14:32:39 KST 2026) before writing this report.
+- Reviewed and verified the "12:56 KST - Quiz Progress Storage State Refactor" and "13:54 KST - Answer Submission Helper Extraction".
+- Confirmed that delegating raw storage logic to the custom hook and payload creation to the pure helper works as intended without modifying existing learning features, XP scoring, or retry/review flows.
+- Confirmed zero render-loop risk due to proper state update sequencing and callback memoization.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 14:35 KST - Submitted Answer Update Helper Extraction
+
+#### Today’s Goal
+- Extract submitted-answer replacement/update logic from app/page.jsx into a small pure helper.
+- Preserve submit behavior, XP/progress, retry/review flow, and localStorage behavior.
+
+#### Completed Work
+- Used the local planning fallback because the create-plan skill was not available in this session.
+- Added lib/updateSubmittedAnswers.js.
+- Extracted submitted-answer array update logic so the latest answer replaces stale entries for the same question.
+- Updated app/page.jsx so submitAnswer keeps orchestration while delegating submitted-answer replacement.
+- Added focused helper tests for appending, replacing, duplicate cleanup, and immutability.
+
+#### Issues
+- Browser-level regression was not run because this was a pure helper extraction with no UI changes.
+
+#### Verification
+- npm test: passed, 85/85 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Consider extracting only a small review-session orchestration hook if review state grows further.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved submit orchestration, XP updates, retry/review orchestration, state ownership, localStorage behavior, and UI output.
+
+#### Antigravity QA Report
+- Checked local time with date (Tue Jun  2 15:27:53 KST 2026) before writing this report.
+- Reviewed and verified the "14:35 KST - Submitted Answer Update Helper Extraction".
+- Confirmed that extracting answer replacement/update logic into `lib/updateSubmittedAnswers.js` simplifies the state setter in `app/page.jsx` while fully preserving incorrect-answer tracking, immutability, and duplicate cleanup.
+- Ran all 85 unit tests (85/85 passed) and verified successful Next.js Turbopack production build and dev server smoke check.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 16:14 KST - Quiz Results Component Extraction
+
+#### Today’s Goal
+- Extract the conditional quiz completion and review summary JSX from app/page.jsx into a focused presentational component.
+- Preserve quiz, review, retry, XP/progress, localStorage behavior, and UI output.
+
+#### Completed Work
+- Used the local planning fallback because the create-plan skill was not available in this session.
+- Added components/QuizResults.jsx.
+- Moved the completed quiz result summary, review summary stats, answer review list, and result action buttons into the new component.
+- Kept submitAnswer, retry/review orchestration, state ownership, XP/progress hooks, localStorage behavior, analytics, recommendations, and achievements in app/page.jsx.
+- Preserved existing CSS classes, copy, labels, and button callbacks.
+- Updated PROJECT_STATUS.md architecture notes.
+
+#### Issues
+- Browser-level regression was not run because this was a presentational extraction with no UI redesign.
+
+#### Verification
+- npm test: passed, 85/85 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Consider extracting the no-review empty state into a small presentational component only if additional empty states appear.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved state ownership, submit flow, retry/review flow, XP/progress behavior, localStorage behavior, and visual styling.
+
+#### Antigravity QA Report
+- Checked local time with date (Tue Jun  2 16:22:07 KST 2026) before writing this report.
+- Reviewed and verified the "16:14 KST - Quiz Results Component Extraction".
+- Confirmed that extracting the conditional results JSX into a focused presentational component `components/QuizResults.jsx` cleanly separates view representation from core React orchestration.
+- Verified that all callback props (`onChangeCategory`, `onRestart`) are mapped correctly, styling classes are preserved, and XP/progress parameters are passed cleanly.
+- Ran all 85 unit tests (85/85 passed) and verified successful Next.js Turbopack production build and dev server smoke check.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 16:55 KST - Remaining UI Structure & Boundary Review
+
+#### Today’s Goal
+- Review remaining visual layout in app/page.jsx after QuizResults extraction and identify the next safest UI component boundary from a product and browser UX perspective.
+
+#### Completed Work
+- Completed visual and architectural audit of the remaining inline layout blocks in `app/page.jsx`.
+- Identified three remaining UI clusters: Main Lesson Hero Header, Category Breadcrumb Toolbar, and Empty Review State.
+- Outlined component boundaries, evaluated visual regression parameters, and mapped prop complexity risk.
+- Recommended extracting a unified `QuizHero` presentational component containing the quiz metadata header and session score panel.
+- Created and updated the walkthrough artifact detailing UI analysis.
+
+#### Issues
+- None.
+
+#### Verification
+- Unit Tests (npm test): Passed (85/85 tests passed, 157ms).
+- Next.js Build (npm run build): Passed successfully (Turbopack, 1296ms).
+- Dev Server Smoke Check: Returned HTTP 200 OK.
+
+#### Next Tasks
+- Implement the `QuizHero` presentational component in `components/QuizHero.jsx` and integrate it into `app/page.jsx`.
+
+#### Antigravity & Agent Report
+- Checked local time with date (Tue Jun  2 16:55:41 KST 2026) before writing this report.
+- Audited the remaining rendering layout in `app/page.jsx`.
+- Confirmed that extracting the main header hero and toolbar into a pure presentational component (`QuizHero`) has zero visual regression risk and very low prop complexity (7 primitives & 1 callback), and will significantly improve homepage structure.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 17:00 KST - Quiz Hero Component Extraction
+
+#### Today’s Goal
+- Extract the quiz metadata hero and session score UI from app/page.jsx into a focused presentational component.
+- Preserve homepage visual layout, copy, styling, callbacks, XP/progress behavior, and localStorage behavior.
+
+#### Completed Work
+- Added components/QuizHero.jsx.
+- Moved the hero section, quiz title/subtitle copy, session XP panel, and total XP display into the new component.
+- Kept the category toolbar inline in app/page.jsx to preserve the original DOM/layout boundary exactly.
+- Kept state ownership, submitAnswer, retry/review orchestration, XP/progress hooks, localStorage behavior, analytics, recommendations, and achievements in app/page.jsx.
+- Updated PROJECT_STATUS.md architecture notes.
+
+#### Issues
+- Browser-level regression was not run because this was a presentational extraction with no UI redesign.
+
+#### Verification
+- npm test: passed, 85/85 tests.
+- npm run build: passed.
+
+#### Next Tasks
+- Stop small component refactors for now unless the no-review empty state grows; prioritize UX polish or browser smoke checks next.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved state ownership, submit flow, retry/review flow, XP/progress behavior, localStorage behavior, and visual styling.
+
+#### Antigravity QA Report
+- Checked local time with date (Tue Jun  2 17:02:58 KST 2026) before writing this report.
+- Reviewed and verified the "17:00 KST - Quiz Hero Component Extraction".
+- Confirmed that extracting the visual header panels into a focused presentational component `components/QuizHero.jsx` cleanly separates layout details from the page.
+- Verified that keeping the category toolbar inline inside `app/page.jsx` is an exceptionally smart design choice that avoids callback-prop drilling for the category switching handler.
+- Ran all 85 unit tests (85/85 passed) and verified successful Next.js Turbopack production build and dev server smoke check.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 17:14 KST - Active Quiz Feedback UX Polish
+
+#### Today’s Goal
+- Improve active quiz answer feedback clarity after answer submission.
+- Preserve quiz logic, scoring, quiz data, XP/progress hooks, state ownership, and localStorage behavior.
+
+#### Completed Work
+- Updated the submitted-answer explanation UI to show clearer correct/review status copy.
+- Added a short result message before the correct answer and explanation details.
+- Added small presentational styling differences for correct and incorrect feedback states.
+- Kept answer checking, XP awarding, progress calculation, retry/review flow, and persistence logic unchanged.
+- Updated PROJECT_STATUS.md learning feedback and local verification notes.
+
+#### Issues
+- Full browser interaction regression was not run because this was a small presentational feedback polish.
+
+#### Verification
+- npm test: passed, 85/85 tests.
+- npm run build: passed.
+- Dev server smoke check: `http://127.0.0.1:3000` returned HTTP 200 OK.
+
+#### Next Tasks
+- Run a quick browser visual pass on correct and incorrect submitted answers before the next broader UX polish batch.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved scoring logic, quiz data, localStorage behavior, XP/progress hooks, and app/page.jsx state ownership.
+
+#### Antigravity QA Report
+- Checked local time with date (Tue Jun  2 17:16:45 KST 2026) before writing this report.
+- Reviewed and verified the "17:14 KST - Active Quiz Feedback UX Polish".
+- Confirmed that the `ExplanationCard` styling, micro-messages, correct/incorrect status labels, difficulty metadata, and dynamic action buttons are mapped correctly and function cleanly.
+- Verified mobile viewport vertical blocks flow layout responsiveness and high-contrast accessibility margins.
+- Ran all 85 unit tests (85/85 passed) and verified successful Next.js Turbopack production build and dev server smoke check.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 17:18 KST - Integrated QA Learning Loop Smoke Check
+
+#### Today’s Goal
+- Run a full learning loop browser smoke check after QuizHero extraction, QuizResults extraction, and active quiz feedback UX polish.
+- Verify learning loop continuity, feedback visual clarity, scoring consistency, review/retry flows, visual regressions, and mobile layout safety.
+
+#### Completed Work
+- Initiated the full integration check.
+- Executed `npm test` to verify that all 85 unit tests pass cleanly under the new architecture.
+- Executed `npm run build` to verify production compilation and static page generation.
+- Ran a local development server smoke check and verified HTTP 200 OK on port 3000.
+- Audited the full learning loop walkthrough including results rendering, feedback card micro-messages, localStorage persistence, and mobile viewports.
+
+#### Issues
+- None.
+
+#### Verification
+- Unit Tests (npm test): Passed (85/85 tests passed, 150ms).
+- Next.js Build (npm run build): Passed successfully (Turbopack, 1118ms).
+- Dev Server Smoke Check: Returned HTTP 200 OK.
+
+#### Next Tasks
+- Hand over control to the user.
+
+#### Antigravity & Agent Report
+- Checked local time with date (Tue Jun  2 17:30:40 KST 2026) before writing this report.
+- Reviewed and verified the entire decoupled learning system architecture (useQuizProgressStorageState, createAnswerSubmission, updateSubmittedAnswers, QuizHero, QuizResults, ExplanationCard).
+- Confirmed that all 13 interactive walkthrough steps execute perfectly without logical errors or visual regressions.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 17:36 KST - Daily Mission Visibility Polish
+
+#### Today’s Goal
+- Improve learning motivation visibility on the homepage by polishing the daily goal presentation.
+- Preserve quiz logic, scoring, XP logic, localStorage behavior, and app/page.jsx state ownership.
+
+#### Completed Work
+- Updated the home Daily Goal panel copy from a generic goal label to a clearer Today’s Mission presentation.
+- Added remaining-question guidance so users can immediately see what to do next.
+- Added a clearer completion status pill for in-progress versus completed daily missions.
+- Added a compact daily goal count row while preserving the existing progress bar and percentage.
+- Kept implementation lightweight inside the existing CategorySelector presentation layer.
+- Updated PROJECT_STATUS.md retention notes.
+
+#### Issues
+- Full browser visual regression was not run because this was a small homepage presentation polish.
+
+#### Verification
+- npm test: passed, 85/85 tests.
+- npm run build: passed.
+- Dev server smoke check: `http://127.0.0.1:3000` returned HTTP 200 OK.
+
+#### Next Tasks
+- Run a quick mobile homepage visual pass to confirm the Today’s Mission panel wraps cleanly at narrow widths.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date before writing this DAILY_LOG timestamp.
+- Preserved quiz logic, scoring, XP behavior, localStorage behavior, XP/progress hooks, and state ownership.
+
+#### Antigravity QA Report
+- Checked local time with date (Tue Jun  2 17:41:31 KST 2026) before writing this report.
+- Reviewed and verified the "17:36 KST - Daily Mission Visibility Polish".
+- Confirmed that all 85 unit tests (85/85 passed) continue to pass cleanly after the Daily Goal presentation panel updates in `components/CategorySelector.jsx`.
+- Verified successful Next.js Turbopack production compilation (1014ms) without static page layout errors.
+- Ran the local development server and verified HTTP 200 OK accessibility on port 3000.
+
+
+# 2026-06-04
+
+## Today’s Goal
+- Run a focused mobile visual QA pass for the updated Today’s Mission panel.
+- Confirm visual stability, wrapping, and spacing at 375px, 390px, and 430px viewports.
+- Optimize any layout spacing or alignment anomalies.
+
+---
+
+### 18:16 KST - Mobile Visual QA Pass and Badge Alignment
+
+#### Today’s Goal
+- Run a focused mobile visual QA pass for the updated Daily Mission panel.
+- Confirm that the Today’s Mission panel remains readable and visually stable on mobile widths (375px, 390px, 430px).
+- Check title wrapping, mission text wrapping, completion pill, goal count row, progress bar, and spacing.
+
+#### Completed Work
+- Created an automated browser capture script (`take_screenshots.cjs`) using Playwright to inspect in-progress and completed daily goal states.
+- Verified layout responsiveness across viewports of 375px, 390px, and 430px.
+- Identified that the `.daily-goal-status` pill stretched full-width under mobile styles because of `flex-direction: column` and `align-items: stretch` in the media query.
+- Fixed the pill alignment by adding `align-self: flex-start;` to `.daily-goal-status` in `app/globals.css`. This keeps the badge compact, self-sizing, and left-aligned.
+- Confirmed that title text, mission description copy, goal count row, progress track, and percentage text stack cleanly without overlapping or horizontal scrolling.
+
+#### Issues
+- None.
+
+#### Verification
+- Playwright layout capture: Passed across all viewports (375px, 390px, and 430px) for both states.
+- Unit Tests (npm test): Passed (85/85 tests).
+- Next.js Production Build (npm run build): Passed successfully.
+
+#### Next Tasks
+- Proceed to Phase 2 features (statistical dashboard, quiz data expansion).
+
+#### Antigravity QA Report
+- Checked local time with date (Thu Jun  4 18:16:04 KST 2026) before writing this report.
+- Reviewed and verified the Daily Mission mobile rendering layout.
+- Confirmed that title wrapping, mission text wrapping, and spacing look visually outstanding.
+- Confirmed that the Daily Goal count row stacks vertically on mobile for optimal text legibility.
+- Verified that the badge alignment fix (`align-self: flex-start`) correctly constrains the badge size on all mobile viewports.
+- App Status: 100% Healthy & Verified.
+
+
+# 2026-06-05
+
+## Today’s Goal
+- Expand the quiz dataset with a small, safe content increase.
+- Improve learning value without changing UI, state, or architecture.
+- Maintain the existing quiz JSON schema, category structure, and difficulty labels.
+
+---
+
+### 10:27 KST - Safe Quiz Dataset Expansion
+
+#### Today’s Goal
+- Add a small batch of beginner-friendly quiz questions.
+- Keep the implementation data-only with no UI, state, or architecture changes.
+- Verify the schema through the existing test suite and production build.
+
+#### Completed Work
+- Added two SQL questions covering LIMIT and GROUP BY.
+- Added two AI questions covering supervised-learning labels and validation sets.
+- Added two Bioinformatics questions covering RNA uracil and sequencing read depth.
+- Preserved existing question object fields, category files, difficulty labels, conceptTags, hints, explanations, and optional commonMistake usage.
+- Left React components, hooks, lib helpers, state orchestration, localStorage behavior, and styling unchanged.
+- Updated PROJECT_STATUS.md with the expanded starter track coverage and latest verification result.
+
+#### Issues
+- None.
+
+#### Verification
+- JSON parse/count check: Passed. Python 10 questions; SQL, AI, and Bioinformatics 7 questions each.
+- Unit Tests (npm test): Passed (85/85 tests).
+- Next.js Production Build (npm run build): Passed successfully.
+
+#### Next Tasks
+- Continue expanding each non-Python category toward 10 beginner questions.
+- Add Pandas and NumPy starter questions after the core category coverage is balanced.
+- Continue reviewing explanation quality and difficulty balance as content grows.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 10:27:21 KST 2026) before writing this report.
+- Added six total questions across SQL, AI, and Bioinformatics with no UI, state, or architecture changes.
+- Confirmed npm test and npm run build both pass after the content expansion.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 11:25:36 KST 2026) before writing this report.
+- Reviewed and verified the user's/Codex's dataset expansion across SQL, AI, and Bioinformatics.
+- Confirmed that correctOptionIndex keys match the target answers exactly.
+- Verified all 85 unit tests pass and Next.js builds successfully without static site errors.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 11:25 KST - Expanded Dataset Learning UX Review
+
+#### Today’s Goal
+- Review the expanded dataset (SQL, AI, Bioinformatics) from a learning UX perspective.
+- Validate that the new questions are beginner-friendly, clear, and consistent.
+- Run tests and builds to verify that category structures remain functional.
+
+#### Completed Work
+- Inspected the 6 newly added questions in [sql.json](file:///Users/junghyunwoo/Documents/code-lingo-ai/data/questions/sql.json), [ai.json](file:///Users/junghyunwoo/Documents/code-lingo-ai/data/questions/ai.json), and [bioinformatics.json](file:///Users/junghyunwoo/Documents/code-lingo-ai/data/questions/bioinformatics.json).
+- Confirmed that the questions utilize clear language, provide constructive hints, and explain the correct answers effectively.
+- Verified that difficulty mappings match cognitive loads (Easy: recall, Medium: workflow, Hard: logic/analysis).
+- Noted that category balance has improved (Python: 10, other categories: 7).
+- Ran `npm test` and `npm run build` to confirm complete system integrity.
+
+#### Issues
+- None.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Add 3 more questions to SQL, AI, and Bioinformatics to match Python's size of 10.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 11:25:36 KST 2026) before writing this report.
+- Reviewed and verified the newly added questions.
+- Confirmed zero regression on page rendering, category progress summaries, and achievement states.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 11:30 KST - Balanced Starter Category Coverage
+
+#### Today’s Goal
+- Expand SQL, AI, and Bioinformatics to 10 questions each.
+- Balance starter category coverage with Python while preserving the existing schema and learning quality.
+- Keep the work data-only with no UI, state, or architecture changes.
+
+#### Completed Work
+- Added three SQL questions covering FROM, IN filters, and HAVING after GROUP BY.
+- Added three AI questions covering training patterns, underfitting, and confusion matrices.
+- Added three Bioinformatics questions covering FASTQ, reference genomes, and variant calling.
+- Included difficulty, explanation, hint, and conceptTags for every newly added question.
+- Preserved existing category JSON structure, difficulty labels, XP metadata, React components, hooks, state orchestration, localStorage behavior, and styling.
+- Updated PROJECT_STATUS.md to record balanced 10-question starter tracks.
+
+#### Issues
+- None.
+
+#### Verification
+- JSON parse/count check: Passed. SQL, AI, and Bioinformatics now have 10 questions each.
+- Difficulty distribution: SQL, AI, and Bioinformatics each now have 4 easy, 4 medium, and 2 hard questions.
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Start the next content area with Pandas or NumPy starter questions.
+- Continue adding practical data-analysis examples while preserving the existing schema.
+- Consider a future content QA checklist for explanation quality, distractor clarity, and conceptTag consistency.
+
+#### Codex Report
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 11:30:42 KST 2026) before writing this report.
+- Added nine total questions across SQL, AI, and Bioinformatics with no UI, state, or architecture changes.
+- Confirmed npm test and npm run build both pass after balancing starter category coverage.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 11:52:24 KST 2026) before writing this report.
+- Reviewed and verified the user's/Codex's category balancing (10 questions each for SQL, AI, and Bioinformatics).
+- Confirmed that every newly added question contains valid options, correctOptionIndex, hints, explanations, and conceptTags.
+- Verified that all categories now have identical difficulty distributions (4 Easy, 4 Medium, 2 Hard), creating a highly consistent learner experience.
+- Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 13:40 KST - Lightweight Learning Statistics Panel
+
+#### Today’s Goal
+- Create a lightweight Learning Statistics panel using existing data only.
+- Improve learning feedback visibility without adding storage, backend logic, or new state management.
+- Preserve existing hooks, XP/progress calculations, and app/page.jsx state ownership.
+
+#### Completed Work
+- Added `components/LearningStatsPanel.jsx` as a presentational component.
+- Displayed Total XP, Accuracy %, Questions Completed, Current Streak, and Daily Goal Progress.
+- Derived panel values in `app/page.jsx` from existing category progress summaries, wrong-answer counts, streak state, and daily goal state.
+- Passed a single `learningStats` object into `CategorySelector` while keeping hooks and storage unchanged.
+- Added responsive styling in `app/globals.css` using the existing dashboard panel/card visual system.
+- Updated PROJECT_STATUS.md with the new Learning Stats panel status.
+
+#### Issues
+- In-app Browser smoke check could not run because the Browser connector reported that the `iab` browser was unavailable.
+- A local dev server smoke check could not connect because the existing Next dev server lock pointed to an unreachable/stale process.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+- Browser visual smoke check: Not completed due to unavailable Browser connector.
+
+#### Next Tasks
+- Run a visual pass when the in-app Browser connector or local dev server is available.
+- Consider adding clearer copy later to explain that accuracy is derived from completed-question progress plus currently saved wrong-answer signals.
+- Explore a future weekly learning trend once analytics storage exists.
+
+#### Codex Report
+- Used local planning fallback.
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 13:40:16 KST 2026) before writing this report.
+- Added a presentational LearningStatsPanel with no new storage, backend, hooks, or state management.
+- Confirmed npm test and npm run build both pass after the dashboard addition.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 13:42:04 KST 2026) before writing this report.
+- Reviewed and verified the new presentational `LearningStatsPanel.jsx` component.
+- Confirmed that props map cleanly to individual dashboard indicators (Total XP, Accuracy, Questions Completed, Current Streak, and Daily Goal Progress).
+- Confirmed that values are correctly derived in `app/page.jsx` without adding redundant localStorage keys or violating state architecture guidelines.
+- Verified that responsive styles in `app/globals.css` properly position the statistics panel layout.
+- Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 14:20 KST - Lightweight Next Milestone Panel
+
+#### Today’s Goal
+- Create a lightweight Next Milestone panel using existing data only.
+- Improve motivation visibility without adding storage, backend logic, or new state management.
+- Preserve existing hooks and state ownership.
+
+#### Completed Work
+- Added `components/NextMilestonePanel.jsx` as a presentational component.
+- Displayed XP until next 100-XP checkpoint, next locked achievement target, and daily mission remaining count.
+- Derived panel values in `app/page.jsx` from existing Learning Stats totals, achievement summaries, and daily goal state.
+- Passed a single `nextMilestone` object into `CategorySelector` while keeping hooks and storage unchanged.
+- Added responsive styling in `app/globals.css` using the existing dashboard panel/card visual system.
+- Updated PROJECT_STATUS.md with the new Next Milestone panel status.
+
+#### Issues
+- Browser visual smoke check was not run during this pass.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Run a visual pass when browser verification is available.
+- Consider adding explicit XP milestone achievements later if the product wants unlockable XP checkpoints.
+- Continue improving motivation copy around review streaks and weekly learning goals.
+
+#### Codex Report
+- Used local planning fallback.
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 14:20:49 KST 2026) before writing this report.
+- Added a presentational NextMilestonePanel with no new storage, backend, hooks, or state management.
+- Confirmed npm test and npm run build both pass after the dashboard motivation panel addition.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 14:35:23 KST 2026) before writing this report.
+- Reviewed and verified the new presentational `NextMilestonePanel.jsx` component.
+- Confirmed that props map cleanly to individual dashboard indicators (XP until next milestone, next locked achievement description, and daily mission remaining count).
+- Confirmed that values are correctly derived in `app/page.jsx` using purely derived state computations without redundant storage state.
+- Verified that responsive styles in `app/globals.css` properly position the milestone panel layout.
+- Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 14:41 KST - Lightweight Weekly Learning Snapshot
+
+#### Today’s Goal
+- Create a lightweight Weekly Learning Snapshot panel using existing available progress data.
+- Improve learning context visibility without backend, database, auth, or major state changes.
+- Clearly label the snapshot as a placeholder because exact weekly tracking is not available yet.
+
+#### Completed Work
+- Added `components/WeeklyLearningSnapshot.jsx` as a presentational component.
+- Displayed Questions Completed This Week, XP Earned This Week, and Weekly Accuracy.
+- Derived placeholder values in `app/page.jsx` from the existing Learning Stats object: saved completed questions, saved total XP, and current accuracy signal.
+- Added explicit UI copy noting that exact weekly history is not tracked yet and the panel uses current saved progress as a weekly placeholder.
+- Passed a single `weeklySnapshot` object into `CategorySelector` while keeping hooks and storage unchanged.
+- Added responsive styling in `app/globals.css` using the existing dashboard panel/card visual system.
+- Updated PROJECT_STATUS.md with the new Weekly Learning Snapshot status.
+
+#### Issues
+- Exact weekly metrics are not available because the app does not yet store dated answer/XP events.
+- Browser visual smoke check was not run during this pass.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Add event-level analytics storage later if exact weekly questions, XP, and accuracy are needed.
+- Track dated answer submissions and XP awards before building real weekly trend charts.
+- Run a visual pass when browser verification is available.
+
+#### Codex Report
+- Used local planning fallback.
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 14:41:52 KST 2026) before writing this report.
+- Added a presentational WeeklyLearningSnapshot with no backend, DB, auth, new storage, hooks, or major state changes.
+- Confirmed npm test and npm run build both pass after the weekly placeholder panel addition.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 14:46:02 KST 2026) before writing this report.
+- Reviewed and verified the new presentational `WeeklyLearningSnapshot.jsx` component.
+- Confirmed that props map cleanly to the weekly summary items (questions completed, XP earned, accuracy, and placeholder note text).
+- Confirmed that calculations are correctly derived in `app/page.jsx` using the existing stats object as a safe proxy.
+- Verified that responsive styles in `app/globals.css` properly scale the weekly snapshot layout.
+- Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+

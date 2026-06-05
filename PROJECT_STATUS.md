@@ -1,7 +1,7 @@
 # PROJECT_STATUS.md
 
 ## Current Status
-CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category progress dashboard, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
+CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category progress dashboard, lightweight learning statistics, next milestone, and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
 
 ## Completed Features
 
@@ -9,6 +9,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Basic multiple-choice quiz screen
 - Python beginner quiz data
 - Python, SQL, AI, and Bioinformatics categories
+- Python, SQL, AI, and Bioinformatics starter tracks balanced at 10 questions each while preserving the existing JSON schema
 - Category selection before quiz start
 - Separate selected category storage
 - Question data organized under data/questions/*.json
@@ -25,6 +26,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 ### Learning Feedback
 - Correct/incorrect answer checking
 - Immediate feedback messaging
+- Submitted answer feedback now shows clearer correct/review status copy and visual treatment
 - Dedicated reusable ExplanationCard after each submitted answer
 - Explanation card shows correct answer, explanation, earned XP, and difficulty
 - Optional commonMistake helper text supported in quiz schema
@@ -63,11 +65,18 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Daily goal tracking for completed normal quiz questions by local calendar day
 - Daily goal target defaults to 5 completed questions
 - Home category screen shows daily goal count, target, progress percentage, and completion state
+- Home category screen highlights today's mission with remaining-question guidance and a clearer completion status
+- Home category screen shows a lightweight Learning Stats snapshot with total XP, accuracy signal, completed questions, current streak, and daily goal progress
+- Home category screen shows a lightweight Next Milestone snapshot with XP checkpoint distance, next locked achievement target, and daily mission remaining count
+- Home category screen shows a lightweight Weekly Learning Snapshot placeholder using current saved progress until weekly history tracking exists
 - Category dashboard helps users resume partially completed tracks
 - Home dashboard information hierarchy groups today's learning actions above category progress and achievements
 
 ### Architecture / Testing
 - Reusable QuizCard, ProgressBar, CategorySelector, and ExplanationCard components
+- Reusable presentational LearningStatsPanel component displays existing derived progress signals without new storage or state management
+- Reusable presentational NextMilestonePanel component displays existing derived motivation signals without new storage or state management
+- Reusable presentational WeeklyLearningSnapshot component displays an explicitly labeled current-progress proxy without new storage or state management
 - Quiz logic separated from UI logic in lib helpers
 - Quiz retry and XP persistence helpers keep session progress separate from saved category progress
 - Streak and daily goal localStorage state management extracted into small reusable hooks
@@ -77,6 +86,10 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Weak-area insight logic centralized in pure lib helpers with hook orchestration
 - Concept analytics logic centralized in pure lib helpers with hook orchestration
 - Wrong-answer history localStorage orchestration extracted into a hook, with pure helpers for saved ID normalization and recency ordering
+- Learning progress derived values for XP totals, progress percentages, current question metadata, and completion status extracted into a focused hook
+- Quiz progress localStorage read/write and restore orchestration extracted into a focused hook while preserving category-specific storage keys
+- Quiz metadata hero and session score rendering extracted into a focused presentational QuizHero component
+- Quiz completion and review summary rendering extracted into a focused presentational QuizResults component
 - Versioned localStorage payload metadata added for future adaptive learning compatibility
 - Initial tests and focused logic tests for quiz data, hint support, difficulty XP, quiz retry XP persistence, streaks, daily goals, category progress, achievements, wrong-answer history, adaptive review recommendations, weak-area insights, and concept analytics
 - npm test and npm run build pass in the current local Codex environment
@@ -87,15 +100,23 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Project structure stabilization
 - Daily reporting workflow
 - Multi-agent development setup
-- Browser-level regression verification for full quiz and review flows
+- Ongoing browser-level regression verification as adaptive learning features expand
 
 ## Issues
-- Full browser-level regression across quiz, review, retry, and dashboard flows is still pending.
+- Codex in-app browser automation does not expose direct localStorage inspection APIs, so browser persistence verification uses visible refresh/restore behavior plus logic tests.
+- Future browser regressions should continue covering new learning flows as features expand.
 
 ## Local Verification
 - npm test passed locally
 - npm run build passed locally
-- Browser smoke check for the latest retry XP fix was attempted but could not complete because the local dev server/browser navigation was unavailable in Codex.
+- Latest Weekly Learning Snapshot verification passed npm test (85/85 tests) and npm run build
+- Latest Next Milestone panel verification passed npm test (85/85 tests) and npm run build
+- Latest Learning Stats panel verification passed npm test (85/85 tests) and npm run build
+- Latest balanced starter track verification passed npm test (85/85 tests) and npm run build
+- Latest content expansion verification passed npm test (85/85 tests) and npm run build
+- Latest dev server smoke check returned HTTP 200 OK for the home route
+- Full browser learning-flow verification covered category selection, quiz progression, hint rendering, explanation rendering, XP accumulation, total XP restore after refresh, Try again behavior, wrong-answer review, recommended review, weak-area insights, concept focus, achievements, daily goal, streak, dashboard hierarchy, and 390px mobile layout.
+- Browser verification found no app bugs requiring code changes.
 - Browser smoke check confirmed the refined dashboard and Concept Focus section headings.
 - npm run dev started successfully locally
 - Category selection screen was confirmed
@@ -104,6 +125,14 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - XP increases after solving questions
 - Progress persists after refresh
 - Category-specific progress is stored separately
+
+## 웹앱 직접 확인 체크리스트
+- 첫 화면: 대시보드와 Python / SQL / AI / Bioinformatics 카테고리 버튼이 정상적으로 보이는지 확인한다.
+- 퀴즈 흐름: 카테고리를 선택하고, 문제를 풀고, 제출했을 때 피드백과 설명 카드가 나오는지 확인한다.
+- 진행률과 XP: 진행률 바, 현재 문제 번호, 세션 XP, 총 XP가 자연스럽게 업데이트되는지 확인한다.
+- 저장 상태: 퀴즈 중간 또는 완료 후 새로고침했을 때 선택한 카테고리, 진행 상황, XP가 복원되는지 확인한다.
+- 다시 풀기와 오답 복습: Try again이 총 XP를 초기화하지 않고 새 세션을 시작하는지, 오답 복습에서는 XP가 증가하지 않는지 확인한다.
+- 모바일 화면: 약 390px 너비에서 버튼, 카드, 텍스트가 겹치지 않고 가로 스크롤이 생기지 않는지 확인한다.
 
 ## Known Technical Debt
 
@@ -116,17 +145,41 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - achievement unlock conditions may become difficult to maintain as milestones increase
 
 
-## Recent Codex Report
+## Recent Antigravity Report
 ~~~txt
-[Codex Result]
-- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before continuing.
-- Completed agent review before implementation.
-- Added optional beginner-friendly hints to selected concept-tagged quiz questions.
-- Added pure hint normalization support in quiz logic.
-- Displayed hints in the quiz UI only when available, without changing scoring, XP, progress, retry, review, streak, daily goal, achievements, recommendations, weak areas, or concept analytics behavior.
-- Refined selected explanations for clearer beginner learning feedback.
-- Added focused tests for optional hint schema and hint normalization.
-- Added the verified-local-time DAILY_LOG timestamp rule to AGENTS.md.
-- npm test passed, 78/78 tests.
-- npm run build passed.
+[Antigravity QA Report - 2026-06-05]
+- Checked local time with date (Fri Jun  5 14:46:02 KST 2026) before writing this report.
+- Reviewed and verified the user's/Codex's dataset balancing (SQL, AI, and Bioinformatics now expanded to 10 questions each, matching Python).
+- Reviewed and verified the presentational `LearningStatsPanel.jsx`, `NextMilestonePanel.jsx`, and `WeeklyLearningSnapshot.jsx` components.
+- Confirmed that props map cleanly to statistics indicators (Total XP, Accuracy, Questions Completed, Current Streak, and Daily Goal Progress), motivation indicators (XP until next milestone, next locked achievement target, and daily mission remaining count), and weekly snapshot metrics.
+- Confirmed that values are correctly derived in `app/page.jsx` using purely derived state computations without redundant storage state.
+- Verified that responsive styles in `app/globals.css` properly position the statistics, milestone, and weekly snapshot panel layouts.
+- Confirmed that distractor options are unambiguous and correctOptionIndex mappings are accurate across all newly added questions.
+- Verified all 85 unit tests pass and Next.js production build successfully compiles.
+- App Status: 100% Healthy & Verified.
+
+
+
+
+[Antigravity QA Report - 2026-06-04]
+- Checked local time with date (Thu Jun  4 18:16:04 KST 2026) before writing this report.
+- Performed a focused mobile visual QA pass on the Today’s Mission panel across 375px, 390px, and 430px viewports.
+- Confirmed visual stability, text wrapping (title and description), progress track scaling, and vertical stacking.
+- Fixed a visual issue in app/globals.css where the status pill (.daily-goal-status) stretched full-width in column layouts; added `align-self: flex-start` to maintain a compact, left-aligned badge.
+- Verified Next.js Turbopack build and 85/85 unit tests pass cleanly.
+- App Status: 100% Healthy & Verified.
+
+[Antigravity QA Report - 2026-06-02]
+- Reviewed, verified, and signed off on the complete decoupled microlearning loop architecture: "useQuizProgressStorageState", "createAnswerSubmission", "updateSubmittedAnswers", "QuizHero", "QuizResults", "ExplanationCard" (Active Quiz Feedback UX Polish), and "CategorySelector" (Daily Mission Visibility Polish).
+- Confirmed that delegating raw progress storage logic to the `useQuizProgressStorageState` hook preserves category flow, localStorage persistence, XP scoring, and retry/review behaviors.
+- Confirmed that extracting the answer payload creation to `lib/createAnswerSubmission.js` separates concerns, standardizes mode-specific XP scoring, and preserves incorrect-answer registering and review flows.
+- Confirmed that extracting the answer update/replacement logic to `lib/updateSubmittedAnswers.js` simplifies the state updates in `app/page.jsx` while keeping array immutability and duplicate cleanup.
+- Confirmed that extracting the results visual interface to `components/QuizResults.jsx` cleanly isolates the results visual presentation while preserving completing, reviewing, and retrying flows.
+- Confirmed that extracting the visual header panels to `components/QuizHero.jsx` cleanly isolates visual layout details while keeping category toolbar switching handlers inline in `app/page.jsx` to prevent callback-prop drilling.
+- Confirmed that active quiz feedback UX polish correctly renders high-contrast border and background states, copy metrics, and accessibility styling using ExplanationCard.
+- Confirmed that Daily Mission Visibility Polish correctly highlights Today's Mission remaining-question guidance and adds status pills while keeping the layout light and mobile-responsive inside CategorySelector.
+- Completed full visual and architectural audit of the remaining layout in `app/page.jsx` and verified component boundary viability of a unified `QuizHero` presentational component with zero visual regression risk.
+- Verified hook stability, memoization of callbacks, and the complete absence of React rendering-loop risks.
+- Ran all 85 unit tests (85/85 passed) and verified successful Next.js Turbopack production build and dev server smoke check.
+- App Status: 100% Healthy & Verified.
 ~~~

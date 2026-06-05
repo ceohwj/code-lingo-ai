@@ -94,6 +94,97 @@
       ],
       "hint": "The word left is the clue: keep every row from the table written on the left side.",
       "explanation": "LEFT JOIN preserves every row from the left table. When a row has no match in the right table, SQL fills the right-table columns with NULL."
+    },
+    {
+      "difficulty": "easy",
+      "id": "sql-006",
+      "prompt": "Which clause limits how many rows a query returns?",
+      "options": [
+        "LIMIT",
+        "WHERE",
+        "JOIN",
+        "HAVING"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "limit",
+        "query-basics"
+      ],
+      "hint": "Think about the clause that caps the result size after the query finds matching rows.",
+      "explanation": "LIMIT restricts the number of rows returned by a query, which is useful for previews or smaller result sets."
+    },
+    {
+      "difficulty": "medium",
+      "id": "sql-007",
+      "prompt": "Which clause groups rows before aggregate functions are calculated?",
+      "options": [
+        "ORDER BY",
+        "GROUP BY",
+        "SELECT DISTINCT",
+        "LIMIT"
+      ],
+      "correctOptionIndex": 1,
+      "conceptTags": [
+        "group-by",
+        "aggregates"
+      ],
+      "explanation": "GROUP BY collects rows with shared values so aggregate functions like COUNT() or AVG() can summarize each group.",
+      "commonMistake": "ORDER BY sorts the final result, but GROUP BY is the clause that creates groups for aggregate calculations."
+    },
+    {
+      "difficulty": "easy",
+      "id": "sql-008",
+      "prompt": "Which SQL keyword names the table a query reads from?",
+      "options": [
+        "FROM",
+        "WHERE",
+        "COUNT",
+        "SORT"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "from",
+        "query-basics"
+      ],
+      "hint": "Look for the clause that usually appears right after SELECT and points to the table.",
+      "explanation": "FROM identifies the table or source that SQL should read before filtering, sorting, or grouping the result."
+    },
+    {
+      "difficulty": "medium",
+      "id": "sql-009",
+      "prompt": "Which operator checks whether a value matches any value in a list?",
+      "options": [
+        "BETWEEN",
+        "IN",
+        "LIKE",
+        "IS NULL"
+      ],
+      "correctOptionIndex": 1,
+      "conceptTags": [
+        "filtering",
+        "in-operator"
+      ],
+      "hint": "This operator is useful when one column can match several allowed values.",
+      "explanation": "IN checks whether a value appears in a list, such as status IN ('active', 'pending'), making multi-value filters easier to read."
+    },
+    {
+      "difficulty": "hard",
+      "id": "sql-010",
+      "prompt": "Which clause filters grouped aggregate results after GROUP BY?",
+      "options": [
+        "WHERE",
+        "HAVING",
+        "ORDER BY",
+        "LIMIT"
+      ],
+      "correctOptionIndex": 1,
+      "conceptTags": [
+        "having",
+        "aggregates",
+        "group-by"
+      ],
+      "hint": "WHERE filters rows before grouping. This clause filters the groups after aggregate values exist.",
+      "explanation": "HAVING filters grouped results after GROUP BY, so it can use aggregate conditions such as COUNT(*) > 5."
     }
   ],
   "difficultyLevels": [

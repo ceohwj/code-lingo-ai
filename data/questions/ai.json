@@ -94,6 +94,96 @@
         "test-data"
       ],
       "explanation": "A separate test set helps estimate how well the model may perform on data it did not learn from directly."
+    },
+    {
+      "difficulty": "easy",
+      "id": "ai-006",
+      "prompt": "What is a label in supervised learning?",
+      "options": [
+        "The target answer for an example",
+        "The color of a chart",
+        "A hidden server name",
+        "A file compression setting"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "labels",
+        "supervised-learning"
+      ],
+      "hint": "In supervised learning, the label is what the model is trying to predict.",
+      "explanation": "A label is the known target answer paired with an input example, such as the correct class or numeric value."
+    },
+    {
+      "difficulty": "medium",
+      "id": "ai-007",
+      "prompt": "What is the main purpose of a validation set?",
+      "options": [
+        "To tune model choices before final testing",
+        "To replace all training data",
+        "To store user passwords",
+        "To make predictions slower"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "validation-data",
+        "model-evaluation"
+      ],
+      "explanation": "A validation set helps compare model settings during development while keeping the test set reserved for final evaluation."
+    },
+    {
+      "difficulty": "easy",
+      "id": "ai-008",
+      "prompt": "What does a machine learning model learn from during training?",
+      "options": [
+        "Patterns in data",
+        "Monitor brightness",
+        "Keyboard shortcuts",
+        "Database table colors"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "training",
+        "patterns"
+      ],
+      "hint": "Training is about finding useful regularities in examples.",
+      "explanation": "During training, a model adjusts itself to learn patterns in data that can help it make future predictions."
+    },
+    {
+      "difficulty": "medium",
+      "id": "ai-009",
+      "prompt": "What does underfitting usually mean?",
+      "options": [
+        "A model is too simple to capture the pattern",
+        "A model memorizes every training example perfectly",
+        "A dataset has no file name",
+        "A prediction is stored in a folder"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "underfitting",
+        "model-performance"
+      ],
+      "hint": "Think about a model that cannot learn enough from the training examples.",
+      "explanation": "Underfitting happens when a model is too simple or poorly trained to capture important patterns, so it performs badly even on training data."
+    },
+    {
+      "difficulty": "hard",
+      "id": "ai-010",
+      "prompt": "Why is a confusion matrix useful for classification?",
+      "options": [
+        "It shows correct and incorrect predictions by class",
+        "It stores training images",
+        "It makes labels disappear",
+        "It chooses database indexes"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "classification",
+        "confusion-matrix",
+        "metrics"
+      ],
+      "hint": "It breaks prediction results into class-level hits and mistakes.",
+      "explanation": "A confusion matrix compares predicted classes against true classes, helping learners see which classes are correct, confused, or frequently mistaken."
     }
   ],
   "difficultyLevels": [

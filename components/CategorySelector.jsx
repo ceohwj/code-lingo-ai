@@ -1,6 +1,39 @@
 "use client";
 
-export function CategorySelector({ achievements = [], categories, categoryProgressByCategory = {}, conceptFocusInsights = [], dailyGoal = {}, onReviewCategory, onSelectCategory, reviewRecommendations = [], streak = {}, weakAreaInsights = [], wrongAnswerCountsByCategory = {} }) {
+import { LearningStatsPanel } from "./LearningStatsPanel";
+import { NextMilestonePanel } from "./NextMilestonePanel";
+import { WeeklyLearningSnapshot } from "./WeeklyLearningSnapshot";
+
+export function CategorySelector({ achievements = [], categories, categoryProgressByCategory = {}, conceptFocusInsights = [], dailyGoal = {}, learningStats, nextMilestone, onReviewCategory, onSelectCategory, reviewRecommendations = [], streak = {}, weakAreaInsights = [], weeklySnapshot, wrongAnswerCountsByCategory = {} }) {
+  const stats = learningStats ?? {
+    accuracyPercent: 0,
+    currentStreak: 0,
+    dailyGoalCompleted: 0,
+    dailyGoalProgressPercent: 0,
+    dailyGoalTarget: 5,
+    questionsCompleted: 0,
+    totalXp: 0
+  };
+  const milestone = nextMilestone ?? {
+    dailyMissionRemaining: 0,
+    nextAchievementDescription: "All current achievement targets are complete.",
+    nextAchievementTitle: "All achievements unlocked",
+    nextXpMilestone: 100,
+    xpUntilNextMilestone: 100
+  };
+  const snapshot = weeklySnapshot ?? {
+    questionsCompleted: 0,
+    snapshotNote: "Weekly history is not tracked yet, so this uses current saved progress as a placeholder.",
+    weeklyAccuracy: 0,
+    xpEarned: 0
+  };
+  const completedDailyQuestions = dailyGoal.completedQuestionCount ?? 0;
+  const dailyGoalTarget = dailyGoal.target ?? 5;
+  const remainingDailyQuestions = Math.max(dailyGoalTarget - completedDailyQuestions, 0);
+  const dailyMissionMessage = dailyGoal.isCompleted
+    ? "Mission complete. Keep the streak warm with a review."
+    : "Answer " + remainingDailyQuestions + " more " + (remainingDailyQuestions === 1 ? "question" : "questions") + " to finish today.";
+
   return (
     <main className="app-shell">
       <section className="category-selector">
@@ -20,10 +53,14 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
             <section className="daily-goal-panel" aria-label="Daily goal progress">
               <div className="daily-goal-panel-header">
                 <div>
-                  <span>Daily goal</span>
-                  <strong>{dailyGoal.completedQuestionCount ?? 0} / {dailyGoal.target ?? 5} questions</strong>
+                  <span>Today&apos;s mission</span>
+                  <strong>{dailyMissionMessage}</strong>
                 </div>
-                <strong>{dailyGoal.isCompleted ? "Completed" : "Not completed"}</strong>
+                <strong className={"daily-goal-status" + (dailyGoal.isCompleted ? " is-complete" : "")}>{dailyGoal.isCompleted ? "Completed" : "In progress"}</strong>
+              </div>
+              <div className="daily-goal-count">
+                <span>Daily goal</span>
+                <strong>{completedDailyQuestions} / {dailyGoalTarget} questions</strong>
               </div>
               <div className="daily-goal-track" aria-hidden="true">
                 <div className="daily-goal-fill" style={{ width: (dailyGoal.progressPercent ?? 0) + "%" }} />
@@ -46,6 +83,31 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
               </div>
             </section>
           </div>
+
+          <LearningStatsPanel
+            accuracyPercent={stats.accuracyPercent}
+            currentStreak={stats.currentStreak}
+            dailyGoalCompleted={stats.dailyGoalCompleted}
+            dailyGoalProgressPercent={stats.dailyGoalProgressPercent}
+            dailyGoalTarget={stats.dailyGoalTarget}
+            questionsCompleted={stats.questionsCompleted}
+            totalXp={stats.totalXp}
+          />
+
+          <NextMilestonePanel
+            dailyMissionRemaining={milestone.dailyMissionRemaining}
+            nextAchievementDescription={milestone.nextAchievementDescription}
+            nextAchievementTitle={milestone.nextAchievementTitle}
+            nextXpMilestone={milestone.nextXpMilestone}
+            xpUntilNextMilestone={milestone.xpUntilNextMilestone}
+          />
+
+          <WeeklyLearningSnapshot
+            questionsCompleted={snapshot.questionsCompleted}
+            snapshotNote={snapshot.snapshotNote}
+            weeklyAccuracy={snapshot.weeklyAccuracy}
+            xpEarned={snapshot.xpEarned}
+          />
 
           <section className="recommended-review-panel" aria-label="Recommended review">
             <div className="recommended-review-header">

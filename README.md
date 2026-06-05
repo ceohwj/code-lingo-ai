@@ -128,6 +128,8 @@ docs/
   DAILY_LOG.md            Chronological development log
 
 AGENTS.md                 Multi-agent workflow and project roles
+WORKFLOW.md               Lightweight Codex, Antigravity, and ChatGPT collaboration guide
+WORKFLOW_MAP.md           Codex, Antigravity, and ChatGPT prompt decision tree map
 PROJECT_STATUS.md         Current project status by feature group
 ROADMAP.md                Completed milestones and future priorities
 ```
@@ -151,9 +153,15 @@ Compatibility notes:
 - Review mode uses separate wrong-answer storage and does not mutate normal quiz progress.
 - Daily streak and daily goal use local calendar day logic.
 
-## AI-Assisted Codex Workflow
+## AI-Assisted Workflow
 
-This project is developed with an AI-assisted Codex workflow documented in `AGENTS.md`. Before feature work, each defined agent reviews the task for learning value, MVP scope, maintainability, testing risk, and portfolio impact.
+This project is developed with an AI-assisted workflow documented in `AGENTS.md`, `WORKFLOW.md`, and `WORKFLOW_MAP.md`. Before feature work, each defined agent reviews the task for learning value, MVP scope, maintainability, testing risk, and portfolio impact.
+
+The collaboration model is:
+
+- ChatGPT: product direction, scope, and final review
+- Codex: fast scoped implementation
+- Antigravity: local validation, build checks, and integration review
 
 For feature work, the project uses role-based reviews from:
 
@@ -168,7 +176,7 @@ For feature work, the project uses role-based reviews from:
 - Growth Agent
 - Portfolio Strategy Agent
 
-The workflow emphasizes MVP scope control, learning effectiveness, retention, scalable architecture, testability, and clear documentation. Codex work is also tracked through `PROJECT_STATUS.md`, `ROADMAP.md`, and chronological entries in `docs/DAILY_LOG.md`.
+The workflow emphasizes MVP scope control, learning effectiveness, retention, scalable architecture, testability, and clear documentation. See `WORKFLOW.md` for the collaboration guide and `WORKFLOW_MAP.md` for prompt selection and handoff guidance. Work is tracked through `PROJECT_STATUS.md`, `ROADMAP.md`, and chronological entries in `docs/DAILY_LOG.md`.
 
 ## Testing Approach
 

@@ -38,8 +38,8 @@ Completed:
 - [x] Project status and daily log workflow
 
 Next Priorities:
-- [ ] Browser-level regression checks for key quiz flows
-- [ ] Browser-level retry check for session XP versus total XP behavior
+- [x] Browser-level regression checks for key quiz flows
+- [x] Browser-level retry check for session XP versus total XP behavior
 - [ ] Continue reducing page-level state complexity when safe
 - [ ] Keep verification notes current as the local environment changes
 
