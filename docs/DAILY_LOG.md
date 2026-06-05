@@ -1857,3 +1857,81 @@
 - Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
 - App Status: 100% Healthy & Verified.
 
+---
+
+### 16:15 KST - Homepage Dashboard Hierarchy Review
+
+#### Today’s Goal
+- Review the homepage dashboard hierarchy following the addition of Learning Stats, Next Milestone, and Weekly Learning Snapshot.
+- Evaluate dashboard clarity, motivation, overcrowding, and mobile responsiveness.
+
+#### Completed Work
+- Performed visual and structural review of dashboard panels, category cards, and achievements.
+- Documented findings in [dashboard_hierarchy_review.md](file:///Users/junghyunwoo/.gemini/antigravity-ide/brain/c5d37d6a-5886-4f64-89ca-bc935490b90f/dashboard_hierarchy_review.md).
+- Verified unit test suite passes cleanly.
+- Verified production build compiles successfully.
+
+#### Issues
+- Stacking 14-15 items vertically on mobile viewports (< 680px) causes heavy scroll fatigue, pushing the primary Category Cards far down.
+- Redundancy/duplication of metrics (streak, daily goal, accuracy) across panels clutters the visual space.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Reorder dashboard to place primary learning paths (Category Cards) and recommended reviews directly below Today's Focus.
+- Adjust mobile responsive css columns for stats (2-column) and snapshot (3-column) grids.
+- Deduplicate streak and daily goal metrics from the secondary stats panels.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 16:15:11 KST 2026) before writing this report.
+- Audited dashboard layout and responsiveness.
+- Verified all 85 unit tests pass and Next.js production build compiles successfully.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 16:32 KST - Homepage Dashboard Hierarchy Simplification
+
+#### Today’s Goal
+- Simplify the homepage dashboard hierarchy based on the Antigravity dashboard review.
+- Reduce mobile scroll fatigue by moving primary learning paths above secondary analytics.
+- Remove duplicated motivation metrics while preserving existing data, storage, state ownership, and functionality.
+
+#### Completed Work
+- Reordered the homepage dashboard so Today's Mission and streak status appear first, followed immediately by Category Cards.
+- Moved Learning Stats, Next Milestone, Weekly Learning Snapshot, Recommended Review, Weak Areas, and Concept Focus into a lower Learning Context section.
+- Removed duplicated Current Streak and Daily Goal values from the secondary Learning Stats panel because those values already appear in the top daily focus area.
+- Removed the duplicated Daily Mission item from the secondary Next Milestone panel because the daily mission already appears as the primary top panel.
+- Kept all changes presentation-only with no new features, storage, backend logic, or state management.
+- Adjusted mobile dashboard grids so Learning Stats and Next Milestone stay denser in two columns, and Weekly Snapshot stays compact in three columns.
+- Updated PROJECT_STATUS.md with the simplified dashboard hierarchy status.
+
+#### Issues
+- Browser visual smoke check was not run during this pass.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Run a mobile visual pass at 375px, 390px, and 430px to confirm reduced scroll fatigue.
+- Consider whether Recommended Review should move closer to Category Cards in a future UX pass.
+- Revisit exact weekly analytics after dated learning-event storage exists.
+
+#### Codex Report
+- Used local planning fallback.
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 16:32:59 KST 2026) before writing this report.
+- Simplified the dashboard order and removed duplicated secondary motivation metrics without changing state ownership, hooks, storage, backend logic, or feature behavior.
+- Confirmed npm test and npm run build both pass after the hierarchy simplification.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 16:37:00 KST 2026) before writing this report.
+- Audited the simplified homepage dashboard hierarchy in `CategorySelector.jsx` and verified that core learning paths (Category Cards) load immediately below the Today's Focus hero.
+- Confirmed that metrics redundancies (streak, daily goal, mission counts) are eliminated from the secondary panels.
+- Verified that mobile styles in `app/globals.css` successfully map stats (2-column), milestones (2-column), and weekly snapshot (3-column) items on mobile viewports to prevent layout bloat.
+- Confirmed unit tests pass (85/85) and production build compiles cleanly.
+- App Status: 100% Healthy & Verified.
+

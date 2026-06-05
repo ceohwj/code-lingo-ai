@@ -7,15 +7,10 @@ import { WeeklyLearningSnapshot } from "./WeeklyLearningSnapshot";
 export function CategorySelector({ achievements = [], categories, categoryProgressByCategory = {}, conceptFocusInsights = [], dailyGoal = {}, learningStats, nextMilestone, onReviewCategory, onSelectCategory, reviewRecommendations = [], streak = {}, weakAreaInsights = [], weeklySnapshot, wrongAnswerCountsByCategory = {} }) {
   const stats = learningStats ?? {
     accuracyPercent: 0,
-    currentStreak: 0,
-    dailyGoalCompleted: 0,
-    dailyGoalProgressPercent: 0,
-    dailyGoalTarget: 5,
     questionsCompleted: 0,
     totalXp: 0
   };
   const milestone = nextMilestone ?? {
-    dailyMissionRemaining: 0,
     nextAchievementDescription: "All current achievement targets are complete.",
     nextAchievementTitle: "All achievements unlocked",
     nextXpMilestone: 100,
@@ -83,19 +78,74 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
               </div>
             </section>
           </div>
+        </section>
+
+        <section className="dashboard-section dashboard-section-secondary" aria-labelledby="learning-paths-heading">
+          <div className="dashboard-section-header">
+            <div>
+              <span>Progress</span>
+              <h2 id="learning-paths-heading">Learning paths</h2>
+            </div>
+          </div>
+          <div className="category-grid" aria-label="Quiz categories">
+            {categories.map((category) => {
+              const progress = categoryProgressByCategory[category.categoryId] ?? getEmptyCategoryProgress(category);
+              const wrongAnswerCount = wrongAnswerCountsByCategory[category.categoryId] ?? 0;
+              const wrongAnswerText = wrongAnswerCount === 0
+                ? "No wrong answers yet"
+                : wrongAnswerCount + " wrong " + (wrongAnswerCount === 1 ? "answer" : "answers") + " to review";
+
+              return (
+                <article className={"category-card category-progress-" + progress.status} key={category.categoryId}>
+                  <button className="category-card-main" type="button" onClick={() => onSelectCategory(category.categoryId)}>
+                    <span>{category.categoryLabel}</span>
+                    <strong>{category.title}</strong>
+                    <small>{category.questions.length} questions</small>
+                  </button>
+                  <div className="category-progress-summary" aria-label={category.categoryLabel + " progress"}>
+                    <div className="category-progress-topline">
+                      <span>{getCategoryProgressLabel(progress.status)}</span>
+                      <strong>{progress.completionPercentage}%</strong>
+                    </div>
+                    <div className="category-progress-track" aria-hidden="true">
+                      <div className="category-progress-fill" style={{ width: progress.completionPercentage + "%" }} />
+                    </div>
+                    <div className="category-progress-meta">
+                      <span>{progress.completedQuestionCount} / {progress.totalQuestions} done</span>
+                      <span>{progress.earnedXp} total XP</span>
+                    </div>
+                  </div>
+                  <p className="wrong-answer-count">{wrongAnswerText}</p>
+                  <button
+                    className="review-mode-button"
+                    type="button"
+                    disabled={wrongAnswerCount === 0}
+                    onClick={() => onReviewCategory(category.categoryId)}
+                  >
+                    {wrongAnswerCount === 0 ? "No review needed" : "Review Wrong Answers"}
+                    <small>{wrongAnswerCount === 0 ? "Clear" : wrongAnswerCount + " saved"}</small>
+                  </button>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="dashboard-section dashboard-section-secondary" aria-labelledby="learning-context-heading">
+          <div className="dashboard-section-header">
+            <div>
+              <span>Context</span>
+              <h2 id="learning-context-heading">Learning context</h2>
+            </div>
+          </div>
 
           <LearningStatsPanel
             accuracyPercent={stats.accuracyPercent}
-            currentStreak={stats.currentStreak}
-            dailyGoalCompleted={stats.dailyGoalCompleted}
-            dailyGoalProgressPercent={stats.dailyGoalProgressPercent}
-            dailyGoalTarget={stats.dailyGoalTarget}
             questionsCompleted={stats.questionsCompleted}
             totalXp={stats.totalXp}
           />
 
           <NextMilestonePanel
-            dailyMissionRemaining={milestone.dailyMissionRemaining}
             nextAchievementDescription={milestone.nextAchievementDescription}
             nextAchievementTitle={milestone.nextAchievementTitle}
             nextXpMilestone={milestone.nextXpMilestone}
@@ -181,57 +231,6 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
               </div>
             )}
           </section>
-        </section>
-
-        <section className="dashboard-section dashboard-section-secondary" aria-labelledby="learning-paths-heading">
-          <div className="dashboard-section-header">
-            <div>
-              <span>Progress</span>
-              <h2 id="learning-paths-heading">Learning paths</h2>
-            </div>
-          </div>
-          <div className="category-grid" aria-label="Quiz categories">
-            {categories.map((category) => {
-              const progress = categoryProgressByCategory[category.categoryId] ?? getEmptyCategoryProgress(category);
-              const wrongAnswerCount = wrongAnswerCountsByCategory[category.categoryId] ?? 0;
-              const wrongAnswerText = wrongAnswerCount === 0
-                ? "No wrong answers yet"
-                : wrongAnswerCount + " wrong " + (wrongAnswerCount === 1 ? "answer" : "answers") + " to review";
-
-              return (
-                <article className={"category-card category-progress-" + progress.status} key={category.categoryId}>
-                  <button className="category-card-main" type="button" onClick={() => onSelectCategory(category.categoryId)}>
-                    <span>{category.categoryLabel}</span>
-                    <strong>{category.title}</strong>
-                    <small>{category.questions.length} questions</small>
-                  </button>
-                  <div className="category-progress-summary" aria-label={category.categoryLabel + " progress"}>
-                    <div className="category-progress-topline">
-                      <span>{getCategoryProgressLabel(progress.status)}</span>
-                      <strong>{progress.completionPercentage}%</strong>
-                    </div>
-                    <div className="category-progress-track" aria-hidden="true">
-                      <div className="category-progress-fill" style={{ width: progress.completionPercentage + "%" }} />
-                    </div>
-                    <div className="category-progress-meta">
-                      <span>{progress.completedQuestionCount} / {progress.totalQuestions} done</span>
-                      <span>{progress.earnedXp} total XP</span>
-                    </div>
-                  </div>
-                  <p className="wrong-answer-count">{wrongAnswerText}</p>
-                  <button
-                    className="review-mode-button"
-                    type="button"
-                    disabled={wrongAnswerCount === 0}
-                    onClick={() => onReviewCategory(category.categoryId)}
-                  >
-                    {wrongAnswerCount === 0 ? "No review needed" : "Review Wrong Answers"}
-                    <small>{wrongAnswerCount === 0 ? "Clear" : wrongAnswerCount + " saved"}</small>
-                  </button>
-                </article>
-              );
-            })}
-          </div>
         </section>
 
         <section className="dashboard-section dashboard-section-secondary" aria-labelledby="achievement-heading">

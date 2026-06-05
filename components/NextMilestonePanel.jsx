@@ -1,16 +1,11 @@
 "use client";
 
 export function NextMilestonePanel({
-  dailyMissionRemaining,
   nextAchievementDescription,
   nextAchievementTitle,
   nextXpMilestone,
   xpUntilNextMilestone
 }) {
-  const dailyMissionText = dailyMissionRemaining === 0
-    ? "Mission complete"
-    : dailyMissionRemaining + " " + (dailyMissionRemaining === 1 ? "question" : "questions") + " left";
-
   return (
     <section className="next-milestone-panel" aria-label="Next learning milestone">
       <div className="next-milestone-header">
@@ -31,11 +26,6 @@ export function NextMilestonePanel({
           label="Achievement Target"
           value={nextAchievementTitle}
           detail={nextAchievementDescription}
-        />
-        <MilestoneItem
-          label="Daily Mission"
-          value={dailyMissionText}
-          detail="Finish today's goal to reinforce the habit loop"
         />
       </div>
     </section>

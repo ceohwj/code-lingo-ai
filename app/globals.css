@@ -336,7 +336,7 @@ h2 {
 
 .learning-stats-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.7rem;
 }
 
@@ -405,7 +405,7 @@ h2 {
 
 .next-milestone-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.7rem;
 }
 
@@ -1513,14 +1513,28 @@ h2 {
   .category-grid,
   .today-summary-grid,
   .streak-panel,
-  .learning-stats-grid,
-  .next-milestone-grid,
-  .weekly-snapshot-grid,
   .recommended-review-grid,
   .weak-area-grid,
   .concept-focus-grid,
   .achievement-grid,
   .progress-summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .learning-stats-grid,
+  .next-milestone-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .weekly-snapshot-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .weekly-snapshot-item {
+    padding: 0.75rem;
+  }
+
+  .weekly-snapshot-item span {
+    font-size: 0.68rem;
   }
 }

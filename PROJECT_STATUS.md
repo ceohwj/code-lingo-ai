@@ -1,7 +1,7 @@
 # PROJECT_STATUS.md
 
 ## Current Status
-CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category progress dashboard, lightweight learning statistics, next milestone, and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
+CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category-first progress dashboard, lightweight learning statistics, next milestone, and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
 
 ## Completed Features
 
@@ -66,16 +66,16 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Daily goal target defaults to 5 completed questions
 - Home category screen shows daily goal count, target, progress percentage, and completion state
 - Home category screen highlights today's mission with remaining-question guidance and a clearer completion status
-- Home category screen shows a lightweight Learning Stats snapshot with total XP, accuracy signal, completed questions, current streak, and daily goal progress
-- Home category screen shows a lightweight Next Milestone snapshot with XP checkpoint distance, next locked achievement target, and daily mission remaining count
+- Home category screen shows a lightweight Learning Stats snapshot with total XP, accuracy signal, and completed questions
+- Home category screen shows a lightweight Next Milestone snapshot with XP checkpoint distance and next locked achievement target
 - Home category screen shows a lightweight Weekly Learning Snapshot placeholder using current saved progress until weekly history tracking exists
 - Category dashboard helps users resume partially completed tracks
-- Home dashboard information hierarchy groups today's learning actions above category progress and achievements
+- Home dashboard information hierarchy prioritizes today's mission, then category cards, then secondary analytics and achievements
 
 ### Architecture / Testing
 - Reusable QuizCard, ProgressBar, CategorySelector, and ExplanationCard components
-- Reusable presentational LearningStatsPanel component displays existing derived progress signals without new storage or state management
-- Reusable presentational NextMilestonePanel component displays existing derived motivation signals without new storage or state management
+- Reusable presentational LearningStatsPanel component displays existing derived progress signals without new storage or state management and avoids duplicating top-level streak/daily-goal indicators
+- Reusable presentational NextMilestonePanel component displays existing derived motivation signals without new storage or state management and avoids duplicating the top-level daily mission
 - Reusable presentational WeeklyLearningSnapshot component displays an explicitly labeled current-progress proxy without new storage or state management
 - Quiz logic separated from UI logic in lib helpers
 - Quiz retry and XP persistence helpers keep session progress separate from saved category progress
@@ -109,6 +109,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 ## Local Verification
 - npm test passed locally
 - npm run build passed locally
+- Latest dashboard hierarchy simplification verification passed npm test (85/85 tests) and npm run build
 - Latest Weekly Learning Snapshot verification passed npm test (85/85 tests) and npm run build
 - Latest Next Milestone panel verification passed npm test (85/85 tests) and npm run build
 - Latest Learning Stats panel verification passed npm test (85/85 tests) and npm run build
@@ -147,7 +148,23 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 
 ## Recent Antigravity Report
 ~~~txt
-[Antigravity QA Report - 2026-06-05]
+[Antigravity QA Report - 2026-06-05 (16:37 KST)]
+- Checked local time with date (Fri Jun  5 16:37:00 KST 2026) before writing this report.
+- Audited the simplified homepage dashboard hierarchy in `CategorySelector.jsx`.
+- Verified that Category Cards appear directly below the Today's focus, rendering core learning paths immediately.
+- Confirmed that Stats/Milestones/Snapshot grids render in denser 2-column and 3-column formats on mobile to avoid scroll fatigue.
+- Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+
+[Antigravity QA Report - 2026-06-05 (16:15 KST)]
+- Checked local time with date (Fri Jun  5 16:15:11 KST 2026) before writing this report.
+- Performed a visual/hierarchy review on homepage dashboard panels: Learning Stats, Next Milestone, and Weekly Learning Snapshot.
+- Analyzed mobile layout behavior at 375px, 390px, and 430px widths and identified scroll fatigue issues due to single-column stacking of all secondary panels.
+- Found metric redundancies (streaks, daily goal, accuracy) across panels and suggested deduplication.
+- Verified 85/85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+
+[Antigravity QA Report - 2026-06-05 (14:46 KST)]
 - Checked local time with date (Fri Jun  5 14:46:02 KST 2026) before writing this report.
 - Reviewed and verified the user's/Codex's dataset balancing (SQL, AI, and Bioinformatics now expanded to 10 questions each, matching Python).
 - Reviewed and verified the presentational `LearningStatsPanel.jsx`, `NextMilestonePanel.jsx`, and `WeeklyLearningSnapshot.jsx` components.

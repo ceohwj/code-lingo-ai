@@ -96,14 +96,10 @@ export default function HomePage() {
 
     return {
       accuracyPercent,
-      currentStreak: streakState.currentStreak ?? 0,
-      dailyGoalCompleted: dailyGoalState.completedQuestionCount ?? 0,
-      dailyGoalProgressPercent: dailyGoalState.progressPercent ?? 0,
-      dailyGoalTarget: dailyGoalState.target ?? 5,
       questionsCompleted: completedQuestionCount,
       totalXp: totalXpFromCategories
     };
-  }, [categoryProgressByCategory, dailyGoalState, streakState, wrongAnswerCountsByCategory]);
+  }, [categoryProgressByCategory, wrongAnswerCountsByCategory]);
 
   const selectedQuiz = selectedCategoryId ? quizByCategoryId[selectedCategoryId] : null;
   const activeQuestions = useMemo(() => {
@@ -163,17 +159,14 @@ export default function HomePage() {
   const nextMilestone = useMemo(() => {
     const nextXpMilestone = getNextXpMilestone(learningStats.totalXp);
     const nextAchievement = achievements.find((achievement) => !achievement.isUnlocked);
-    const dailyGoalTarget = dailyGoalState.target ?? 5;
-    const dailyGoalCompleted = dailyGoalState.completedQuestionCount ?? 0;
 
     return {
-      dailyMissionRemaining: Math.max(dailyGoalTarget - dailyGoalCompleted, 0),
       nextAchievementDescription: nextAchievement?.description ?? "All current achievement targets are complete.",
       nextAchievementTitle: nextAchievement?.title ?? "All achievements unlocked",
       nextXpMilestone,
       xpUntilNextMilestone: Math.max(nextXpMilestone - learningStats.totalXp, 0)
     };
-  }, [achievements, dailyGoalState, learningStats]);
+  }, [achievements, learningStats]);
   const weeklySnapshot = useMemo(() => ({
     questionsCompleted: learningStats.questionsCompleted,
     snapshotNote: "Exact weekly history is not tracked yet, so this snapshot uses current saved progress as a weekly placeholder.",
