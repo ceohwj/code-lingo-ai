@@ -66,9 +66,9 @@
       "prompt": "What is sequence alignment used for?",
       "options": [
         "Comparing biological sequences",
-        "Encrypting files",
-        "Sorting UI buttons",
-        "Counting browser tabs"
+        "Compressing fasta lines",
+        "Synthesizing new genes",
+        "Translating RNA into peptides directly"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
@@ -83,9 +83,9 @@
       "prompt": "What does gene expression data often describe?",
       "options": [
         "How active genes are in a sample",
-        "The color of a database",
-        "Keyboard layout",
-        "Network cable length"
+        "The absolute size of a genome in base pairs",
+        "The number of chromosomes in the cell nucleus",
+        "The sequence alignment score of ribosomal RNA"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
@@ -119,9 +119,9 @@
       "prompt": "In sequencing data, what does read depth usually describe?",
       "options": [
         "How many times a position is covered by reads",
-        "The physical depth of a lab freezer",
-        "The number of colors in a heatmap",
-        "How long a SQL query takes"
+        "The base pair length of an individual sequencer read",
+        "The speed at which the sequencing chemistry runs",
+        "The distance between two mapped forward and reverse primers"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
@@ -155,9 +155,9 @@
       "prompt": "What is a reference genome used for in sequence analysis?",
       "options": [
         "A baseline sequence to compare reads against",
-        "A spreadsheet password",
-        "A color palette for charts",
-        "A way to erase sample names"
+        "An algorithm to assemble reads without references",
+        "A sequence that holds only non-coding regions",
+        "A list of genes sorted alphabetically by length"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
@@ -173,9 +173,9 @@
       "prompt": "What does variant calling try to identify?",
       "options": [
         "Differences between sample sequences and a reference",
-        "The size of a web button",
-        "The number of SQL columns",
-        "A chart title font"
+        "The rate of protein translation in a ribosome",
+        "The physical size of a microfluidic flow cell",
+        "The number of hydrogen bonds in a DNA helix"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [

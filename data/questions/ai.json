@@ -84,9 +84,9 @@
       "prompt": "Why do we keep test data separate from training data?",
       "options": [
         "To estimate performance on unseen examples",
-        "To make the app prettier",
-        "To delete labels",
-        "To reduce monitor brightness"
+        "To increase the training dataset size",
+        "To visualize the decision boundary",
+        "To prevent data leakage during training"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
@@ -119,9 +119,9 @@
       "prompt": "What is the main purpose of a validation set?",
       "options": [
         "To tune model choices before final testing",
-        "To replace all training data",
-        "To store user passwords",
-        "To make predictions slower"
+        "To increase the model size during training",
+        "To evaluate the final test accuracy directly",
+        "To compress the training dataset storage"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
@@ -136,9 +136,9 @@
       "prompt": "What does a machine learning model learn from during training?",
       "options": [
         "Patterns in data",
-        "Monitor brightness",
-        "Keyboard shortcuts",
-        "Database table colors"
+        "Hardcoded logic trees",
+        "SQL query optimization rules",
+        "Explicit user-written rules"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
@@ -172,9 +172,9 @@
       "prompt": "Why is a confusion matrix useful for classification?",
       "options": [
         "It shows correct and incorrect predictions by class",
-        "It stores training images",
-        "It makes labels disappear",
-        "It chooses database indexes"
+        "It calculates gradient descent steps",
+        "It scales training features",
+        "It displays the loss curve over epochs"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [

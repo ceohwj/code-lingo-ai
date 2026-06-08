@@ -78,39 +78,43 @@
       "commonMistake": "A common mistake is adding 2 + 3 first. Python follows operator precedence, so multiplication runs before addition."
     },
     {
-      "difficulty": "medium",
+      "difficulty": "hard",
       "id": "py-005",
-      "prompt": "Which line creates a variable named score?",
+      "prompt": "What is a known risk of using a mutable value (like a list) as a default function argument in Python?",
       "options": [
-        "score = 10",
-        "let score = 10",
-        "var score: 10",
-        "score := 10;"
+        "The default value is shared across all function calls",
+        "Python throws a syntax error on definition",
+        "The function cannot accept any other arguments",
+        "The argument becomes read-only"
       ],
       "correctOptionIndex": 0,
       "conceptTags": [
-        "variables",
-        "assignment"
+        "functions",
+        "mutability"
       ],
-      "hint": "Python assignment usually reads like name equals value, without let or var.",
-      "explanation": "Python creates variables with the assignment operator: name = value. The variable name goes on the left, and the value being stored goes on the right."
+      "hint": "Think about when default values are evaluated—only once at function definition, or every time the function runs?",
+      "explanation": "In Python, default arguments are evaluated once when the function is defined. If you use a mutable default like a list, it is shared across all calls, which can cause unexpected accumulations of data.",
+      "commonMistake": "Beginners often expect a new list to be created every time the function is called. Instead, you should default to None and initialize the list inside the function."
     },
     {
-      "difficulty": "medium",
+      "difficulty": "hard",
       "id": "py-006",
-      "prompt": "Which type is used for True or False values?",
+      "prompt": "What is the output of [x * 2 for x in [1, 2, 3, 4] if x % 2 == 0]?",
       "options": [
-        "str",
-        "int",
-        "bool",
-        "list"
+        "[4, 8]",
+        "[2, 4, 6, 8]",
+        "[2, 4]",
+        "[4, 6]"
       ],
-      "correctOptionIndex": 2,
+      "correctOptionIndex": 0,
       "conceptTags": [
-        "booleans",
-        "data-types"
+        "lists",
+        "comprehensions",
+        "filtering"
       ],
-      "explanation": "Boolean values use the bool type. The two boolean literals are True and False."
+      "hint": "Evaluate the if filter condition first on the input list, then apply the multiplication x * 2 to the matching elements.",
+      "explanation": "The list comprehension filters the list first, keeping only even numbers (2 and 4), then multiplies each by 2 to yield [4, 8].",
+      "commonMistake": "A common mistake is applying the operation x * 2 before filtering, or missing the filter condition entirely."
     },
     {
       "difficulty": "medium",
@@ -147,7 +151,7 @@
       "explanation": "Python uses if to run code only when a condition is true."
     },
     {
-      "difficulty": "hard",
+      "difficulty": "medium",
       "id": "py-009",
       "prompt": "Which loop is best for visiting every item in a list?",
       "options": [
@@ -165,7 +169,7 @@
       "explanation": "A for loop can visit each item in a list using syntax like for item in items:."
     },
     {
-      "difficulty": "hard",
+      "difficulty": "medium",
       "id": "py-010",
       "prompt": "What does input() usually return?",
       "options": [

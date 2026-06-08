@@ -2196,3 +2196,36 @@
 - Checked local time with date (Mon Jun  8 11:39:09 KST 2026) before writing this report.
 - Documentation-only MVP completion pass completed.
 - Verified all 85 unit tests and the production build pass.
+
+---
+
+### 13:11 KST - Curriculum Quality Audit & Calibration
+
+#### Today’s Goal
+- Perform a curriculum quality audit across all 6 categories: Python, SQL, AI, Bioinformatics, Pandas, and NumPy.
+- Review difficulty consistency, hint quality, explanation quality, conceptTag consistency, ambiguous wording, and category balance, and apply the improvements to the codebase.
+
+#### Completed Work
+- Audited 60 quiz questions, confirming that all categories are perfectly balanced (10 questions each, 4-4-2 difficulty split).
+- Replaced joke/silly distractors in AI (`ai.json`) and Bioinformatics (`bioinformatics.json`) with realistic machine learning, biological, and sequencing alternatives.
+- Recalibrated the Python basics category (`python.json`): moved the introductory loop and input questions to Medium, and replaced the placeholders with two new advanced questions (mutable default arguments and list comprehension filtering/mapping) to maintain a rigorous 4-4-2 difficulty split.
+- Documented findings in the final Antigravity Audit Report.
+
+#### Issues
+- None (resolved placeholder distractors and Python tier mismatches).
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully in Turbopack mode.
+
+#### Next Tasks
+- Prepare the portfolio case study.
+- Prepare deployment.
+
+#### Antigravity QA Report
+- Checked local time with date (Mon Jun  8 13:11:05 KST 2026) before writing this report.
+- Audited and successfully calibrated all 6 content categories, replacing oversimplified distractors and fixing difficulty tiers.
+- Verified all 85 unit tests and Next.js production builds compile cleanly.
+- App Status: 100% Healthy & Verified.
+
+
