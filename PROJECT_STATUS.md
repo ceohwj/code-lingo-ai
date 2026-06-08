@@ -1,15 +1,26 @@
 # PROJECT_STATUS.md
 
+## Status
+MVP Completed
+
+CodeLingo AI is now a portfolio-ready MVP. The core learning loop is complete, mobile learning-flow QA is complete, and the latest validation passes both `npm test` and `npm run build`.
+
+### MVP Completion Notes
+- Core learning loop completed: category selection, quiz answering, immediate feedback, explanations, XP, saved progress, wrong-answer review, adaptive recommendations, weak-area insights, concept focus, achievements, streaks, and daily goals are implemented.
+- Mobile QA completed: final mobile learning-flow validation covered 375px, 390px, and 430px viewports.
+- Validation completed: `npm test` passed and `npm run build` passed in the current local Codex environment.
+- Portfolio-ready MVP: the app is ready to present as an AI-assisted microlearning platform MVP with scalable frontend architecture, retention systems, practical data-analysis content expansion, and traceable multi-agent documentation.
+
 ## Current Status
-CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category-first progress dashboard, lightweight learning statistics, next milestone, and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
+CodeLingo AI is a completed local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category-first progress dashboard, lightweight learning statistics, next milestone and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
 
 ## Completed Features
 
 ### Quiz Core
 - Basic multiple-choice quiz screen
 - Python beginner quiz data
-- Python, SQL, AI, and Bioinformatics categories
-- Python, SQL, AI, and Bioinformatics starter tracks balanced at 10 questions each while preserving the existing JSON schema
+- Python, SQL, Pandas, NumPy, AI, and Bioinformatics categories
+- Python, SQL, Pandas, NumPy, AI, and Bioinformatics starter tracks balanced at 10 questions each while preserving the existing JSON schema
 - Category selection before quiz start
 - Separate selected category storage
 - Question data organized under data/questions/*.json
@@ -99,9 +110,8 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Prompt ecosystem simplified to `CODEX_TASK_PROMPT.md`, `CODEX_QUIZ_GENERATOR_PROMPT.md`, `CODEX_REPORT_PROMPT.md`, and `ANTIGRAVITY_REVIEW_PROMPT.md`
 
 ## In Progress
-- Project structure stabilization
-- Daily reporting workflow
-- Multi-agent development setup
+- Portfolio case study preparation
+- Deployment planning
 - Ongoing browser-level regression verification as adaptive learning features expand
 
 ## Issues
@@ -109,8 +119,11 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Future browser regressions should continue covering new learning flows as features expand.
 
 ## Local Verification
-- npm test passed locally
-- npm run build passed locally
+- npm test passed locally for the MVP completion state
+- npm run build passed locally for the MVP completion state
+- Final mobile learning-flow validation completed across 375px, 390px, and 430px viewports
+- Latest NumPy content expansion verification passed npm test (85/85 tests) and npm run build
+- Latest Pandas content expansion verification passed npm test (85/85 tests) and npm run build
 - Latest CODEX_TASK_PROMPT Recommended Review explainability validation passed npm test (85/85 tests) and npm run build
 - Latest Recommended Review explainability verification passed npm test (85/85 tests) and npm run build
 - Latest prompt ecosystem simplification was documentation-only; remaining prompt references and prompt file structure were checked
@@ -126,14 +139,14 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Browser smoke check confirmed the refined dashboard and Concept Focus section headings.
 - npm run dev started successfully locally
 - Category selection screen was confirmed
-- Python / SQL / AI / Bioinformatics buttons were confirmed
+- Python / SQL / Pandas / NumPy / AI / Bioinformatics categories are registered in the quiz data registry
 - Category-to-quiz flow works
 - XP increases after solving questions
 - Progress persists after refresh
 - Category-specific progress is stored separately
 
 ## 웹앱 직접 확인 체크리스트
-- 첫 화면: 대시보드와 Python / SQL / AI / Bioinformatics 카테고리 버튼이 정상적으로 보이는지 확인한다.
+- 첫 화면: 대시보드와 Python / SQL / Pandas / NumPy / AI / Bioinformatics 카테고리 버튼이 정상적으로 보이는지 확인한다.
 - 퀴즈 흐름: 카테고리를 선택하고, 문제를 풀고, 제출했을 때 피드백과 설명 카드가 나오는지 확인한다.
 - 진행률과 XP: 진행률 바, 현재 문제 번호, 세션 XP, 총 XP가 자연스럽게 업데이트되는지 확인한다.
 - 저장 상태: 퀴즈 중간 또는 완료 후 새로고침했을 때 선택한 카테고리, 진행 상황, XP가 복원되는지 확인한다.

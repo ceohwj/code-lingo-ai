@@ -1,0 +1,206 @@
+{
+  "id": "pandas-basics",
+  "categoryId": "pandas",
+  "categoryLabel": "Pandas",
+  "title": "Pandas Basics",
+  "subtitle": "Practice the table skills behind practical data analysis.",
+  "xpPerCorrectAnswer": 10,
+  "questions": [
+    {
+      "difficulty": "easy",
+      "id": "pd-001",
+      "prompt": "What is a Pandas DataFrame best used to represent?",
+      "options": [
+        "A single number",
+        "A table with rows and columns",
+        "A Python package installer",
+        "A chart image"
+      ],
+      "correctOptionIndex": 1,
+      "conceptTags": [
+        "dataframe",
+        "tabular-data"
+      ],
+      "hint": "Think of the structure that looks most like a spreadsheet or SQL table.",
+      "explanation": "A DataFrame stores data in rows and columns, making it useful for working with table-shaped data such as CSV files, reports, and experiment results.",
+      "commonMistake": "A common mistake is confusing a DataFrame with a single list. A DataFrame is two-dimensional, while a list is usually one-dimensional."
+    },
+    {
+      "difficulty": "easy",
+      "id": "pd-002",
+      "prompt": "What is a Pandas Series?",
+      "options": [
+        "A one-dimensional labeled array",
+        "A database server",
+        "A folder of CSV files",
+        "A required chart style"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "series",
+        "data-structures"
+      ],
+      "hint": "A single DataFrame column is often this Pandas object.",
+      "explanation": "A Series is a one-dimensional labeled array. In everyday Pandas work, selecting one column from a DataFrame usually returns a Series."
+    },
+    {
+      "difficulty": "easy",
+      "id": "pd-003",
+      "prompt": "Which Pandas function loads a CSV file into a DataFrame?",
+      "options": [
+        "pd.open_csv()",
+        "pd.load_table()",
+        "pd.read_csv()",
+        "pd.csv_to_rows()"
+      ],
+      "correctOptionIndex": 2,
+      "conceptTags": [
+        "csv-loading",
+        "dataframe"
+      ],
+      "hint": "The common Pandas loading function starts with read_.",
+      "explanation": "pd.read_csv() reads a comma-separated values file and returns a DataFrame, which you can then inspect, filter, clean, and analyze.",
+      "commonMistake": "Beginners often guess open_csv because Python has open(), but Pandas uses read_csv for CSV loading."
+    },
+    {
+      "difficulty": "easy",
+      "id": "pd-004",
+      "prompt": "Which expression selects the column named 'price' from df?",
+      "options": [
+        "df['price']",
+        "df(price)",
+        "df->price",
+        "select df price"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "series",
+        "column-selection"
+      ],
+      "hint": "Column selection often uses square brackets with the column name as a string.",
+      "explanation": "df['price'] selects the price column and usually returns a Series. This bracket form is reliable, especially for column names that contain spaces or conflict with method names."
+    },
+    {
+      "difficulty": "medium",
+      "id": "pd-005",
+      "prompt": "What does df.loc[3, 'name'] select?",
+      "options": [
+        "The fourth row and first column by position",
+        "The value at index label 3 and column label 'name'",
+        "Every row except index 3",
+        "A random row from the name column"
+      ],
+      "correctOptionIndex": 1,
+      "conceptTags": [
+        "loc",
+        "label-based-indexing"
+      ],
+      "hint": "loc uses labels, not zero-based positions.",
+      "explanation": "df.loc[3, 'name'] uses label-based indexing. It looks for the row whose index label is 3 and the column whose label is 'name'.",
+      "commonMistake": "The label 3 is not always the fourth row. If the DataFrame index labels are custom values, loc follows those labels."
+    },
+    {
+      "difficulty": "medium",
+      "id": "pd-006",
+      "prompt": "What does df.iloc[0] select?",
+      "options": [
+        "The first row by integer position",
+        "The row with index label '0' only",
+        "The first column by name",
+        "All rows except the first"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "iloc",
+        "position-based-indexing"
+      ],
+      "hint": "iloc is about integer location, so count from zero.",
+      "explanation": "df.iloc[0] selects the first row by integer position. Unlike loc, iloc does not care what the visible index label is."
+    },
+    {
+      "difficulty": "medium",
+      "id": "pd-007",
+      "prompt": "Which expression keeps only rows where score is at least 80?",
+      "options": [
+        "df[df['score'] >= 80]",
+        "df['score' >= 80]",
+        "df.where(score >= 80)",
+        "df.filter(score: 80)"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "filtering",
+        "boolean-masks"
+      ],
+      "hint": "Build a True/False condition from the column, then use it inside df[...].",
+      "explanation": "df['score'] >= 80 creates a boolean mask. Passing that mask into df[...] keeps only the rows where the condition is True.",
+      "commonMistake": "Do not put the comparison inside the string. The column name is a string, but the comparison must happen after selecting the column."
+    },
+    {
+      "difficulty": "medium",
+      "id": "pd-008",
+      "prompt": "What does df.groupby('team')['score'].mean() calculate?",
+      "options": [
+        "The highest score in the whole DataFrame",
+        "The average score for each team",
+        "The number of columns named team",
+        "The first score only"
+      ],
+      "correctOptionIndex": 1,
+      "conceptTags": [
+        "groupby",
+        "aggregation"
+      ],
+      "hint": "groupby creates groups first, then mean summarizes each group.",
+      "explanation": "groupby('team') splits rows into team groups, ['score'] chooses the score column, and mean() calculates the average score within each team."
+    },
+    {
+      "difficulty": "hard",
+      "id": "pd-009",
+      "prompt": "Which expression joins orders with customers by the shared customer_id column?",
+      "options": [
+        "orders.merge(customers, on='customer_id')",
+        "orders.groupby(customers, on='customer_id')",
+        "pd.concat(orders, customers, key='customer_id')",
+        "orders.loc(customers['customer_id'])"
+      ],
+      "correctOptionIndex": 0,
+      "conceptTags": [
+        "merge",
+        "joins"
+      ],
+      "hint": "Use the Pandas method named after database-style joins.",
+      "explanation": "orders.merge(customers, on='customer_id') combines rows from both DataFrames where customer_id matches. By default, merge performs an inner join.",
+      "commonMistake": "concat stacks or appends data along an axis; merge matches rows using key columns."
+    },
+    {
+      "difficulty": "hard",
+      "id": "pd-010",
+      "prompt": "Which expression replaces missing values in df with 0?",
+      "options": [
+        "df.dropna(0)",
+        "df.fillna(0)",
+        "df.isna(0)",
+        "df.replace_missing()"
+      ],
+      "correctOptionIndex": 1,
+      "conceptTags": [
+        "missing-values",
+        "data-cleaning"
+      ],
+      "hint": "The method name means fill not available values.",
+      "explanation": "df.fillna(0) returns a DataFrame where missing values are filled with 0. This is useful when missing numeric values should be treated as zero for later calculations.",
+      "commonMistake": "dropna removes rows or columns with missing values, while fillna keeps the data shape and replaces the missing entries."
+    }
+  ],
+  "difficultyLevels": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "xpByDifficulty": {
+    "easy": 10,
+    "medium": 15,
+    "hard": 25
+  }
+}

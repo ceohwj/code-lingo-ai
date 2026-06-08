@@ -1,208 +1,206 @@
 # CodeLingo AI
 
-CodeLingo AI is a local-first, Duolingo-style coding learning platform MVP for programming, AI, SQL, and bioinformatics fundamentals.
+CodeLingo AI is a portfolio-ready MVP for a Duolingo-style coding learning platform. It helps learners build practical programming and data skills through short quiz sessions, immediate explanations, XP progression, wrong-answer review, and daily retention loops.
 
-The project started as a simple quiz app and has grown into a scalable learning product prototype with category-based lessons, difficulty-based XP, explanation feedback, wrong-answer review, daily retention loops, and local progress persistence.
+The project is intentionally local-first for the MVP stage: user progress is saved in browser `localStorage`, quiz content is stored as JSON, and learning logic is separated into testable modules. This keeps the architecture explainable, scalable, and suitable for portfolio review or technical interviews.
+
+## Current MVP Status
+
+Status: MVP Completed
+
+The MVP is complete and portfolio-ready. The core learning loop has been implemented, mobile QA has been completed across common mobile widths, and the latest local validation passes both `npm test` and `npm run build`.
+
+Completed MVP outcomes:
+
+- Core learning loop completed
+- Mobile learning-flow QA completed
+- Local progress persistence completed
+- Review and retention systems completed
+- Practical data-analysis category expansion completed with Pandas and NumPy
+- Documentation and multi-agent workflow tracking completed
+- Latest validation passed: `npm test` and `npm run build`
 
 ## Project Overview
 
-CodeLingo AI helps learners build coding fluency through short multiple-choice learning sessions. The current MVP focuses on a fast feedback loop:
+CodeLingo AI turns coding fundamentals into lightweight daily learning sessions:
 
 1. Choose a learning category.
-2. Answer short quiz questions.
-3. Review correctness, explanation, difficulty, and earned XP.
-4. Save progress automatically in the browser.
-5. Return later to continue, review wrong answers, and maintain daily learning habits.
+2. Answer a short multiple-choice question.
+3. Get immediate feedback and a beginner-friendly explanation.
+4. Earn difficulty-based XP for correct answers.
+5. Save category progress automatically.
+6. Review missed questions later.
+7. Build daily learning momentum through goals, streaks, milestones, and dashboard feedback.
 
-Current categories:
+Current learning categories:
 
 - Python
 - SQL
+- Pandas
+- NumPy
 - AI
 - Bioinformatics
 
-## Core Learning Loop
+## Key Features
 
-```text
-Choose category
-  -> Answer question
-  -> Get immediate feedback and explanation
-  -> Earn difficulty-based XP
-  -> Save category progress
-  -> Review wrong answers
-  -> Build daily streak and daily goal progress
-```
+### Learning Flow
 
-The product prioritizes learning effectiveness, retention, and maintainable architecture over feature volume.
+- Category-based quiz selection
+- 10-question starter tracks per category
+- Easy, medium, and hard difficulty levels
+- Difficulty-based XP rewards
+- Immediate correct/incorrect feedback
+- Explanation cards after each answer
+- Optional hints and common mistake notes
+- Final quiz summary
 
-## Current Features
+### Review And Retention
 
-### Quiz Core
-- Category selection before quiz start
-- Multiple-choice quiz flow
-- Category-specific progress restore
-- Selected category persistence
-- JSON-based question content under `data/questions/`
-- Progress summary with current question, total questions, percentage, and XP
+- Wrong-answer review mode
+- Category-specific missed-question history
+- Adaptive review recommendations
+- Weak-area insights
+- Concept focus analytics
+- Daily goal tracking
+- Daily streak tracking
+- Achievement milestones
+- Category progress dashboard
 
-### Learning Feedback
-- Difficulty-based XP rewards for `easy`, `medium`, and `hard` questions
-- Reusable explanation cards after each answer
-- Correct answer, explanation, earned XP, and difficulty display
-- Optional `commonMistake` helper text support
-- Scalable quiz schema for future `conceptTag` and `hint` fields
+### Data And Curriculum
 
-### Review System
-- Wrong-answer review mode before quiz start
-- Incorrect questions saved separately by category
-- Review mode does not overwrite normal quiz progress
-- Review mode does not award normal quiz XP
-- End-of-review summary with reviewed, corrected, and remaining wrong answers
+- JSON-based quiz datasets under `data/questions/`
+- Concept-tagged questions for analytics and review signals
+- Practical data-analysis coverage through Pandas and NumPy
+- Beginner-friendly explanations designed for retention
+- Curriculum structure ready for future AI-generated content and adaptive learning
 
-### Retention System
-- Daily streak tracking with local calendar day logic
-- Daily goal tracking with a default target of 5 completed normal quiz questions
-- Review mode excluded from streak and daily goal completion
-- Category progress dashboard showing completed questions, total questions, completion percentage, earned XP, and status
-- Visual distinction for not started, in progress, and completed categories
+### Architecture
 
-## Architecture Overview
+- Local-first MVP architecture
+- Reusable React components
+- Focused hooks for browser state orchestration
+- Pure helper modules for quiz, XP, progress, streak, daily goal, achievement, review, weak-area, and concept analytics logic
+- Category-specific `localStorage` persistence
+- Versioned saved-state payloads where useful for future migration
 
-The app is built with Next.js and React using a local-first architecture. Most behavior is implemented with pure logic helpers, focused hooks, and reusable client components.
+## Tech Stack
 
-Short architecture map:
+- Next.js 16
+- React 19
+- JavaScript ES modules
+- Node.js built-in test runner
+- JSON quiz datasets
+- Browser `localStorage`
+- Global CSS through `app/globals.css`
 
-- **components**: Render reusable UI surfaces such as category cards, quiz cards, explanation cards, and progress summaries.
-- **hooks**: Own browser-side state orchestration for localStorage-backed features such as streaks, daily goals, and category dashboard summaries.
-- **lib**: Holds pure, testable learning logic for answer checking, XP, streaks, daily goals, and category progress summaries.
-- **data**: Keeps quiz content in JSON files, separated from rendering and scoring logic.
-
-Key principles:
-
-- Keep quiz data separate from UI rendering.
-- Keep scoring, progress, streak, daily goal, and dashboard calculations in testable helper modules.
-- Preserve localStorage compatibility as the MVP evolves.
-- Prefer small reusable components and hooks over broad rewrites.
-- Avoid backend complexity during the MVP stage.
-
-## Folder Structure
+## Architecture Map
 
 ```text
 app/
-  layout.jsx              App metadata and shell
-  page.jsx                Main quiz flow and screen orchestration
-  globals.css             Responsive app styling
+  layout.jsx
+  page.jsx
+  globals.css
 
 components/
-  CategorySelector.jsx    Home/category dashboard and category actions
-  QuizCard.jsx            Question, choices, answer action, explanation mount
-  ExplanationCard.jsx     Reusable answer explanation UI
-  ProgressBar.jsx         Reusable quiz progress summary
+  CategorySelector.jsx
+  ExplanationCard.jsx
+  LearningStatsPanel.jsx
+  NextMilestonePanel.jsx
+  ProgressBar.jsx
+  QuizCard.jsx
+  QuizHero.jsx
+  QuizResults.jsx
+  WeeklyLearningSnapshot.jsx
 
 data/
-  quizData.js             Quiz registry
+  quizData.js
   questions/
-    python.json
-    sql.json
     ai.json
     bioinformatics.json
+    numpy.json
+    pandas.json
+    python.json
+    sql.json
 
 hooks/
+  useAchievementState.js
+  useAdaptiveReviewRecommendations.js
   useCategoryProgressSummaries.js
+  useConceptFocusInsights.js
   useDailyGoalState.js
+  useLearningProgress.js
+  useQuizProgressStorageState.js
   useStreakState.js
+  useWeakAreaInsights.js
+  useWrongAnswerHistory.js
 
 lib/
+  achievementLogic.js
+  adaptiveReviewLogic.js
   categoryProgressLogic.js
+  conceptAnalyticsLogic.js
+  createAnswerSubmission.js
   dailyGoalLogic.js
+  learningProgressLogic.js
   quizLogic.js
+  quizProgressLogic.js
   streakLogic.js
+  updateSubmittedAnswers.js
+  weakAreaInsightLogic.js
+  wrongAnswerHistoryLogic.js
 
 test/
-  categoryProgressLogic.test.js
-  dailyGoalLogic.test.js
-  quizLogic.test.js
-  streakLogic.test.js
+  *.test.js
 
 docs/
-  DAILY_LOG.md            Chronological development log
-
-AGENTS.md                 Multi-agent workflow and project roles
-WORKFLOW.md               Lightweight Codex, Antigravity, and ChatGPT collaboration guide
-WORKFLOW_MAP.md           Codex, Antigravity, and ChatGPT prompt decision tree map
-CODEX_TASK_PROMPT.md      Codex implementation, component, bug-fix, and refactor task prompt
-CODEX_QUIZ_GENERATOR_PROMPT.md
-                           Codex quiz content generation prompt
-CODEX_REPORT_PROMPT.md    Codex report consolidation prompt
-ANTIGRAVITY_REVIEW_PROMPT.md
-                           Antigravity local review and small-review mode prompt
-PROJECT_STATUS.md         Current project status by feature group
-ROADMAP.md                Completed milestones and future priorities
+  DAILY_LOG.md
 ```
-
-## localStorage Persistence Strategy
-
-The MVP uses browser localStorage only. There is no backend, authentication, or database yet.
-
-Stored state includes:
-
-- Selected category
-- Category-specific quiz progress
-- Category-specific wrong-answer question IDs
-- Daily streak state
-- Daily goal state
-
-Compatibility notes:
-
-- The original Python progress key is preserved for legacy restore compatibility.
-- Progress payloads include schema metadata where useful for future migration.
-- Review mode uses separate wrong-answer storage and does not mutate normal quiz progress.
-- Daily streak and daily goal use local calendar day logic.
 
 ## AI-Assisted Workflow
 
-This project is developed with an AI-assisted workflow documented in `AGENTS.md`, `WORKFLOW.md`, and `WORKFLOW_MAP.md`. Before feature work, each defined agent reviews the task for learning value, MVP scope, maintainability, testing risk, and portfolio impact.
+CodeLingo AI was built with a documented multi-agent workflow that simulates a small product team:
 
-The collaboration model is:
+- ChatGPT: product owner, architecture reviewer, UX strategist, and portfolio strategist
+- Codex: production engineer for scoped implementation, content generation, utilities, and documentation updates
+- Antigravity: tech lead and local build engineer for integration review, runtime validation, and QA reporting
 
-- ChatGPT: product direction, scope, and final review
-- Codex: fast scoped implementation
-- Antigravity: local validation, build checks, and integration review
+The workflow is tracked in:
 
-For feature work, the project uses role-based reviews from:
+- `AGENTS.md`
+- `WORKFLOW.md`
+- `WORKFLOW_MAP.md`
+- `PROJECT_STATUS.md`
+- `ROADMAP.md`
+- `docs/DAILY_LOG.md`
 
-- Product Manager Agent
-- Learning Experience Agent
-- Quiz Generator Agent
-- UI Agent
-- Refactor Agent
-- Test Agent
-- Documentation Agent
-- Architecture Agent
-- Growth Agent
-- Portfolio Strategy Agent
+Prompt templates are intentionally scoped:
 
-The workflow emphasizes MVP scope control, learning effectiveness, retention, scalable architecture, testability, and clear documentation. See `WORKFLOW.md` for the collaboration guide and `WORKFLOW_MAP.md` for prompt selection and handoff guidance. Work is tracked through `PROJECT_STATUS.md`, `ROADMAP.md`, and chronological entries in `docs/DAILY_LOG.md`.
+- `CODEX_TASK_PROMPT.md`
+- `CODEX_QUIZ_GENERATOR_PROMPT.md`
+- `CODEX_REPORT_PROMPT.md`
+- `ANTIGRAVITY_REVIEW_PROMPT.md`
 
-Current prompt files are intentionally small:
+This workflow is part of the portfolio story: it demonstrates AI-assisted software engineering, MVP scope control, iterative QA, and explainable product decision-making.
 
-- `CODEX_TASK_PROMPT.md` for Codex implementation, component, bug-fix, and refactor tasks
-- `CODEX_QUIZ_GENERATOR_PROMPT.md` for quiz dataset generation
-- `CODEX_REPORT_PROMPT.md` for consolidating multiple Codex outputs
-- `ANTIGRAVITY_REVIEW_PROMPT.md` for local validation, integration review, and small-review mode
+## Testing And Validation
 
-## Testing Approach
+The project uses focused logic tests to keep learning behavior stable as the UI evolves.
 
-Tests are focused on pure logic modules so product behavior remains stable while the UI evolves.
+Covered areas include:
 
-Covered areas:
-
-- Quiz data structure and category coverage
-- Answer checking and feedback helpers
-- Difficulty-based XP calculation
-- Streak date logic and saved-state normalization
-- Daily goal progress and reset logic
-- Category progress dashboard summary logic
+- Quiz data schema and category registration
+- Answer checking
+- Difficulty-based XP
+- Progress persistence helpers
+- Retry behavior
+- Wrong-answer history
+- Adaptive review recommendations
+- Weak-area insights
+- Concept focus analytics
+- Daily goals
+- Streaks
+- Achievements
+- Category progress summaries
 
 Run tests:
 
@@ -210,58 +208,60 @@ Run tests:
 npm test
 ```
 
-The npm test script runs:
+Run production build:
 
 ```bash
-node --test
+npm run build
 ```
+
+Latest MVP validation:
+
+- Schema consistency checks passed
+- `npm test` passed
+- `npm run build` passed
+- Mobile learning-flow validation completed at 375px, 390px, and 430px
 
 ## Run Locally
 
+Install dependencies:
+
 ```bash
 npm install
+```
+
+Start the local dev server:
+
+```bash
 npm run dev
 ```
 
-Then open:
+Open:
 
 ```text
 http://127.0.0.1:3000
 ```
 
-If your shell uses `nvm`, load it first as needed:
+## Roadmap
 
-```bash
-source ~/.nvm/nvm.sh
-```
+The MVP is complete. Next priorities are portfolio presentation and deployment:
 
-## Roadmap Summary
+- Write a portfolio case study
+- Add screenshots or a short demo recording
+- Prepare deployment notes
+- Deploy the MVP publicly
+- Continue content expansion with practical mini challenges
+- Later, add backend sync, authentication, analytics, and AI tutor features
 
-The roadmap is organized around MVP stabilization, learning-system depth, content expansion, AI tutor features, retention, scalability, and portfolio polish.
+## Portfolio Positioning
 
-Near-term priorities:
+CodeLingo AI demonstrates:
 
-- Expand question coverage per category
-- Add `conceptTag` metadata to quiz content
-- Add `hint` support to selected questions
-- Improve explanation quality and consistency
-- Add browser-level regression checks for key quiz flows
-- Continue safe state-management refactors when behavior is covered
-
-## Future Plans
-
-- Adaptive difficulty
-- Personalized wrong-answer review
-- Spaced repetition
-- Lightweight learning statistics dashboard
-- Achievement and XP milestone systems
-- AI tutor features for personalized explanations, hints, and review recommendations
-- Backend, authentication, database, and learning analytics when the MVP is ready to scale
-
-## Current Status
-
-See:
-
-- `PROJECT_STATUS.md` for grouped feature status
-- `ROADMAP.md` for completed milestones and future priorities
-- `docs/DAILY_LOG.md` for chronological development notes
+- AI-assisted product development workflow
+- Scalable frontend architecture
+- Local-first MVP design
+- Educational product thinking
+- Retention-oriented UX
+- Modular React architecture
+- Testable learning logic
+- Practical data-analysis curriculum expansion
+- Clear documentation and QA traceability

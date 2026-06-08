@@ -16,6 +16,9 @@ Core focus:
 Goal:
 Make the current quiz app stable, readable, and maintainable.
 
+Status:
+Completed
+
 Core Priorities:
 - Stable quiz experience
 - Reusable component structure
@@ -40,8 +43,8 @@ Completed:
 Next Priorities:
 - [x] Browser-level regression checks for key quiz flows
 - [x] Browser-level retry check for session XP versus total XP behavior
+- [x] Keep verification notes current as the local environment changes
 - [ ] Continue reducing page-level state complexity when safe
-- [ ] Keep verification notes current as the local environment changes
 
 Success Criteria:
 - Users can complete quizzes without bugs
@@ -107,8 +110,8 @@ Learning Tracks:
 - [x] SQL basics
 - [x] AI basics
 - [x] Bioinformatics basics
-- [ ] Pandas
-- [ ] NumPy
+- [x] Pandas
+- [x] NumPy
 - [ ] Machine learning
 - [ ] XAI
 - [ ] Bio/healthcare data examples
@@ -171,9 +174,9 @@ Completed:
 - [x] Achievement system
 
 Future Features:
-- [ ] XP milestones
+- [x] XP milestones
 - [ ] Weekly challenges
-- [ ] Learning statistics dashboard
+- [x] Learning statistics dashboard
 - [ ] Shareable progress cards
 - [ ] Friend system
 - [ ] Leaderboards
@@ -220,7 +223,7 @@ Core Priorities:
 - Deployable product quality
 
 Future Features:
-- [ ] Improve README
+- [x] Improve README
 - [ ] Add screenshots
 - [ ] Add demo video/GIF
 - [ ] Write Velog development logs

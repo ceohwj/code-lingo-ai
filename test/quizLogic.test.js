@@ -1,18 +1,20 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { pythonBasicsQuiz, quizzes } from "../data/quizData.js";
+import { numpyBasicsQuiz, pandasBasicsQuiz, pythonBasicsQuiz, quizzes } from "../data/quizData.js";
 import { DEFAULT_XP_BY_DIFFICULTY, SUPPORTED_DIFFICULTIES, calculateDifficultyXp, calculateXp, checkAnswer, getFeedback, getProgressPercent, getQuestionHint, getQuestionXp } from "../lib/quizLogic.js";
 
 test("quiz data contains the required categories", () => {
   assert.deepEqual(
     quizzes.map((quiz) => quiz.categoryLabel),
-    ["Python", "SQL", "AI", "Bioinformatics"]
+    ["Python", "SQL", "Pandas", "NumPy", "AI", "Bioinformatics"]
   );
 });
 
 test("all quizzes contain valid multiple-choice questions", () => {
   assert.equal(pythonBasicsQuiz.questions.length, 10);
+  assert.equal(pandasBasicsQuiz.questions.length, 10);
+  assert.equal(numpyBasicsQuiz.questions.length, 10);
 
   const ids = new Set();
 
@@ -76,6 +78,8 @@ test("quiz content includes lightweight concept tags", () => {
 
   assert.ok(conceptTags.has("loops"));
   assert.ok(conceptTags.has("joins"));
+  assert.ok(conceptTags.has("dataframe"));
+  assert.ok(conceptTags.has("arrays"));
   assert.ok(conceptTags.has("overfitting"));
   assert.ok(conceptTags.has("sequence-alignment"));
 });
