@@ -1935,3 +1935,171 @@
 - Confirmed unit tests pass (85/85) and production build compiles cleanly.
 - App Status: 100% Healthy & Verified.
 
+---
+
+### 17:16 KST - Recommended Review Explainability
+
+#### Today’s Goal
+- Improve Recommended Review explainability using existing dashboard data only.
+- Help learners understand why each review item is recommended without adding storage, backend logic, or state architecture changes.
+
+#### Completed Work
+- Added a short learner-facing explanation under each Recommended Review item.
+- Reused existing Concept Focus insights first when a recommended category has missed concept signals.
+- Reused existing Weak Area insights when a category-level weak-area signal is available.
+- Added fallback explanations from existing recommendation fields such as saved miss count and hardest missed difficulty.
+- Added lightweight styling for the explanation note inside Recommended Review cards.
+- Kept the change presentational only with no new storage, backend, hooks, or state management.
+- Updated PROJECT_STATUS.md with the new Recommended Review explainability status.
+
+#### Issues
+- Browser visual smoke check was not run during this pass.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Run a visual pass to confirm the new explanation note stays readable in dense mobile cards.
+- Consider surfacing exact concept names per category later if recommendation objects gain category-scoped concept summaries.
+
+#### Codex Report
+- Used local planning fallback.
+- Read AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 17:16:39 KST 2026) before writing this report.
+- Added Recommended Review explanations by reusing existing concept focus, weak-area, and recommendation data.
+- Confirmed npm test and npm run build both pass after the explainability enhancement.
+
+---
+
+### 17:22 KST - Prompt Ecosystem Simplification
+
+#### Today’s Goal
+- Simplify the Antigravity and Codex prompt ecosystem.
+- Reduce overlapping prompt files and make the multi-agent workflow easier to choose and use.
+
+#### Completed Work
+- Created `CODEX_TASK_PROMPT.md` as the unified Codex prompt for implementation, component work, bug fixes, and behavior-preserving refactors.
+- Updated `ANTIGRAVITY_REVIEW_PROMPT.md` to include Small-Review Mode for minor local fixes, documentation edits, and safe integration checks.
+- Kept `CODEX_QUIZ_GENERATOR_PROMPT.md` and `CODEX_REPORT_PROMPT.md` as specialized prompts.
+- Removed obsolete prompt templates: `CODEX_IMPLEMENTATION_PROMPT.md`, `CODEX_COMPONENT_PROMPT.md`, `CODEX_REFACTOR_PROMPT.md`, `ANTIGRAVITY_MASTER_PROMPT.md`, and `ANTIGRAVITY_SMALL_TASK_PROMPT.md`.
+- Updated active workflow references in README.md, AGENTS.md, PROJECT_STATUS.md, WORKFLOW.md, and WORKFLOW_MAP.md.
+- Confirmed the remaining prompt files are easy to understand and no active workflow docs reference the removed prompts.
+
+#### Issues
+- None.
+
+#### Verification
+- Remaining prompt files: `CODEX_TASK_PROMPT.md`, `CODEX_QUIZ_GENERATOR_PROMPT.md`, `CODEX_REPORT_PROMPT.md`, and `ANTIGRAVITY_REVIEW_PROMPT.md`.
+- Active reference scan: Passed for AGENTS.md, README.md, PROJECT_STATUS.md, ROADMAP.md, WORKFLOW.md, WORKFLOW_MAP.md, and root prompt docs.
+- Unit Tests (`npm test`): Not run because this was a documentation-only change with no app code, package, data, or test changes.
+- Next.js Production Build (`npm run build`): Not required because no app code changed.
+
+#### Next Tasks
+- Use `CODEX_TASK_PROMPT.md` for the next general Codex implementation/refactor/component task.
+- Use `ANTIGRAVITY_REVIEW_PROMPT.md` Small-Review Mode for minor local validation or documentation-only checks.
+
+#### Codex Report
+- Used local planning fallback.
+- Read AGENTS.md, README.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before implementation.
+- Checked local time with date (Fri Jun  5 17:22:35 KST 2026) before writing this report.
+- Simplified the prompt ecosystem to four active prompt files and updated the active workflow references.
+- Did not run npm test or npm run build because the task was documentation-only.
+
+---
+
+### 17:55 KST - Recommended Review Explainability CODEX_TASK Validation
+
+#### Today’s Goal
+- Use `CODEX_TASK_PROMPT.md` to validate the Recommended Review explainability enhancement.
+- Confirm that learners can understand why each review item is recommended.
+- Preserve the no-storage, no-backend, no-state-architecture-change constraints.
+
+#### Completed Work
+- Read `CODEX_TASK_PROMPT.md`, AGENTS.md, PROJECT_STATUS.md, ROADMAP.md, and docs/DAILY_LOG.md before validation.
+- Confirmed the current Recommended Review implementation already adds a short explanation below each recommendation.
+- Confirmed the explanation strategy reuses existing Concept Focus, Weak Area, and recommendation signals.
+- Confirmed the UI note is presentational only and styled inside the existing Recommended Review card system.
+- Made no additional app-code changes during this pass because the existing implementation already satisfied the requested scope.
+- Updated PROJECT_STATUS.md with the latest CODEX_TASK validation result.
+
+#### Issues
+- Browser visual smoke check was not run during this pass.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Run a browser/mobile visual pass to confirm the explanation note remains readable in dense Recommended Review cards.
+- Consider a future category-scoped concept summary if recommendations need more precise concept explanations.
+
+#### Codex Task Report
+- Used `CODEX_TASK_PROMPT.md`.
+- Checked local time with date (Fri Jun  5 17:55:09 KST 2026) before writing this report.
+- Verified the Recommended Review explainability strategy and validation results.
+- Confirmed npm test and npm run build both pass.
+
+---
+
+### 18:14 KST - Recommended Review Explainability Antigravity Review
+
+#### Today’s Goal
+- Review Recommended Review explainability across clarity, trustworthiness, usefulness, motivation, and mobile readability.
+- Fix any identified copy duplication or visual overcrowding under ANTIGRAVITY_REVIEW_PROMPT guidelines.
+
+#### Completed Work
+- Audited the implementation of card-level recommended review explanations.
+- Identified visual/textual redundancy between `recommendation.reason` and the detailed dynamic explanation.
+- Fixed the duplication in `components/CategorySelector.jsx` by removing the redundant top paragraph `<p>{recommendation.reason}</p>` and keeping the unified specific explanation block.
+- Confirmed all tests pass and build succeeds.
+
+#### Issues
+- Redundant trigger text was repeating the explanation in slightly different words (e.g., "Hard missed question needs review" + "Review recommended because this category includes a hard missed question"). This has been resolved.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully.
+
+#### Next Tasks
+- Perform a final visual layout validation on a mobile device to confirm readability.
+
+#### Antigravity QA Report
+- Checked local time with date (Fri Jun  5 18:14:25 KST 2026) before writing this report.
+- Audited the Recommended Review explainability and removed duplicate reason headers in `CategorySelector.jsx`.
+- Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+
+---
+
+### 10:50 KST - Mobile Learning-Flow Validation
+
+#### Today’s Goal
+- Perform final mobile learning-flow validation across 375px, 390px, and 430px viewports.
+- Review Today's Mission, Category Cards, Learning Stats, Next Milestone, Weekly Snapshot, Recommended Review, Weak Areas, and Concept Focus.
+
+#### Completed Work
+- Ran a browser subagent session to simulate a standard user learning flow.
+- Selected the Python category, completed 5 quiz questions (3 correct, 2 incorrect), and checked dashboard updates.
+- Verified responsive layout behaviors under mobile widths (375px, 390px, 430px).
+- Confirmed scroll depth, readability, CTA accessibility, and section wrapping.
+
+#### Issues
+- Visual Next.js Dev Tool Overlay: In development mode, the default Next.js feedback button overlaps the review buttons in the bottom-left/right area. This is a framework-level dev helper and does not impact the production build.
+- Streak/Daily Goal distinction: Completing the daily mission (5 questions) does not automatically complete the daily streak (requires completing a full 10-question quiz). Clarified that this behavior is by design.
+
+#### Verification
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully in Turbopack mode.
+- Browser Visual Check: Completed on 375px, 390px, and 430px.
+
+#### Next Tasks
+- Proceed to Phase 2 and Phase 3 roadmaps as scheduled.
+
+#### Antigravity QA Report
+- Checked local time with date (Mon Jun  8 10:50:56 KST 2026) before writing this report.
+- Performed end-to-end mobile learning-flow validation and confirmed responsive visual hierarchy and layout health.
+- Verified all 85 unit tests and the production build pass.
+- App Status: 100% Healthy & Verified.
+
+

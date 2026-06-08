@@ -130,6 +130,12 @@ docs/
 AGENTS.md                 Multi-agent workflow and project roles
 WORKFLOW.md               Lightweight Codex, Antigravity, and ChatGPT collaboration guide
 WORKFLOW_MAP.md           Codex, Antigravity, and ChatGPT prompt decision tree map
+CODEX_TASK_PROMPT.md      Codex implementation, component, bug-fix, and refactor task prompt
+CODEX_QUIZ_GENERATOR_PROMPT.md
+                           Codex quiz content generation prompt
+CODEX_REPORT_PROMPT.md    Codex report consolidation prompt
+ANTIGRAVITY_REVIEW_PROMPT.md
+                           Antigravity local review and small-review mode prompt
 PROJECT_STATUS.md         Current project status by feature group
 ROADMAP.md                Completed milestones and future priorities
 ```
@@ -177,6 +183,13 @@ For feature work, the project uses role-based reviews from:
 - Portfolio Strategy Agent
 
 The workflow emphasizes MVP scope control, learning effectiveness, retention, scalable architecture, testability, and clear documentation. See `WORKFLOW.md` for the collaboration guide and `WORKFLOW_MAP.md` for prompt selection and handoff guidance. Work is tracked through `PROJECT_STATUS.md`, `ROADMAP.md`, and chronological entries in `docs/DAILY_LOG.md`.
+
+Current prompt files are intentionally small:
+
+- `CODEX_TASK_PROMPT.md` for Codex implementation, component, bug-fix, and refactor tasks
+- `CODEX_QUIZ_GENERATOR_PROMPT.md` for quiz dataset generation
+- `CODEX_REPORT_PROMPT.md` for consolidating multiple Codex outputs
+- `ANTIGRAVITY_REVIEW_PROMPT.md` for local validation, integration review, and small-review mode
 
 ## Testing Approach
 

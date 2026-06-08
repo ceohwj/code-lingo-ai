@@ -176,7 +176,9 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
                       <span>{recommendation.categoryLabel}</span>
                       <strong>{recommendation.missedQuestionCount} saved {recommendation.missedQuestionCount === 1 ? "miss" : "misses"}</strong>
                     </div>
-                    <p>{recommendation.reason}</p>
+                    <p className="recommended-review-explanation">
+                      {getRecommendedReviewExplanation({ conceptFocusInsights, recommendation, weakAreaInsights })}
+                    </p>
                     <small>{recommendation.hardestDifficulty} difficulty - {recommendation.completionPercentage}% complete</small>
                     <button className="review-mode-button" type="button" onClick={() => onReviewCategory(recommendation.categoryId)}>
                       Start Recommended Review
@@ -278,4 +280,30 @@ function getCategoryProgressLabel(status) {
   }
 
   return "Not started";
+}
+
+function getRecommendedReviewExplanation({ conceptFocusInsights, recommendation, weakAreaInsights }) {
+  const conceptSignal = conceptFocusInsights.find((concept) => (
+    concept.categoryLabels.includes(recommendation.categoryLabel) && concept.missedQuestionCount > 0
+  ));
+
+  if (conceptSignal) {
+    return "You missed " + conceptSignal.missedQuestionCount + " " + (conceptSignal.missedQuestionCount === 1 ? "question" : "questions") + " related to " + conceptSignal.conceptLabel + ".";
+  }
+
+  const weakAreaSignal = weakAreaInsights.find((insight) => insight.categoryId === recommendation.categoryId);
+
+  if (weakAreaSignal) {
+    return weakAreaSignal.message + ".";
+  }
+
+  if (recommendation.missedQuestionCount > 1) {
+    return "Review recommended because this category has " + recommendation.missedQuestionCount + " saved wrong answers.";
+  }
+
+  if (recommendation.hardestDifficulty === "hard") {
+    return "Review recommended because this category includes a hard missed question.";
+  }
+
+  return "Review recommended based on recent mistakes.";
 }

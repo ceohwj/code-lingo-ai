@@ -37,18 +37,18 @@ ChatGPT scope review
    - Keep the task MVP-friendly and aligned with learning effectiveness.
 
 2. **Codex implementation**
-   - Use the appropriate Codex prompt.
+   - Use `CODEX_TASK_PROMPT.md` for implementation, components, fixes, and refactors.
    - Keep changes scoped and follow existing `lib/`, `hooks/`, and `components/` patterns.
-   - Return a `[Codex Report]`.
+   - Return a `# Codex Task Report`.
 
 3. **Codex report consolidation**
    - If multiple Codex outputs exist, use `CODEX_REPORT_PROMPT.md`.
    - Produce one unified handoff for Antigravity.
 
 4. **Antigravity validation**
-   - Use the appropriate Antigravity prompt.
+   - Use `ANTIGRAVITY_REVIEW_PROMPT.md`.
    - Run local verification and apply only small integration fixes when needed.
-   - Return an `[Antigravity QA Report]`.
+   - Return an `# Antigravity Review Report`.
 
 5. **ChatGPT final review**
    - Compare implementation results, validation results, risks, and next priorities.
@@ -58,17 +58,9 @@ ChatGPT scope review
 
 ### Codex prompts
 
-- `CODEX_IMPLEMENTATION_PROMPT.md`
-  - Use for normal feature implementation and bug fixes.
-  - Best for changes touching `lib/`, `hooks/`, components, tests, or documentation.
-
-- `CODEX_COMPONENT_PROMPT.md`
-  - Use for focused React component or UI surface work.
-  - Best when the task is mostly rendering, styling, layout, or component integration.
-
-- `CODEX_REFACTOR_PROMPT.md`
-  - Use for behavior-preserving cleanup.
-  - Best when improving structure without changing user-facing behavior.
+- `CODEX_TASK_PROMPT.md`
+  - Use for normal feature implementation, bug fixes, React components, UI work, and behavior-preserving refactors.
+  - Best for scoped changes touching `lib/`, `hooks/`, `components/`, tests, styles, or documentation.
 
 - `CODEX_QUIZ_GENERATOR_PROMPT.md`
   - Use for generating or improving quiz content.
@@ -80,25 +72,19 @@ ChatGPT scope review
 
 ### Antigravity prompts
 
-- `ANTIGRAVITY_MASTER_PROMPT.md`
-  - Use for larger tasks that need planning, implementation, verification, and documentation.
-
-- `ANTIGRAVITY_SMALL_TASK_PROMPT.md`
-  - Use for small local fixes or safe tweaks.
-
 - `ANTIGRAVITY_REVIEW_PROMPT.md`
-  - Use after Codex implementation to validate the work locally.
-  - Best for `npm test`, `npm run build`, browser checks, mobile checks, and localStorage behavior.
+  - Use after Codex implementation to validate the work locally, or for small local fixes through its Small-Review Mode.
+  - Best for `npm test`, `npm run build`, browser checks, mobile checks, localStorage behavior, and safe integration fixes.
 
 ## Reporting Expectations
 
-Codex reports should use the header `[Codex Report]` and answer:
+Codex task reports should use the header `# Codex Task Report` and answer:
   - What was implemented?
   - Which files changed?
   - What verification was completed?
   - What risks remain?
 
-Antigravity reports should use the header `[Antigravity QA Report]` and answer:
+Antigravity reports should use the header `# Antigravity Review Report` and answer:
   - What was reviewed?
   - Did tests, build, browser, and mobile checks pass?
   - Were any issues found or fixed?

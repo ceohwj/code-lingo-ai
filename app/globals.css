@@ -585,6 +585,15 @@ h2 {
   line-height: 1.45;
 }
 
+.recommended-review-item .recommended-review-explanation {
+  padding: 0.65rem 0.7rem;
+  border: 1px solid rgba(242, 184, 75, 0.34);
+  border-radius: 8px;
+  background: #fffaf0;
+  color: var(--brand-strong);
+  font-weight: 700;
+}
+
 .recommended-review-item > small {
   color: var(--muted);
   font-size: 0.78rem;

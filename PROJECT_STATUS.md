@@ -43,6 +43,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - Wrong-answer review mode before quiz start
 - Adaptive review recommendations derived from wrong answers, difficulty, and category progress
 - Recommended Review dashboard section prioritizes recent misses, harder misses, and low-progress categories
+- Recommended Review items now include short learner-facing explanations based on existing concept focus, weak-area, and saved-miss signals
 - Weak Areas dashboard section derives concise insights from wrong answers, category progress, difficulty patterns, and adaptive review signals
 - Concept Focus dashboard section derives frequently missed and review-needed concepts from wrong answers, weak areas, and adaptive review signals
 - Incorrect answers saved separately by category
@@ -95,6 +96,7 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 - npm test and npm run build pass in the current local Codex environment
 - Local verification previously confirmed category flow, XP, refresh restore, and category-specific progress behavior
 - README expanded to describe the scalable Duolingo-style platform MVP, architecture, persistence, workflow, testing, and future plans
+- Prompt ecosystem simplified to `CODEX_TASK_PROMPT.md`, `CODEX_QUIZ_GENERATOR_PROMPT.md`, `CODEX_REPORT_PROMPT.md`, and `ANTIGRAVITY_REVIEW_PROMPT.md`
 
 ## In Progress
 - Project structure stabilization
@@ -109,6 +111,9 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 ## Local Verification
 - npm test passed locally
 - npm run build passed locally
+- Latest CODEX_TASK_PROMPT Recommended Review explainability validation passed npm test (85/85 tests) and npm run build
+- Latest Recommended Review explainability verification passed npm test (85/85 tests) and npm run build
+- Latest prompt ecosystem simplification was documentation-only; remaining prompt references and prompt file structure were checked
 - Latest dashboard hierarchy simplification verification passed npm test (85/85 tests) and npm run build
 - Latest Weekly Learning Snapshot verification passed npm test (85/85 tests) and npm run build
 - Latest Next Milestone panel verification passed npm test (85/85 tests) and npm run build
@@ -148,6 +153,14 @@ CodeLingo AI is a local-first quiz MVP with category selection, reusable quiz UI
 
 ## Recent Antigravity Report
 ~~~txt
+[Antigravity QA Report - 2026-06-05 (18:14 KST)]
+- Checked local time with date (Fri Jun  5 18:14:25 KST 2026) before writing this report.
+- Audited Recommended Review explainability in `CategorySelector.jsx`.
+- Found copy redundancy between trigger reason and dynamic explanation paragraphs in Recommended Review cards.
+- Fixed duplication by removing the redundant reason block and displaying only the specific explanation.
+- Verified all 85 unit tests pass and Next.js production build succeeds with no warnings.
+- App Status: 100% Healthy & Verified.
+
 [Antigravity QA Report - 2026-06-05 (16:37 KST)]
 - Checked local time with date (Fri Jun  5 16:37:00 KST 2026) before writing this report.
 - Audited the simplified homepage dashboard hierarchy in `CategorySelector.jsx`.

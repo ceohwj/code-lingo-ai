@@ -132,6 +132,19 @@ Responsibilities:
 
 ---
 
+# Prompt Toolkit
+
+Use the smallest prompt surface that fits the work:
+
+* `CODEX_TASK_PROMPT.md` for scoped implementation, component, bug-fix, and behavior-preserving refactor work
+* `CODEX_QUIZ_GENERATOR_PROMPT.md` for quiz dataset generation and content expansion
+* `CODEX_REPORT_PROMPT.md` for consolidating multiple Codex outputs into one handoff
+* `ANTIGRAVITY_REVIEW_PROMPT.md` for local verification, integration review, and small-review mode
+
+Deprecated prompt files should not be recreated unless the workflow becomes complex enough to justify a separate template again.
+
+---
+
 # Agent Roles
 
 ## 1. Product Manager Agent
