@@ -111,14 +111,16 @@ CodeLingo AI is a completed local-first quiz MVP with category selection, reusab
 
 ## In Progress
 - Portfolio case study preparation
-- Deployment planning
+- Deployment planning: Vercel is the recommended first public host, with `DEPLOYMENT_CHECKLIST.md` tracking metadata, Open Graph image, favicon, live demo URL, screenshots, README demo section, and portfolio linking tasks.
 - Ongoing browser-level regression verification as adaptive learning features expand
 
 ## Issues
 - Codex in-app browser automation does not expose direct localStorage inspection APIs, so browser persistence verification uses visible refresh/restore behavior plus logic tests.
 - Future browser regressions should continue covering new learning flows as features expand.
+- Public deployment presentation polish remains before recruiter sharing: favicon, Open Graph image, live demo URL, screenshots, and README portfolio links.
 
 ## Local Verification
+- Latest deployment checklist documentation pass verified npm test (85/85 tests) and npm run build.
 - npm test passed locally for the MVP completion state
 - npm run build passed locally for the MVP completion state
 - Final mobile learning-flow validation completed across 375px, 390px, and 430px viewports
