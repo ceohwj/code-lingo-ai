@@ -2363,3 +2363,214 @@
 - Confirmed that previously unhinted questions have empty `hint` string values, leaving UI rendering, scoring, and state persistence behaviors completely unchanged.
 - Ran `npm test` and `npm run build` locally, verifying all 85 unit tests pass and Next.js production build compiles successfully.
 - App Status: 100% Healthy, Verified & Deployment Ready.
+
+---
+
+### 15:09 KST - Public Release README Update
+
+#### Today’s Goal
+- Update README.md for the public release of CodeLingo AI v1.
+- Promote the deployed application and improve GitHub portfolio presentation for recruiters.
+
+#### Completed Work
+- Added a prominent Live Demo section near the top of README.md.
+- Updated project messaging from MVP-focused language to Public Release / Learning Platform v1.
+- Highlighted the public Vercel deployment at https://code-lingo-ai.vercel.app.
+- Preserved existing architecture, testing, local development, and multi-agent workflow documentation.
+- Updated PROJECT_STATUS.md to reflect the live public release and remaining portfolio polish tasks.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Tue Jun  9 15:09:45 KST 2026.
+- Markdown readability review: Passed.
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully in Turbopack mode.
+
+#### Next Tasks
+- Add screenshots, Open Graph metadata, favicon, and a portfolio case study link.
+
+#### Codex QA Report
+- Applied a documentation-only public release update.
+- Kept README.md recruiter-friendly and scannable while preserving architecture and workflow detail.
+- Verified README.md readability, all 85 unit tests, and the Next.js production build after the documentation update.
+
+---
+
+### 15:16 KST - README.md Recruiter & Portfolio Review
+
+#### Today’s Goal
+- Review the updated README.md from a recruiter and portfolio reviewer's perspective, focusing on readability, live demo visibility, technical storytelling, and project scope.
+- Maintain a high-quality portfolio presence that highlights the unique multi-agent development workflow.
+
+#### Completed Work
+- Completed a comprehensive review of the public README.md.
+- Evaluated layout readability, Live Demo positioning, technical messaging, and architecture documentation.
+- Highlighted key recommendations: adding a short demo GIF, embedding actual markdown image links for screenshots, and expanding the architectural rationale for local-first hook-based persistence.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Tue Jun  9 15:16:42 KST 2026.
+- Verified README.md alignment, formatting, and file-system links.
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully in Turbopack mode.
+
+#### Next Tasks
+- Capture actual screenshots and create a demo GIF to embed in the README.
+- Add favicon, metadata, and link a case study.
+
+#### Antigravity QA Report
+- Performed a strategic portfolio audit on README.md.
+- Scored the README at 9/10, noting high live-demo visibility and exceptional agent workflow storytelling.
+- Recommended visual asset embedding and adding a brief architecture decision rationale.
+- Verified all unit tests and builds continue to pass cleanly.
+- App Status: 100% Healthy & Portfolio Ready.
+
+---
+
+### 15:23 KST - Context7 MCP Usage Policy
+
+#### Today’s Goal
+- Add a concise Context7 MCP usage policy to AGENTS.md.
+- Update future Codex report expectations so reports include a Context7 Check section.
+
+#### Completed Work
+- Added Context7 usage guidance for current external framework, library, API, deployment, and tooling documentation checks.
+- Clarified when Context7 should not be used, including local project facts and documentation-only process updates.
+- Added a Codex Report Format list with Files changed, What changed, Context7 Check, Verification, Issues, and Next recommended task.
+- Updated PROJECT_STATUS.md to mention the Context7 MCP usage policy and report format addition.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Tue Jun  9 15:23:39 KST 2026.
+- Documentation scope review: Passed; only AGENTS.md, PROJECT_STATUS.md, and docs/DAILY_LOG.md changed.
+- Unit Tests (`npm test`): Not run because this was documentation-only with no app code, quiz logic, state logic, tests, or package file changes.
+
+#### Next Tasks
+- Apply the Context7 Check section in future Codex task reports.
+
+#### Codex Report
+- Files changed: AGENTS.md, PROJECT_STATUS.md, docs/DAILY_LOG.md.
+- What changed: Added Context7 MCP usage policy and future Codex report format expectations.
+- Context7 Check: Not used for this task per user instruction; this was a local documentation/process update.
+- Verification: Documentation scope review passed; npm test was not required.
+- Issues: None.
+- Next recommended task: Use the new report format on the next implementation task.
+
+---
+
+### 15:55 KST - Public Release Metadata Polish
+
+#### Today’s Goal
+- Improve public portfolio metadata for the deployed CodeLingo AI release.
+- Add or improve app title, meta description, Open Graph metadata, and favicon support only if safely supported by the existing app structure.
+
+#### Completed Work
+- Used Context7 to confirm current Next.js App Router metadata, Open Graph metadata, canonical URL, Twitter metadata, and favicon conventions.
+- Updated the existing App Router metadata export in `app/layout.jsx`.
+- Added a polished app title, reusable description, canonical URL, Open Graph metadata, and Twitter summary metadata.
+- Updated PROJECT_STATUS.md to record the public release metadata polish.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Tue Jun  9 15:55:38 KST 2026.
+- npm test: Passed (85/85 tests).
+- npm run build: Passed successfully in Turbopack mode.
+
+#### Deferred
+- Favicon setup was deferred because the current app structure has no existing favicon or icon asset, and creating a new asset was outside the safest metadata-only path.
+- Open Graph image asset was deferred for the same reason.
+
+#### Next Tasks
+- Add a real favicon and Open Graph image asset when screenshot/visual asset work begins.
+
+#### Codex Report
+- Files changed: app/layout.jsx, PROJECT_STATUS.md, docs/DAILY_LOG.md.
+- What changed: Added public release metadata polish in the existing App Router metadata location and updated project documentation.
+- Context7 Check: Used Next.js App Router metadata docs before implementation.
+- Verification: npm test passed and npm run build passed.
+- Issues: None.
+- Deferred: Favicon and Open Graph image assets.
+- Next recommended task: Add real visual assets for favicon, Open Graph image, and README screenshots.
+
+---
+
+### 16:02 KST - Public Release Visual Asset Support
+
+#### Today’s Goal
+- Prepare public release presentation support for favicon, app icon, Open Graph image, and README screenshots.
+- Avoid fabricating screenshots or wiring metadata to missing assets.
+
+#### Completed Work
+- Inspected the repository for existing image assets and confirmed no `public/` visual assets are currently committed.
+- Added a README Public Release Visual Assets section with pending paths for `public/favicon.ico`, `public/icon.png`, `public/og-image.png`, `public/screenshots/home.png`, `public/screenshots/quiz.png`, and `public/screenshots/results.png`.
+- Updated PROJECT_STATUS.md to track the pending public visual asset paths and deferred real asset creation.
+- Left `app/layout.jsx` unchanged because favicon, icon, and Open Graph image references should only be connected after real files exist.
+
+#### Issues
+- Real favicon, app icon, Open Graph image, and screenshots are still missing from the repository.
+
+#### Verification
+- Local time checked with `date`: Tue Jun  9 16:02:57 KST 2026.
+- Context7 MCP documentation check completed for current Next.js App Router metadata, icon/favicon conventions, Open Graph image handling, and public static assets.
+- npm test: Passed (85/85 tests).
+- npm run build: Passed successfully in Turbopack mode.
+
+#### Deferred
+- Create real `public/favicon.ico`, `public/icon.png`, and `public/og-image.png` assets.
+- Capture real app screenshots for `public/screenshots/home.png`, `public/screenshots/quiz.png`, and `public/screenshots/results.png`.
+- Connect icon and Open Graph image metadata only after those files exist.
+
+#### Next Tasks
+- Capture real desktop/mobile screenshots from the deployed or local app and add the visual assets under `public/`.
+
+#### Codex Report
+- Files changed: README.md, PROJECT_STATUS.md, docs/DAILY_LOG.md.
+- What changed: Added public-release visual asset support documentation with pending asset paths and kept metadata asset references deferred until valid files exist.
+- Context7 Check: Used Next.js docs for App Router metadata, icons/favicon, Open Graph image handling, and static public assets.
+- Verification: npm test passed and npm run build passed.
+- Issues: Missing real visual assets.
+- Deferred: Favicon, app icon, Open Graph image, and screenshots.
+- Next recommended task: Add real visual assets and then wire metadata image/icon paths.
+
+---
+
+### 16:22 KST - MCP Availability & Public Release Visual Asset Review
+
+#### Today’s Goal
+- Check MCP server availability and verify if Context7 is mounted.
+- Perform a thorough public-release visual asset support QA review using the `ANTIGRAVITY_REVIEW_PROMPT.md` guidelines.
+
+#### Completed Work
+- Checked MCP availability and confirmed that the `context7` server is mounted with the lazy-loaded tools `resolve-library-id` and `query-docs`.
+- Performed an audit of the public-release visual asset support, confirming that:
+  - The live demo URL is highly visible in `README.md`.
+  - Pending visual assets (favicon, app icon, OG image, and screenshots) are clearly cataloged as "Pending" in a markdown table in `README.md` without triggering broken link warnings.
+  - Search-engine-friendly metadata is ready in `app/layout.jsx`, and missing assets are safely deferred from the config to avoid build errors.
+  - The portfolio presentation score is 9.5/10.
+- Ran all 85 unit tests and confirmed they pass.
+- Successfully ran the production build compilation with zero errors or warnings.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Tue Jun  9 16:22:19 KST 2026.
+- npm test: Passed (85/85 tests).
+- npm run build: Passed successfully in Turbopack mode.
+- Deployed URL check: Reachable, running healthy.
+
+#### Deferred
+- Creation and check-in of real favicon, app icon, Open Graph image, and screenshots.
+
+#### Next Tasks
+- Capture real desktop/mobile screenshots from the deployed or local app and add the visual assets under `public/`.
+- Wire favicon and OG image metadata paths once real files are committed.
+

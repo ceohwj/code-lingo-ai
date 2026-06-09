@@ -145,6 +145,26 @@ Deprecated prompt files should not be recreated unless the workflow becomes comp
 
 ---
 
+# Context7 MCP Usage Policy
+
+Use Context7 only when current external documentation is needed for implementation or review.
+
+Use Context7 for:
+
+* framework, library, API, deployment, or tooling questions where docs may have changed
+* version-specific implementation details
+* unfamiliar third-party package behavior
+
+Do not use Context7 for:
+
+* local project facts already available in the repository
+* documentation-only process updates
+* quiz content edits unless external library or API behavior is involved
+
+When Context7 is used, reports must state what was checked and how it affected the work. When it is not used, reports must explicitly say why.
+
+---
+
 # Agent Roles
 
 ## 1. Product Manager Agent
@@ -461,6 +481,15 @@ General Rules:
 * keep docs readable as project scales
 * keep logs concise
 * keep progress traceable
+
+Codex Report Format:
+
+* Files changed
+* What changed
+* Context7 Check
+* Verification
+* Issues
+* Next recommended task
 
 Before writing timestamps in DAILY_LOG.md:
 

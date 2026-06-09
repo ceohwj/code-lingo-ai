@@ -3,18 +3,18 @@
 Last Updated: 2026-06-09
 
 ## Status
-MVP Completed
+Public Release / Learning Platform v1
 
-CodeLingo AI is now a portfolio-ready MVP. The core learning loop is complete, mobile learning-flow QA is complete, and the latest validation passes both `npm test` and `npm run build`.
+CodeLingo AI is now publicly deployed as Learning Platform v1 at https://code-lingo-ai.vercel.app. The core learning loop is complete, mobile learning-flow QA is complete, and the latest validation passes both `npm test` and `npm run build`.
 
-### MVP Completion Notes
+### Public Release Notes
 - Core learning loop completed: category selection, quiz answering, immediate feedback, explanations, XP, saved progress, wrong-answer review, adaptive recommendations, weak-area insights, concept focus, achievements, streaks, and daily goals are implemented.
 - Mobile QA completed: final mobile learning-flow validation covered 375px, 390px, and 430px viewports.
 - Validation completed: `npm test` passed and `npm run build` passed in the current local Codex environment.
-- Portfolio-ready MVP: the app is ready to present as an AI-assisted microlearning platform MVP with scalable frontend architecture, retention systems, practical data-analysis content expansion, and traceable multi-agent documentation.
+- Public release ready: the app is deployed as an AI-assisted microlearning platform v1 with scalable frontend architecture, retention systems, practical data-analysis content expansion, and traceable multi-agent documentation.
 
 ## Current Status
-CodeLingo AI is a completed local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category-first progress dashboard, lightweight learning statistics, next milestone and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files with explicit schema fields for deployment validation, and browser progress is preserved with category-specific localStorage keys.
+CodeLingo AI is a publicly deployed local-first learning platform v1 with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category-first progress dashboard, lightweight learning statistics, next milestone and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files with explicit schema fields for deployment validation, and browser progress is preserved with category-specific localStorage keys.
 
 ## Completed Features
 
@@ -109,20 +109,25 @@ CodeLingo AI is a completed local-first quiz MVP with category selection, reusab
 - Initial tests and focused logic tests for quiz data, hint support, difficulty XP, quiz retry XP persistence, streaks, daily goals, category progress, achievements, wrong-answer history, adaptive review recommendations, weak-area insights, and concept analytics
 - npm test and npm run build pass in the current local Codex environment
 - Local verification previously confirmed category flow, XP, refresh restore, and category-specific progress behavior
-- README expanded to describe the scalable Duolingo-style platform MVP, architecture, persistence, workflow, testing, and future plans
+- README updated to describe the public Learning Platform v1 release, live demo, architecture, persistence, workflow, testing, and future plans
+- README now includes a public release visual asset manifest with pending favicon, app icon, Open Graph image, and screenshot paths under `public/`
 - Prompt ecosystem simplified to `CODEX_TASK_PROMPT.md`, `CODEX_QUIZ_GENERATOR_PROMPT.md`, `CODEX_REPORT_PROMPT.md`, and `ANTIGRAVITY_REVIEW_PROMPT.md`
+- AGENTS.md now includes a concise Context7 MCP usage policy and requires future Codex reports to include a Context7 Check section
+- Public release metadata now includes a polished app title, description, canonical URL, Open Graph metadata, and Twitter summary metadata
 
 ## In Progress
 - Portfolio case study preparation
-- Deployment planning: Vercel is the recommended first public host, with `DEPLOYMENT_CHECKLIST.md` tracking metadata, Open Graph image, favicon, live demo URL, screenshots, README demo section, and portfolio linking tasks.
+- Public release polish: Vercel deployment is live; README now tracks pending `public/favicon.ico`, `public/icon.png`, `public/og-image.png`, and screenshot paths; remaining portfolio polish includes creating real assets and case study links.
 - Ongoing browser-level regression verification as adaptive learning features expand
 
 ## Issues
 - Codex in-app browser automation does not expose direct localStorage inspection APIs, so browser persistence verification uses visible refresh/restore behavior plus logic tests.
 - Future browser regressions should continue covering new learning flows as features expand.
-- Public deployment presentation polish remains before recruiter sharing: favicon, Open Graph image, live demo URL, screenshots, and README portfolio links.
+- Public deployment presentation polish remains for recruiter sharing: real favicon, Open Graph image, screenshots, and README portfolio links still need to be created.
 
 ## Local Verification
+- Latest public release visual asset support verification passed npm test (85/85 tests) and npm run build; no committed visual assets were found, README/PROJECT_STATUS/DAILY_LOG were updated with pending `public/` asset paths, and metadata asset references remain deferred until real files exist
+- Latest public release metadata polish verification passed npm test (85/85 tests) and npm run build
 - Latest deployment checklist documentation pass verified npm test (85/85 tests) and npm run build.
 - npm test passed locally for the MVP completion state
 - npm run build passed locally for the MVP completion state

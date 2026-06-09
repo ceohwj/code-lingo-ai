@@ -158,26 +158,33 @@ CodeLingo AI v1 is live as a public learning platform demo. The release emphasiz
 - Wrong-answer review, adaptive recommendations, weak-area analysis, and concept analytics
 - Local-first persistence with modular React hooks and testable learning logic
 
-Screenshots can be added next to improve visual scanning on GitHub.
+Screenshots and social preview assets are tracked in the Public Release Visual Assets section below. They remain pending until real app captures and branding assets are committed.
 
-Suggested screenshots:
+## 7. Public Release Visual Assets
 
-- Dashboard with daily mission, learning tracks, stats, and review panels
-- Active quiz question with hint and XP reward
-- Explanation card after answer submission
-- Quiz results summary
-- Mobile dashboard at 390px width
+No real screenshot, favicon, or Open Graph image assets are currently committed in this repository. The public release asset paths below are reserved so the README, portfolio case study, and link-preview work can be completed without inventing images.
 
-```text
-docs/screenshots/
-  dashboard-desktop.png
-  quiz-active.png
-  explanation-card.png
-  results-summary.png
-  dashboard-mobile.png
-```
+| Asset | Expected path | Status |
+| --- | --- | --- |
+| Favicon | `public/favicon.ico` | Pending |
+| App icon | `public/icon.png` | Pending |
+| Open Graph image | `public/og-image.png` | Pending |
+| Home/dashboard screenshot | `public/screenshots/home.png` | Pending |
+| Active quiz screenshot | `public/screenshots/quiz.png` | Pending |
+| Results screenshot | `public/screenshots/results.png` | Pending |
 
-## 7. Local Development
+Screenshot capture checklist:
+
+- `public/screenshots/home.png` - dashboard with daily mission, learning tracks, stats, and review panels
+- `public/screenshots/quiz.png` - active quiz question with hint, difficulty, and XP reward visible
+- `public/screenshots/results.png` - quiz completion summary with XP and next action visible
+
+Metadata note:
+
+- `app/layout.jsx` already defines the public title, description, canonical URL, Open Graph metadata, and Twitter summary metadata.
+- Favicon, icon, and Open Graph image references should be connected only after the real files exist at the expected `public/` paths.
+
+## 8. Local Development
 
 Install dependencies:
 
@@ -214,7 +221,7 @@ Environment variables:
 - No runtime environment variables are required for the current local-first v1 release.
 - No backend, database, authentication provider, or API key is required.
 
-## 8. Test Results
+## 9. Test Results
 
 Latest verified public release status:
 
@@ -240,7 +247,7 @@ Test coverage includes:
 - Weak-area insights
 - Concept analytics
 
-## 9. Future Roadmap
+## 10. Future Roadmap
 
 Deployment and portfolio polish:
 
