@@ -1,5 +1,7 @@
 # PROJECT_STATUS.md
 
+Last Updated: 2026-06-09
+
 ## Status
 MVP Completed
 
@@ -12,7 +14,7 @@ CodeLingo AI is now a portfolio-ready MVP. The core learning loop is complete, m
 - Portfolio-ready MVP: the app is ready to present as an AI-assisted microlearning platform MVP with scalable frontend architecture, retention systems, practical data-analysis content expansion, and traceable multi-agent documentation.
 
 ## Current Status
-CodeLingo AI is a completed local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category-first progress dashboard, lightweight learning statistics, next milestone and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files and browser progress is preserved with category-specific localStorage keys.
+CodeLingo AI is a completed local-first quiz MVP with category selection, reusable quiz UI, balanced 10-question starter quiz tracks, explanation feedback, wrong-answer review, adaptive review recommendations, weak-area insights, concept focus analytics, difficulty-based XP, retention tracking, a category-first progress dashboard, lightweight learning statistics, next milestone and weekly snapshot panels, and milestone achievements. Quiz content is stored in JSON files with explicit schema fields for deployment validation, and browser progress is preserved with category-specific localStorage keys.
 
 ## Completed Features
 
@@ -24,6 +26,7 @@ CodeLingo AI is a completed local-first quiz MVP with category selection, reusab
 - Category selection before quiz start
 - Separate selected category storage
 - Question data organized under data/questions/*.json
+- Quiz question schema now includes explicit `question`, `hint`, and `xpReward` fields for every question while preserving the existing app-facing `prompt` field
 - Lightweight conceptTags metadata added across quiz questions, with multiple tags supported per question
 - Optional beginner-friendly hints added to selected concept-tagged quiz questions
 - localStorage progress save and restore

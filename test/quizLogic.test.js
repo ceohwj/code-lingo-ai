@@ -17,6 +17,17 @@ test("all quizzes contain valid multiple-choice questions", () => {
   assert.equal(numpyBasicsQuiz.questions.length, 10);
 
   const ids = new Set();
+  const requiredQuestionFields = [
+    "id",
+    "question",
+    "options",
+    "correctOptionIndex",
+    "explanation",
+    "difficulty",
+    "conceptTags",
+    "hint",
+    "xpReward"
+  ];
 
   for (const quiz of quizzes) {
     assert.equal(typeof quiz.id, "string");
@@ -29,12 +40,19 @@ test("all quizzes contain valid multiple-choice questions", () => {
     assert.ok(quiz.questions.length > 0);
 
     for (const question of quiz.questions) {
+      for (const field of requiredQuestionFields) {
+        assert.equal(Object.hasOwn(question, field), true, question.id + " is missing " + field);
+      }
       assert.equal(typeof question.id, "string");
       assert.equal(ids.has(question.id), false);
       ids.add(question.id);
+      assert.equal(typeof question.question, "string");
+      assert.ok(question.question.length > 0);
       assert.ok(question.prompt.length > 0);
+      assert.equal(question.question, question.prompt);
       assert.equal(typeof question.difficulty, "string");
       assert.ok(SUPPORTED_DIFFICULTIES.includes(question.difficulty));
+      assert.equal(question.xpReward, quiz.xpByDifficulty[question.difficulty]);
       assert.equal(question.options.length, 4);
       assert.ok(question.options.every((option) => option.length > 0));
       assert.ok(question.correctOptionIndex >= 0);
@@ -44,13 +62,13 @@ test("all quizzes contain valid multiple-choice questions", () => {
       assert.ok(Array.isArray(question.conceptTags));
       assert.ok(question.conceptTags.length > 0);
       assert.ok(question.conceptTags.every((conceptTag) => typeof conceptTag === "string" && conceptTag.length > 0));
+      assert.equal(typeof question.hint, "string");
+      if (question.hint) {
+        assert.ok(question.hint.length > 20);
+      }
       if (question.commonMistake !== undefined) {
         assert.equal(typeof question.commonMistake, "string");
         assert.ok(question.commonMistake.length > 20);
-      }
-      if (question.hint !== undefined) {
-        assert.equal(typeof question.hint, "string");
-        assert.ok(question.hint.length > 20);
       }
     }
   }

@@ -2323,5 +2323,43 @@
 
 
 
+---
 
+### 11:11 KST - Quiz Schema Contract Fix
 
+#### Today’s Goal
+- Resolve the deployment monitor's critical quiz data schema issue by adding explicit schema fields to every question.
+- Preserve current quiz behavior, scoring, UI, localStorage, dashboard state, and difficulty-based XP logic.
+
+#### Completed Work
+- Added explicit `question` fields to all 60 quiz questions while preserving the existing app-facing `prompt` fields.
+- Added explicit `xpReward` fields to all 60 quiz questions using the current difficulty XP mapping.
+- Added required `hint` fields to the remaining questions as empty strings so previously unhinted questions keep the same UI behavior.
+- Updated the quiz schema test to fail when any question is missing `id`, `question`, `options`, `correctOptionIndex`, `explanation`, `difficulty`, `conceptTags`, `hint`, or `xpReward`.
+- Updated PROJECT_STATUS.md with a Last Updated line and the schema contract fix.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Tue Jun  9 11:11:13 KST 2026.
+- Schema integrity check: Passed for 60/60 questions.
+- Unit Tests (`npm test`): Passed (85/85 tests).
+- Next.js Production Build (`npm run build`): Passed successfully in Turbopack mode.
+
+#### Next Tasks
+- Proceed with deployment monitor re-check.
+
+#### Codex QA Report
+- Applied a behavior-preserving schema contract update for deployment validation.
+- Preserved existing difficulty-derived runtime XP behavior while making each question's XP reward explicit in data.
+- Preserved existing hint display behavior by leaving previously unhinted questions with empty required hint fields.
+- Verified all 85 unit tests and the Next.js production build pass after the schema update.
+
+#### Antigravity QA Report
+- Checked local time with `date`: Tue Jun  9 13:27:48 KST 2026.
+- Validated all 60 questions across all category JSON files to ensure `xpReward` is present and matches the difficulty XP policy (easy: 10, medium: 15, hard: 25).
+- Confirmed that schema test correctly catches missing required fields and checks runtime XP value parity.
+- Confirmed that previously unhinted questions have empty `hint` string values, leaving UI rendering, scoring, and state persistence behaviors completely unchanged.
+- Ran `npm test` and `npm run build` locally, verifying all 85 unit tests pass and Next.js production build compiles successfully.
+- App Status: 100% Healthy, Verified & Deployment Ready.

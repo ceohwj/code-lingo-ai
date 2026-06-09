@@ -8,7 +8,9 @@
   "questions": [
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "bio-001",
+      "question": "Which molecule stores genetic information in most living organisms?",
       "prompt": "Which molecule stores genetic information in most living organisms?",
       "options": [
         "ATP",
@@ -21,11 +23,14 @@
         "dna",
         "genetic-information"
       ],
+      "hint": "",
       "explanation": "DNA stores genetic instructions using nucleotide sequences built from A, T, C, and G bases."
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "bio-002",
+      "question": "What does FASTA format commonly store?",
       "prompt": "What does FASTA format commonly store?",
       "options": [
         "Sequence data",
@@ -43,7 +48,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "bio-003",
+      "question": "In DNA, which base pairs with adenine?",
       "prompt": "In DNA, which base pairs with adenine?",
       "options": [
         "Cytosine",
@@ -62,7 +69,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "bio-004",
+      "question": "What is sequence alignment used for?",
       "prompt": "What is sequence alignment used for?",
       "options": [
         "Comparing biological sequences",
@@ -75,11 +84,14 @@
         "sequence-alignment",
         "sequence-comparison"
       ],
+      "hint": "",
       "explanation": "Sequence alignment places biological sequences side by side. Matching and mismatching positions help reveal similarities, differences, and possible evolutionary relationships."
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "bio-005",
+      "question": "What does gene expression data often describe?",
       "prompt": "What does gene expression data often describe?",
       "options": [
         "How active genes are in a sample",
@@ -97,7 +109,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "bio-006",
+      "question": "Which base appears in RNA instead of thymine?",
       "prompt": "Which base appears in RNA instead of thymine?",
       "options": [
         "Uracil",
@@ -115,7 +129,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "bio-007",
+      "question": "In sequencing data, what does read depth usually describe?",
       "prompt": "In sequencing data, what does read depth usually describe?",
       "options": [
         "How many times a position is covered by reads",
@@ -128,11 +144,14 @@
         "sequencing",
         "read-depth"
       ],
+      "hint": "",
       "explanation": "Read depth describes how many sequencing reads cover a position, which helps estimate confidence in the observed sequence."
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "bio-008",
+      "question": "Which file format is commonly used for sequencing reads with quality scores?",
       "prompt": "Which file format is commonly used for sequencing reads with quality scores?",
       "options": [
         "FASTQ",
@@ -151,7 +170,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "bio-009",
+      "question": "What is a reference genome used for in sequence analysis?",
       "prompt": "What is a reference genome used for in sequence analysis?",
       "options": [
         "A baseline sequence to compare reads against",
@@ -169,7 +190,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "bio-010",
+      "question": "What does variant calling try to identify?",
       "prompt": "What does variant calling try to identify?",
       "options": [
         "Differences between sample sequences and a reference",

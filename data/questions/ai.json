@@ -8,7 +8,9 @@
   "questions": [
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "ai-001",
+      "question": "In supervised learning, what does the training data usually include?",
       "prompt": "In supervised learning, what does the training data usually include?",
       "options": [
         "Only unlabeled text",
@@ -26,7 +28,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "ai-002",
+      "question": "What is overfitting?",
       "prompt": "What is overfitting?",
       "options": [
         "A model memorizes training data too closely",
@@ -45,7 +49,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "ai-003",
+      "question": "Which metric is commonly used for classification accuracy?",
       "prompt": "Which metric is commonly used for classification accuracy?",
       "options": [
         "Correct predictions divided by total predictions",
@@ -58,11 +64,14 @@
         "classification",
         "metrics"
       ],
+      "hint": "",
       "explanation": "Accuracy measures the share of predictions that match the true labels across all evaluated examples."
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "ai-004",
+      "question": "What is a feature in machine learning?",
       "prompt": "What is a feature in machine learning?",
       "options": [
         "A payment plan",
@@ -80,7 +89,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "ai-005",
+      "question": "Why do we keep test data separate from training data?",
       "prompt": "Why do we keep test data separate from training data?",
       "options": [
         "To estimate performance on unseen examples",
@@ -93,11 +104,14 @@
         "evaluation",
         "test-data"
       ],
+      "hint": "",
       "explanation": "A separate test set helps estimate how well the model may perform on data it did not learn from directly."
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "ai-006",
+      "question": "What is a label in supervised learning?",
       "prompt": "What is a label in supervised learning?",
       "options": [
         "The target answer for an example",
@@ -115,7 +129,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "ai-007",
+      "question": "What is the main purpose of a validation set?",
       "prompt": "What is the main purpose of a validation set?",
       "options": [
         "To tune model choices before final testing",
@@ -128,11 +144,14 @@
         "validation-data",
         "model-evaluation"
       ],
+      "hint": "",
       "explanation": "A validation set helps compare model settings during development while keeping the test set reserved for final evaluation."
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "ai-008",
+      "question": "What does a machine learning model learn from during training?",
       "prompt": "What does a machine learning model learn from during training?",
       "options": [
         "Patterns in data",
@@ -150,7 +169,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "ai-009",
+      "question": "What does underfitting usually mean?",
       "prompt": "What does underfitting usually mean?",
       "options": [
         "A model is too simple to capture the pattern",
@@ -168,7 +189,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "ai-010",
+      "question": "Why is a confusion matrix useful for classification?",
       "prompt": "Why is a confusion matrix useful for classification?",
       "options": [
         "It shows correct and incorrect predictions by class",

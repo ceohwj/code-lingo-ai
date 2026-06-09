@@ -8,7 +8,9 @@
   "questions": [
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "pd-001",
+      "question": "What is a Pandas DataFrame best used to represent?",
       "prompt": "What is a Pandas DataFrame best used to represent?",
       "options": [
         "A single number",
@@ -27,7 +29,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "pd-002",
+      "question": "What is a Pandas Series?",
       "prompt": "What is a Pandas Series?",
       "options": [
         "A one-dimensional labeled array",
@@ -45,7 +49,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "pd-003",
+      "question": "Which Pandas function loads a CSV file into a DataFrame?",
       "prompt": "Which Pandas function loads a CSV file into a DataFrame?",
       "options": [
         "pd.open_csv()",
@@ -64,7 +70,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "pd-004",
+      "question": "Which expression selects the column named 'price' from df?",
       "prompt": "Which expression selects the column named 'price' from df?",
       "options": [
         "df['price']",
@@ -82,7 +90,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "pd-005",
+      "question": "What does df.loc[3, 'name'] select?",
       "prompt": "What does df.loc[3, 'name'] select?",
       "options": [
         "The fourth row and first column by position",
@@ -101,7 +111,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "pd-006",
+      "question": "What does df.iloc[0] select?",
       "prompt": "What does df.iloc[0] select?",
       "options": [
         "The first row by integer position",
@@ -119,7 +131,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "pd-007",
+      "question": "Which expression keeps only rows where score is at least 80?",
       "prompt": "Which expression keeps only rows where score is at least 80?",
       "options": [
         "df[df['score'] >= 80]",
@@ -138,7 +152,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "pd-008",
+      "question": "What does df.groupby('team')['score'].mean() calculate?",
       "prompt": "What does df.groupby('team')['score'].mean() calculate?",
       "options": [
         "The highest score in the whole DataFrame",
@@ -156,7 +172,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "pd-009",
+      "question": "Which expression joins orders with customers by the shared customer_id column?",
       "prompt": "Which expression joins orders with customers by the shared customer_id column?",
       "options": [
         "orders.merge(customers, on='customer_id')",
@@ -175,7 +193,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "pd-010",
+      "question": "Which expression replaces missing values in df with 0?",
       "prompt": "Which expression replaces missing values in df with 0?",
       "options": [
         "df.dropna(0)",

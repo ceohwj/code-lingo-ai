@@ -8,7 +8,9 @@
   "questions": [
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "np-001",
+      "question": "Which import alias is most commonly used for NumPy?",
       "prompt": "Which import alias is most commonly used for NumPy?",
       "options": [
         "import numpy as np",
@@ -27,7 +29,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "np-002",
+      "question": "Which expression creates a NumPy array from a Python list?",
       "prompt": "Which expression creates a NumPy array from a Python list?",
       "options": [
         "np.array([1, 2, 3])",
@@ -45,7 +49,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "np-003",
+      "question": "What does arr.shape usually tell you?",
       "prompt": "What does arr.shape usually tell you?",
       "options": [
         "The number of dimensions and size along each dimension",
@@ -64,7 +70,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "np-004",
+      "question": "What does arr.dtype describe?",
       "prompt": "What does arr.dtype describe?",
       "options": [
         "The data type stored in the array",
@@ -82,7 +90,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "np-005",
+      "question": "What is the result of np.array([1, 2, 3]) + 10?",
       "prompt": "What is the result of np.array([1, 2, 3]) + 10?",
       "options": [
         "[1, 2, 3, 10]",
@@ -101,7 +111,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "np-006",
+      "question": "Which expression selects values from arr that are greater than 5?",
       "prompt": "Which expression selects values from arr that are greater than 5?",
       "options": [
         "arr[arr > 5]",
@@ -119,7 +131,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "np-007",
+      "question": "What does arr.mean() calculate?",
       "prompt": "What does arr.mean() calculate?",
       "options": [
         "The average of the array values",
@@ -137,7 +151,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "np-008",
+      "question": "What does np.zeros((2, 3)) create?",
       "prompt": "What does np.zeros((2, 3)) create?",
       "options": [
         "A 2 by 3 array filled with zeros",
@@ -155,7 +171,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "np-009",
+      "question": "What is broadcasting in NumPy?",
       "prompt": "What is broadcasting in NumPy?",
       "options": [
         "A rule that lets compatible arrays with different shapes work together in operations",
@@ -174,7 +192,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "np-010",
+      "question": "What does arr.reshape(2, 3) require when arr has one dimension?",
       "prompt": "What does arr.reshape(2, 3) require when arr has one dimension?",
       "options": [
         "arr must contain exactly 6 elements",

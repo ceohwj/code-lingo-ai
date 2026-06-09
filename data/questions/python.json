@@ -8,7 +8,9 @@
   "questions": [
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "py-001",
+      "question": "Which symbol starts a comment in Python?",
       "prompt": "Which symbol starts a comment in Python?",
       "options": [
         "//",
@@ -21,12 +23,15 @@
         "comments",
         "syntax"
       ],
+      "hint": "",
       "explanation": "Python ignores everything after a # on the same line, so it is used for comments.",
       "commonMistake": "Many beginners use // because they have seen it in JavaScript or Java, but Python comments start with #."
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "py-002",
+      "question": "What does print('Hello') do?",
       "prompt": "What does print('Hello') do?",
       "options": [
         "Creates a variable",
@@ -39,11 +44,14 @@
         "output",
         "functions"
       ],
+      "hint": "",
       "explanation": "The print function sends text or values to the screen."
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "py-003",
+      "question": "Which value is a string?",
       "prompt": "Which value is a string?",
       "options": [
         "42",
@@ -61,7 +69,9 @@
     },
     {
       "difficulty": "easy",
+      "xpReward": 10,
       "id": "py-004",
+      "question": "What is the result of 2 + 3 * 4?",
       "prompt": "What is the result of 2 + 3 * 4?",
       "options": [
         "20",
@@ -74,12 +84,15 @@
         "operators",
         "precedence"
       ],
+      "hint": "",
       "explanation": "Multiplication happens before addition, so 3 * 4 is 12, then 2 + 12 is 14.",
       "commonMistake": "A common mistake is adding 2 + 3 first. Python follows operator precedence, so multiplication runs before addition."
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "py-005",
+      "question": "What is a known risk of using a mutable value (like a list) as a default function argument in Python?",
       "prompt": "What is a known risk of using a mutable value (like a list) as a default function argument in Python?",
       "options": [
         "The default value is shared across all function calls",
@@ -98,7 +111,9 @@
     },
     {
       "difficulty": "hard",
+      "xpReward": 25,
       "id": "py-006",
+      "question": "What is the output of [x * 2 for x in [1, 2, 3, 4] if x % 2 == 0]?",
       "prompt": "What is the output of [x * 2 for x in [1, 2, 3, 4] if x % 2 == 0]?",
       "options": [
         "[4, 8]",
@@ -118,7 +133,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "py-007",
+      "question": "What does len(['a', 'b', 'c']) return?",
       "prompt": "What does len(['a', 'b', 'c']) return?",
       "options": [
         "2",
@@ -131,11 +148,14 @@
         "lists",
         "built-in-functions"
       ],
+      "hint": "",
       "explanation": "len returns the number of items in a collection. This list has three items."
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "py-008",
+      "question": "Which keyword starts a conditional branch?",
       "prompt": "Which keyword starts a conditional branch?",
       "options": [
         "when",
@@ -148,11 +168,14 @@
         "conditionals",
         "control-flow"
       ],
+      "hint": "",
       "explanation": "Python uses if to run code only when a condition is true."
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "py-009",
+      "question": "Which loop is best for visiting every item in a list?",
       "prompt": "Which loop is best for visiting every item in a list?",
       "options": [
         "for item in list:",
@@ -170,7 +193,9 @@
     },
     {
       "difficulty": "medium",
+      "xpReward": 15,
       "id": "py-010",
+      "question": "What does input() usually return?",
       "prompt": "What does input() usually return?",
       "options": [
         "A number",
@@ -183,6 +208,7 @@
         "input",
         "strings"
       ],
+      "hint": "",
       "explanation": "input reads what the user types and returns it as a string."
     }
   ],
