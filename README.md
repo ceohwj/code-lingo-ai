@@ -1,16 +1,25 @@
 # CodeLingo AI
 
-Portfolio-ready MVP for a Duolingo-style coding learning platform.
+Publicly deployed Learning Platform v1 for a Duolingo-style coding education experience.
 
 CodeLingo AI helps learners practice programming, data analysis, AI, and bioinformatics through short quizzes, immediate explanations, XP progression, daily missions, wrong-answer review, weak-area analysis, and lightweight learning analytics.
 
-**MVP Status:** Completed and portfolio-ready  
+**Release Status:** Public Release / Learning Platform v1  
+**Live Demo:** https://code-lingo-ai.vercel.app  
 **Curriculum:** 60 questions across 6 learning tracks  
 **Validation:** `npm test` passed, `npm run build` passed, mobile QA completed
 
+## Live Demo
+
+CodeLingo AI is publicly deployed and available here:
+
+**https://code-lingo-ai.vercel.app**
+
+Use the live app to try the full learning loop: choose a track, answer questions, earn XP, complete daily missions, unlock achievements, review missed questions, and inspect learning analytics.
+
 ## 1. Project Overview
 
-CodeLingo AI is a local-first microlearning web app built with Next.js and React. The MVP focuses on one complete learning loop:
+CodeLingo AI is a local-first microlearning web app built with Next.js and React. Version 1 focuses on one complete learning loop:
 
 ```text
 Choose a track
@@ -22,7 +31,7 @@ Choose a track
   -> Return through daily missions and streaks
 ```
 
-The project is designed as a portfolio case study in AI-assisted software engineering, scalable frontend architecture, and retention-oriented educational UX. It avoids backend complexity during the MVP stage so the core learning experience, data model, local persistence, and review logic stay easy to inspect and explain.
+The project is designed as a public portfolio case study in AI-assisted software engineering, scalable frontend architecture, and retention-oriented educational UX. It avoids backend complexity in v1 so the core learning experience, data model, local persistence, and review logic stay easy to inspect and explain.
 
 ## 2. Key Features
 
@@ -139,9 +148,17 @@ Workflow artifacts:
 
 This workflow makes the project more than a demo app: it shows how AI tools can support product thinking, implementation, verification, and portfolio documentation without losing engineering discipline.
 
-## 6. Screenshots Placeholder
+## 6. Public Release Notes
 
-Screenshots will be added after public deployment.
+CodeLingo AI v1 is live as a public learning platform demo. The release emphasizes recruiter-friendly product clarity and a complete, inspectable learning system:
+
+- Public Vercel deployment for direct review
+- 60 questions across 6 learning tracks
+- XP progression, daily missions, streaks, and achievements
+- Wrong-answer review, adaptive recommendations, weak-area analysis, and concept analytics
+- Local-first persistence with modular React hooks and testable learning logic
+
+Screenshots can be added next to improve visual scanning on GitHub.
 
 Suggested screenshots:
 
@@ -194,18 +211,18 @@ npm run build
 
 Environment variables:
 
-- No runtime environment variables are required for the current local-first MVP.
+- No runtime environment variables are required for the current local-first v1 release.
 - No backend, database, authentication provider, or API key is required.
 
 ## 8. Test Results
 
-Latest verified MVP status:
+Latest verified public release status:
 
 - Unit tests: `npm test` passed, 85/85 tests
 - Production build: `npm run build` passed successfully in Turbopack mode
 - Mobile QA: completed at 375px, 390px, and 430px widths
 - Curriculum QA: completed across all 60 questions and 6 categories
-- Deployment UX review: completed and signed off as portfolio-ready
+- Deployment UX review: completed and signed off as public-release ready
 
 Test coverage includes:
 
@@ -230,8 +247,8 @@ Deployment and portfolio polish:
 - Add screenshots and a short demo GIF
 - Add favicon and public branding assets
 - Add deployment instructions for the selected host
-- Deploy the MVP publicly
-- Link deployed app and case study from this README
+- Keep the public demo link current
+- Link a detailed portfolio case study from this README
 
 Learning product expansion:
 
