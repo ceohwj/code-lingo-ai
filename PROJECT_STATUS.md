@@ -117,15 +117,16 @@ CodeLingo AI is a publicly deployed local-first learning platform v1 with catego
 
 ## In Progress
 - Portfolio case study polish and recruiter navigation
-- Public release polish: Vercel deployment is live; favicon, app icon, Open Graph image, README screenshots, and README case study navigation are now connected; remaining portfolio polish includes optional demo video/GIF.
+- Public release polish: Vercel deployment is live; favicon, app icon, Open Graph image, README screenshots, README case study navigation, and README demo placeholder support are now connected; remaining portfolio polish includes replacing the placeholder with a real demo video/GIF.
 - Ongoing browser-level regression verification as adaptive learning features expand
 
 ## Issues
 - Codex in-app browser automation does not expose direct localStorage inspection APIs, so browser persistence verification uses visible refresh/restore behavior plus logic tests.
 - Future browser regressions should continue covering new learning flows as features expand.
-- Public deployment presentation polish remaining for recruiter sharing: optional demo video/GIF.
+- Public deployment presentation polish remaining for recruiter sharing: replace the README demo placeholder with a real demo GIF, YouTube walkthrough, or Loom walkthrough.
 
 ## Local Verification
+- Latest README demo placeholder support update was documentation-only; markdown placement and missing-media handling were reviewed and tests/build were not required.
 - Latest README technical case study navigation update was documentation-only; markdown link placement was reviewed and tests/build were not required.
 - Latest public release asset connection added real favicon, app icon, Open Graph image, and README screenshots; metadata now points to committed `public/` assets, with npm test (85/85 tests) and npm run build passing
 - Latest public release visual asset support verification passed npm test (85/85 tests) and npm run build; no committed visual assets were found, README/PROJECT_STATUS/DAILY_LOG were updated with pending `public/` asset paths, and metadata asset references remain deferred until real files exist

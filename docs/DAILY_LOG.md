@@ -2716,3 +2716,38 @@
 - Context7 Check: Not used (no library/API questions).
 - Verification: Checked system date and verified document path.
 - Issues: None.
+
+---
+
+### 13:37 KST - README Demo Placeholder Support
+
+#### Today’s Goal
+- Prepare README support for a demo GIF or walkthrough video.
+- Improve recruiter understanding by making space for a future visual product demonstration.
+
+#### Completed Work
+- Checked the repository for existing demo media and walkthrough links.
+- Confirmed no `demo.gif`, video file, YouTube walkthrough, or Loom walkthrough is currently committed or referenced.
+- Added a Demo section near the README Live Demo section.
+- Added a clearly marked Coming soon placeholder with supported future options: `public/demo.gif`, YouTube walkthrough, or Loom walkthrough.
+- Updated README roadmap wording to point future work at replacing the placeholder with a real demo asset or link.
+- Updated PROJECT_STATUS.md to record README demo placeholder support and remaining demo media work.
+
+#### Issues
+- No demo media asset exists yet.
+
+#### Verification
+- Local time checked with `date`: Fri Jul  3 13:37:03 KST 2026.
+- Markdown rendering review only: README Demo placement, placeholder clarity, and status/log references reviewed.
+- npm test: Not run because this was documentation-only.
+- npm run build: Not run because this was documentation-only.
+
+#### Next Tasks
+- Capture or publish one final walkthrough option: `public/demo.gif`, YouTube walkthrough, or Loom walkthrough.
+
+#### Codex Report
+- Files changed: README.md, PROJECT_STATUS.md, docs/DAILY_LOG.md.
+- What changed: Added README Demo placeholder support and updated project documentation.
+- Context7 Check: Not used because this was a local documentation/navigation update with no external library, framework, API, or tooling questions.
+- Verification: Markdown rendering review only; tests/build not required.
+- Issues: No demo media asset exists yet.

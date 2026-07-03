@@ -17,6 +17,18 @@ CodeLingo AI is publicly deployed and available here:
 
 Use the live app to try the full learning loop: choose a track, answer questions, earn XP, complete daily missions, unlock achievements, review missed questions, and inspect learning analytics.
 
+## Demo
+
+Demo walkthrough: **Coming soon**
+
+Planned options:
+
+- `public/demo.gif`
+- YouTube walkthrough link
+- Loom walkthrough link
+
+No demo GIF or walkthrough video is committed yet. This placeholder is intentional so the README can support a visual product walkthrough without fabricating media.
+
 ## Technical Case Study
 
 Read the technical case study here:
@@ -266,7 +278,7 @@ Test coverage includes:
 
 Deployment and portfolio polish:
 
-- Add screenshots and a short demo GIF
+- Add a final demo GIF, YouTube walkthrough, or Loom walkthrough to the Demo section
 - Add favicon and public branding assets
 - Add deployment instructions for the selected host
 - Keep the public demo link current
