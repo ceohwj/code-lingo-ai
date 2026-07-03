@@ -158,31 +158,38 @@ CodeLingo AI v1 is live as a public learning platform demo. The release emphasiz
 - Wrong-answer review, adaptive recommendations, weak-area analysis, and concept analytics
 - Local-first persistence with modular React hooks and testable learning logic
 
-Screenshots and social preview assets are tracked in the Public Release Visual Assets section below. They remain pending until real app captures and branding assets are committed.
+Screenshots and social preview assets are tracked in the Public Release Visual Assets section below.
 
 ## 7. Public Release Visual Assets
 
-No real screenshot, favicon, or Open Graph image assets are currently committed in this repository. The public release asset paths below are reserved so the README, portfolio case study, and link-preview work can be completed without inventing images.
+The public release now includes real app screenshots and branding assets for GitHub, portfolio pages, browser tabs, and social link previews.
 
-| Asset | Expected path | Status |
+| Asset | Path | Status |
 | --- | --- | --- |
-| Favicon | `public/favicon.ico` | Pending |
-| App icon | `public/icon.png` | Pending |
-| Open Graph image | `public/og-image.png` | Pending |
-| Home/dashboard screenshot | `public/screenshots/home.png` | Pending |
-| Active quiz screenshot | `public/screenshots/quiz.png` | Pending |
-| Results screenshot | `public/screenshots/results.png` | Pending |
+| Favicon | `public/favicon.ico` | Added |
+| App icon | `public/icon.png` | Added |
+| Open Graph image | `public/og-image.png` | Added |
+| Home/dashboard screenshot | `public/screenshots/home.png` | Added |
+| Active quiz screenshot | `public/screenshots/quiz.png` | Added |
+| Results screenshot | `public/screenshots/results.png` | Added |
 
-Screenshot capture checklist:
+### Screenshots
 
-- `public/screenshots/home.png` - dashboard with daily mission, learning tracks, stats, and review panels
-- `public/screenshots/quiz.png` - active quiz question with hint, difficulty, and XP reward visible
-- `public/screenshots/results.png` - quiz completion summary with XP and next action visible
+Dashboard with daily mission, learning tracks, stats, and review panels:
+
+![CodeLingo AI dashboard](public/screenshots/home.png)
+
+Active quiz question with hint, difficulty, and XP reward:
+
+![CodeLingo AI quiz screen](public/screenshots/quiz.png)
+
+Quiz completion summary with XP and answer review:
+
+![CodeLingo AI results screen](public/screenshots/results.png)
 
 Metadata note:
 
-- `app/layout.jsx` already defines the public title, description, canonical URL, Open Graph metadata, and Twitter summary metadata.
-- Favicon, icon, and Open Graph image references should be connected only after the real files exist at the expected `public/` paths.
+- `app/layout.jsx` connects the favicon, app icon, Open Graph image, and Twitter summary image to the committed files in `public/`.
 
 ## 8. Local Development
 

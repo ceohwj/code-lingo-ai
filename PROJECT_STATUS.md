@@ -1,6 +1,6 @@
 # PROJECT_STATUS.md
 
-Last Updated: 2026-06-09
+Last Updated: 2026-06-10
 
 ## Status
 Public Release / Learning Platform v1
@@ -110,22 +110,23 @@ CodeLingo AI is a publicly deployed local-first learning platform v1 with catego
 - npm test and npm run build pass in the current local Codex environment
 - Local verification previously confirmed category flow, XP, refresh restore, and category-specific progress behavior
 - README updated to describe the public Learning Platform v1 release, live demo, architecture, persistence, workflow, testing, and future plans
-- README now includes a public release visual asset manifest with pending favicon, app icon, Open Graph image, and screenshot paths under `public/`
+- Public release assets now include `public/favicon.ico`, `public/icon.png`, `public/og-image.png`, and real README screenshots under `public/screenshots/`
 - Prompt ecosystem simplified to `CODEX_TASK_PROMPT.md`, `CODEX_QUIZ_GENERATOR_PROMPT.md`, `CODEX_REPORT_PROMPT.md`, and `ANTIGRAVITY_REVIEW_PROMPT.md`
 - AGENTS.md now includes a concise Context7 MCP usage policy and requires future Codex reports to include a Context7 Check section
 - Public release metadata now includes a polished app title, description, canonical URL, Open Graph metadata, and Twitter summary metadata
 
 ## In Progress
 - Portfolio case study preparation
-- Public release polish: Vercel deployment is live; README now tracks pending `public/favicon.ico`, `public/icon.png`, `public/og-image.png`, and screenshot paths; remaining portfolio polish includes creating real assets and case study links.
+- Public release polish: Vercel deployment is live; favicon, app icon, Open Graph image, and README screenshots are now connected; remaining portfolio polish includes case study links and optional demo video/GIF.
 - Ongoing browser-level regression verification as adaptive learning features expand
 
 ## Issues
 - Codex in-app browser automation does not expose direct localStorage inspection APIs, so browser persistence verification uses visible refresh/restore behavior plus logic tests.
 - Future browser regressions should continue covering new learning flows as features expand.
-- Public deployment presentation polish remains for recruiter sharing: real favicon, Open Graph image, screenshots, and README portfolio links still need to be created.
+- Public deployment presentation polish remaining for recruiter sharing: README portfolio/case-study links and optional demo video/GIF.
 
 ## Local Verification
+- Latest public release asset connection added real favicon, app icon, Open Graph image, and README screenshots; metadata now points to committed `public/` assets, with npm test (85/85 tests) and npm run build passing
 - Latest public release visual asset support verification passed npm test (85/85 tests) and npm run build; no committed visual assets were found, README/PROJECT_STATUS/DAILY_LOG were updated with pending `public/` asset paths, and metadata asset references remain deferred until real files exist
 - Latest public release metadata polish verification passed npm test (85/85 tests) and npm run build
 - Latest deployment checklist documentation pass verified npm test (85/85 tests) and npm run build.

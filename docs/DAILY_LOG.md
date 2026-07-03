@@ -2540,8 +2540,6 @@
 - Deferred: Favicon, app icon, Open Graph image, and screenshots.
 - Next recommended task: Add real visual assets and then wire metadata image/icon paths.
 
----
-
 ### 16:22 KST - MCP Availability & Public Release Visual Asset Review
 
 #### Today’s Goal
@@ -2574,3 +2572,82 @@
 - Capture real desktop/mobile screenshots from the deployed or local app and add the visual assets under `public/`.
 - Wire favicon and OG image metadata paths once real files are committed.
 
+---
+
+### 02:13 KST - Public Release Visual Assets Connected
+
+#### Today’s Goal
+- Add real favicon, app icon, Open Graph image, and README screenshots.
+- Wire metadata only after the actual files exist.
+
+#### Completed Work
+- Created `public/favicon.ico` and `public/icon.png` as committed CodeLingo AI brand assets.
+- Captured `public/og-image.png` from the real app dashboard at 1200x630 for social previews.
+- Captured real app screenshots for `public/screenshots/home.png`, `public/screenshots/quiz.png`, and `public/screenshots/results.png`.
+- Updated `app/layout.jsx` to connect favicon/icon metadata, Open Graph image metadata, and Twitter large-image metadata.
+- Updated README.md to mark visual assets as added and embed the actual screenshots.
+- Updated PROJECT_STATUS.md and ROADMAP.md to reflect completed public screenshot/asset polish.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Wed Jun 10 02:13:52 KST 2026.
+- Context7 MCP documentation check completed for current Next.js App Router metadata, icons/favicon, Open Graph images, Twitter images, and public static assets.
+- Asset check confirmed:
+  - `public/favicon.ico`: ICO wrapper with PNG image data
+  - `public/icon.png`: 512x512 PNG
+  - `public/og-image.png`: 1200x630 PNG
+  - `public/screenshots/home.png`: real dashboard screenshot
+  - `public/screenshots/quiz.png`: real active quiz screenshot
+  - `public/screenshots/results.png`: real results screenshot
+- npm test: Passed (85/85 tests).
+- npm run build: Passed successfully in Turbopack mode.
+
+#### Deferred
+- Optional demo video/GIF.
+- Portfolio case study link.
+
+#### Next Tasks
+- Add a short demo GIF or portfolio case study link for recruiter sharing.
+
+#### Codex Report
+- Files changed: app/layout.jsx, README.md, PROJECT_STATUS.md, ROADMAP.md, docs/DAILY_LOG.md, public/favicon.ico, public/icon.png, public/og-image.png, public/screenshots/home.png, public/screenshots/quiz.png, public/screenshots/results.png.
+- What changed: Added real public-release visual assets, embedded README screenshots, and connected metadata asset paths.
+- Context7 Check: Used Next.js docs for App Router metadata, icons/favicon, Open Graph image handling, Twitter images, and static public assets.
+- Verification: npm test passed and npm run build passed.
+- Issues: None.
+- Deferred: Optional demo GIF and portfolio case study link.
+- Next recommended task: Add portfolio case study link or demo GIF.
+
+---
+
+# 2026-07-03
+
+### 11:07 KST - Recruiter Case Study Review
+
+#### Today’s Goal
+- Conduct a recruiter-focused review of CASE_STUDY.md focusing on storytelling, technical depth, portfolio quality, and hiring appeal.
+- Generate a comprehensive Antigravity Review Report detailing the Recruiter Score, Strongest section, Weakest section, Missing details, and Portfolio readiness.
+
+#### Completed Work
+- Completed recruiter-focused audit of CASE_STUDY.md.
+- Formulated the Recruiter Review Report including evaluation metrics, strongest/weakest sections, and action items.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Fri Jul  3 11:07:06 KST 2026.
+- npm test: Not run (documentation-only change).
+- npm run build: Not run (documentation-only change).
+
+#### Next Tasks
+- Update README.md to link to the case study as suggested in the case study's own future roadmap.
+
+#### Codex Report
+- Files changed: docs/DAILY_LOG.md.
+- What changed: Appended log entry for the recruiter review of CASE_STUDY.md.
+- Context7 Check: Not used (no library/API questions).
+- Verification: Checked system date and verified document path.
+- Issues: None.

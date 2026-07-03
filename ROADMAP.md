@@ -224,7 +224,7 @@ Core Priorities:
 
 Future Features:
 - [x] Improve README
-- [ ] Add screenshots
+- [x] Add screenshots
 - [ ] Add demo video/GIF
 - [ ] Write Velog development logs
 - [ ] Document architecture

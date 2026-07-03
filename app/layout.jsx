@@ -15,18 +15,39 @@ export const metadata = {
   alternates: {
     canonical: "/"
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" }
+    ],
+    shortcut: "/favicon.ico"
+  },
   openGraph: {
     title: "CodeLingo AI | Daily Coding Microlearning",
     description: siteDescription,
     url: "/",
     siteName: "CodeLingo AI",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeLingo AI dashboard with daily mission and learning paths"
+      }
+    ],
     locale: "en_US",
     type: "website"
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "CodeLingo AI | Daily Coding Microlearning",
-    description: siteDescription
+    description: siteDescription,
+    images: [
+      {
+        url: "/og-image.png",
+        alt: "CodeLingo AI dashboard with daily mission and learning paths"
+      }
+    ]
   }
 };
 
