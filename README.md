@@ -17,6 +17,14 @@ CodeLingo AI is publicly deployed and available here:
 
 Use the live app to try the full learning loop: choose a track, answer questions, earn XP, complete daily missions, unlock achievements, review missed questions, and inspect learning analytics.
 
+## Technical Case Study
+
+Read the technical case study here:
+
+**[CASE_STUDY.md](CASE_STUDY.md)**
+
+The case study explains the product problem, local-first architecture, curriculum design, learning analytics, AI-assisted workflow, QA process, deployment approach, lessons learned, and future roadmap behind CodeLingo AI.
+
 ## 1. Project Overview
 
 CodeLingo AI is a local-first microlearning web app built with Next.js and React. Version 1 focuses on one complete learning loop:
@@ -262,7 +270,7 @@ Deployment and portfolio polish:
 - Add favicon and public branding assets
 - Add deployment instructions for the selected host
 - Keep the public demo link current
-- Link a detailed portfolio case study from this README
+- Keep the technical case study link current
 
 Learning product expansion:
 

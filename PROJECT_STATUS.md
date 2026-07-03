@@ -116,16 +116,17 @@ CodeLingo AI is a publicly deployed local-first learning platform v1 with catego
 - Public release metadata now includes a polished app title, description, canonical URL, Open Graph metadata, and Twitter summary metadata
 
 ## In Progress
-- Portfolio case study preparation
-- Public release polish: Vercel deployment is live; favicon, app icon, Open Graph image, and README screenshots are now connected; remaining portfolio polish includes case study links and optional demo video/GIF.
+- Portfolio case study polish and recruiter navigation
+- Public release polish: Vercel deployment is live; favicon, app icon, Open Graph image, README screenshots, and README case study navigation are now connected; remaining portfolio polish includes optional demo video/GIF.
 - Ongoing browser-level regression verification as adaptive learning features expand
 
 ## Issues
 - Codex in-app browser automation does not expose direct localStorage inspection APIs, so browser persistence verification uses visible refresh/restore behavior plus logic tests.
 - Future browser regressions should continue covering new learning flows as features expand.
-- Public deployment presentation polish remaining for recruiter sharing: README portfolio/case-study links and optional demo video/GIF.
+- Public deployment presentation polish remaining for recruiter sharing: optional demo video/GIF.
 
 ## Local Verification
+- Latest README technical case study navigation update was documentation-only; markdown link placement was reviewed and tests/build were not required.
 - Latest public release asset connection added real favicon, app icon, Open Graph image, and README screenshots; metadata now points to committed `public/` assets, with npm test (85/85 tests) and npm run build passing
 - Latest public release visual asset support verification passed npm test (85/85 tests) and npm run build; no committed visual assets were found, README/PROJECT_STATUS/DAILY_LOG were updated with pending `public/` asset paths, and metadata asset references remain deferred until real files exist
 - Latest public release metadata polish verification passed npm test (85/85 tests) and npm run build

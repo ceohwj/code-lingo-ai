@@ -2651,3 +2651,68 @@
 - Context7 Check: Not used (no library/API questions).
 - Verification: Checked system date and verified document path.
 - Issues: None.
+
+---
+
+### 11:21 KST - README Technical Case Study Link
+
+#### Today’s Goal
+- Link CASE_STUDY.md from README.md near the Live Demo section.
+- Improve recruiter navigation from the project landing page to the technical case study.
+
+#### Completed Work
+- Added a Technical Case Study section immediately after the README Live Demo section.
+- Linked `CASE_STUDY.md` from README.md.
+- Added concise copy explaining that the case study covers the product problem, architecture, curriculum design, learning analytics, AI workflow, QA process, deployment, lessons learned, and roadmap.
+- Updated the README portfolio roadmap bullet to keep the case study link current.
+- Updated PROJECT_STATUS.md to mark README case study navigation as connected.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Fri Jul  3 11:21:35 KST 2026.
+- Markdown rendering review only: README section placement, CASE_STUDY.md link, and status/log references reviewed.
+- npm test: Not run because this was documentation-only.
+- npm run build: Not run because this was documentation-only.
+
+#### Next Tasks
+- Optional: add a short demo GIF or video walkthrough for portfolio sharing.
+
+#### Codex Report
+- Files changed: README.md, PROJECT_STATUS.md, docs/DAILY_LOG.md.
+- What changed: Added README technical case study navigation and updated project documentation.
+- Context7 Check: Not used because this was a local documentation/navigation update with no external library, framework, API, or tooling questions.
+- Verification: Markdown rendering review only; tests/build not required.
+- Issues: None.
+
+---
+
+### 11:44 KST - Recruiter README Navigation Review
+
+#### Today’s Goal
+- Review README navigation flow after adding the CASE_STUDY.md link.
+- Focus on recruiter navigation, Live Demo visibility, Case Study discoverability, portfolio storytelling, and GitHub landing page quality.
+- Generate the Recruiter Review Report detailing the Recruiter Score, Navigation quality, Strongest improvement, Remaining recommendations, and Portfolio readiness.
+
+#### Completed Work
+- Performed recruiter-focused navigation and layout audit of README.md.
+- Formulated the Recruiter Navigation Review Report including evaluation metrics, strongest improvements, and recommendations.
+
+#### Issues
+- None.
+
+#### Verification
+- Local time checked with `date`: Fri Jul  3 11:44:02 KST 2026.
+- npm test: Not run (documentation-only change).
+- npm run build: Not run (documentation-only change).
+
+#### Next Tasks
+- Add a short demo GIF or video walkthrough link as planned in the future roadmap.
+
+#### Codex Report
+- Files changed: docs/DAILY_LOG.md.
+- What changed: Appended log entry for the recruiter review of README navigation.
+- Context7 Check: Not used (no library/API questions).
+- Verification: Checked system date and verified document path.
+- Issues: None.
