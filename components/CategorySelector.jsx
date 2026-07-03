@@ -36,6 +36,14 @@ export function CategorySelector({ achievements = [], categories, categoryProgre
         <h1>Dashboard</h1>
         <p className="subtitle">Track today&apos;s learning momentum, review priorities, and category progress.</p>
 
+        <section className="onboarding-banner" aria-label="CodeLingo AI learning loop">
+          <div>
+            <span>Developer learning coach</span>
+            <strong>Practice coding concepts through short quizzes, get instant explanations, track your progress, and review weak areas.</strong>
+          </div>
+          <p>Pick a topic, solve focused questions, use feedback to spot weak concepts, then return through recommended review.</p>
+        </section>
+
         <section className="dashboard-section dashboard-section-primary" aria-labelledby="today-focus-heading">
           <div className="dashboard-section-header">
             <div>

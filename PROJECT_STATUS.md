@@ -126,6 +126,7 @@ CodeLingo AI is a publicly deployed local-first learning platform v1 with catego
 - Public deployment presentation polish remaining for recruiter sharing: replace the README demo placeholder with a real demo GIF, YouTube walkthrough, or Loom walkthrough.
 
 ## Local Verification
+- Latest README live demo presentation polish updated the demo URL, learning-loop copy, and demo placeholder language; npm test passed and npm run build passed.
 - Latest README demo placeholder support update was documentation-only; markdown placement and missing-media handling were reviewed and tests/build were not required.
 - Latest README technical case study navigation update was documentation-only; markdown link placement was reviewed and tests/build were not required.
 - Latest public release asset connection added real favicon, app icon, Open Graph image, and README screenshots; metadata now points to committed `public/` assets, with npm test (85/85 tests) and npm run build passing

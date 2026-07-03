@@ -5,7 +5,7 @@ Publicly deployed Learning Platform v1 for a Duolingo-style coding education exp
 CodeLingo AI helps learners practice programming, data analysis, AI, and bioinformatics through short quizzes, immediate explanations, XP progression, daily missions, wrong-answer review, weak-area analysis, and lightweight learning analytics.
 
 **Release Status:** Public Release / Learning Platform v1  
-**Live Demo:** https://code-lingo-ai.vercel.app  
+**Live Demo:** https://code-lingo-ai.vercel.app/  
 **Curriculum:** 60 questions across 6 learning tracks  
 **Validation:** `npm test` passed, `npm run build` passed, mobile QA completed
 
@@ -13,9 +13,9 @@ CodeLingo AI helps learners practice programming, data analysis, AI, and bioinfo
 
 CodeLingo AI is publicly deployed and available here:
 
-**https://code-lingo-ai.vercel.app**
+**https://code-lingo-ai.vercel.app/**
 
-Use the live app to try the full learning loop: choose a track, answer questions, earn XP, complete daily missions, unlock achievements, review missed questions, and inspect learning analytics.
+Use the live app to review the core learning loop: learning track selection -> quiz solving -> instant feedback -> weak-area analysis -> review recommendation. The flow is designed to show recruiters and portfolio reviewers how CodeLingo AI connects short practice sessions with retention-focused learning signals.
 
 ## Demo
 
@@ -27,7 +27,7 @@ Planned options:
 - YouTube walkthrough link
 - Loom walkthrough link
 
-No demo GIF or walkthrough video is committed yet. This placeholder is intentional so the README can support a visual product walkthrough without fabricating media.
+No demo GIF or walkthrough video is committed yet. This placeholder is intentional so the README can support a future visual walkthrough without fabricating media or implying that a video already exists.
 
 ## Technical Case Study
 
