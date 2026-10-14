@@ -17,18 +17,6 @@ CodeLingo AI is publicly deployed and available here:
 
 Use the live app to review the core learning loop: learning track selection -> quiz solving -> instant feedback -> weak-area analysis -> review recommendation. The flow is designed to show recruiters and portfolio reviewers how CodeLingo AI connects short practice sessions with retention-focused learning signals.
 
-## Demo
-
-Demo walkthrough: **Coming soon**
-
-Planned options:
-
-- `public/demo.gif`
-- YouTube walkthrough link
-- Loom walkthrough link
-
-No demo GIF or walkthrough video is committed yet. This placeholder is intentional so the README can support a future visual walkthrough without fabricating media or implying that a video already exists.
-
 ## Technical Case Study
 
 Read the technical case study here:
@@ -36,6 +24,10 @@ Read the technical case study here:
 **[CASE_STUDY.md](CASE_STUDY.md)**
 
 The case study explains the product problem, local-first architecture, curriculum design, learning analytics, AI-assisted workflow, QA process, deployment approach, lessons learned, and future roadmap behind CodeLingo AI.
+
+## AI assistance and runtime boundary
+
+AI coding tools supported implementation; product scope, acceptance criteria, diff review and final approval remained human-controlled. The deployed v1 uses a fixed question bank and rule-based learning logic; it does not call a runtime LLM to generate lessons or answers.
 
 ## 1. Project Overview
 
